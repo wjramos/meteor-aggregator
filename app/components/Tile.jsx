@@ -7,6 +7,10 @@ function rawHTML ( str ) {
 }
 
 export default Tile = ( { tile } ) => {
+  if ( !tile.config.visible ) {
+    return;
+  }
+  
   const classes = [
     'item',
     tile.type,
@@ -145,9 +149,10 @@ export default Tile = ( { tile } ) => {
 
   return (
     <li className = { classNames( classes ) }
-        data-category  = { tile.type }
-        data-subcategory = { tile.activityType }
-        data-timestamp = { tile.timestamp }
+        data-visible       = { tile.config.visible }
+        data-category      = { tile.type }
+        data-subcategory   = { tile.activityType }
+        data-timestamp     = { tile.timestamp }
         data-rel-timestamp = { tile.relTimestamp } >
       { inner }
     </li>
