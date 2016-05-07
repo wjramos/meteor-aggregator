@@ -14,7 +14,7 @@ class App extends Component {
     super( props );
 
     this.state = {
-      hideCompleted: false,
+      hideCompleted: false
     };
   }
 
@@ -59,38 +59,60 @@ class App extends Component {
 
   render ( ) {
     return (
-      <div className="container">
-        <header>
-          <h1>Todo List ( { this.props.incompleteCount } )</h1>
+      <div>
+        {/* TODO: Separate components */}
+        <header className = "container">
+          <div className = "col-xs-12 text-center">
+            <div className = "card">
+              {/* TODO: Make headings authorable */}
+              <h1 className = "heading-announce">United Outside</h1>
+              <h2>Scelerisque consectetur consequat porta aenean in taciti phasellus congue facilisi lacus nascetur fusce...</h2>
 
-          <label className = "hide-completed">
-            <input
-              type    = "checkbox"
-              checked = { this.state.hideCompleted }
-              onClick = { this.toggleHideCompleted.bind( this ) }
-              readOnly
-            />
-            Hide Completed Tasks
-          </label>
+              {/* TODO: Toggle "Past Events" visibility */}
+              {/*
+              <label className = "hide-completed">
+                <input
+                  type    = "checkbox"
+                  checked = { this.state.hideCompleted }
+                  onClick = { this.toggleHideCompleted.bind( this ) }
+                  readOnly
+                />
+                Hide Completed Tasks
+              </label>
+              */}
+              {/* TODO: Create admin route -- remove this */}
+              <AccountsUIWrapper />
 
-          <AccountsUIWrapper />
-
-          { this.props.currentUser ?
-            <form className = "new-task"
-                  onSubmit  = { this.handleSubmit.bind( this ) }
-              >
-              <input
-                type        = "text"
-                ref         = "textInput"
-                placeholder = "Type to add new tasks"
-              />
-            </form> : ''
-          }
+              {/* TODO: Display admin status */}
+              {/*
+              { this.props.currentUser ?
+                <form className = "new-task"
+                      onSubmit  = { this.handleSubmit.bind( this ) }
+                  >
+                  <input
+                    type        = "text"
+                    ref         = "textInput"
+                    placeholder = "Type to add new tasks"
+                  />
+                </form> : ''
+              */}
+            </div>
+          </div>
         </header>
+        
+        <section>
+          <nav>
+            <ul>
 
-        <ul>
-          { this.renderTasks() }
-        </ul>
+            </ul>
+          </nav>
+        </section>
+
+        <main className = "container">
+          <ul className = "row row-flex tile masonry">
+            { this.renderTasks() }
+          </ul>
+        </main>
       </div>
     );
   }

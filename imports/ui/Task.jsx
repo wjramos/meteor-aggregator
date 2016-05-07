@@ -34,10 +34,14 @@ export default class Task extends Component {
     const taskClassName = classnames( {
       checked: this.props.task.checked,
       private: this.props.task.private,
+      colXs:   `col-xs-${ this.props.task.cols.xs || 6 }`,
+      colSm:   `col-sm-${ this.props.task.cols.sm || 4 }`,
+      colMd:   `col-md-${ this.props.task.cols.md || 3 }`,
+      colLg:   `col-xs-${ this.props.task.cols.lg || 2 }`
     } );
 
     return (
-      <li className={ taskClassName }>
+      <li className = { taskClassName }>
         <button className = "delete"
                 onClick   = { this.deleteThisTask.bind( this ) }
           >
