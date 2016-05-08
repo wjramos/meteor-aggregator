@@ -16,7 +16,7 @@ class App extends Component {
     super( props );
 
     this.state = {
-      hideCompleted: true
+      hideExpired: true
     };
   }
 
@@ -34,21 +34,21 @@ class App extends Component {
 
   toggleHideCompleted ( ) {
     this.setState( {
-      hideCompleted: !this.state.hideCompleted,
+      hideExpired: !this.state.hideExpired,
     } );
   }
 
   renderTiles ( ) {
     let filteredTiles = this.props.tiles;
     {/*
-    if ( this.state.hideCompleted ) {
-      filteredTiles = filteredTiles.filter( tile => !tile.checked );
+    if ( this.state.hideExpired ) {
+      filteredTiles = filteredTiles.filter( tile => !tile.expired );
     }
     */}
     return filteredTiles.map(
       tile => {
         const currentUserId = this.props.currentUser && this.props.currentUser._id;
-        const showPrivateButton = tile.owner === currentUserId;
+        // const showPrivateButton = tile.owner === currentUserId;
 
         return (
           <Tile
@@ -69,22 +69,17 @@ class App extends Component {
 
   renderMain ( ) {
     return (
-      <main className = "container-fluid">
+      <main  className = "container-fluid">
         <div className = "row row-flex tile grid js-isotope"
-            data-isotope = "{ 'itemSelector': '.grid-item', 'masonry': { 'columnWidth': 200 } }">
-            <div className = "grid-item col-xs-3" style={{ background:'red', height: '80px' }}></div>
-            <div className = "grid-item col-xs-3" style={{ background:'blue', height: '40px' }}></div>
-            <div className = "grid-item col-xs-3" style={{ background:'green', height: '30px' }}></div>
-            <div className = "grid-item col-xs-3" style={{ background:'grey', height: '60px' }}></div>
-            <div className = "grid-item col-xs-3" style={{ background:'yellow', height: '10px' }}></div>
-          {/* this.renderTiles() */}
+             data-isotope = "{ 'itemSelector': '.grid-item', 'masonry': { 'columnWidth': 200 } }">
+          { this.renderTiles() }
         </div>
       </main>
     );
   }
   renderNav ( ) {
     return (
-      <section  className = "container-fluid overlay-dark-2">
+      <section className = "container-fluid overlay-dark-2">
         <Nav />
       </section>
     );
@@ -102,8 +97,8 @@ class App extends Component {
 }
 
 App.propTypes = {
-  tiles:           PropTypes.array.isRequired,
-  currentUser:     PropTypes.object,
+  tiles:       PropTypes.array.isRequired,
+  currentUser: PropTypes.object,
 };
 
 export default createContainer(

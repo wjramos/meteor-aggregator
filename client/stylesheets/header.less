@@ -3,7 +3,7 @@
 
 header {
     .card {
-        padding: 8rem 2rem;
+        padding: 4rem 2rem;
 
         h1,
         h3 {
@@ -11,7 +11,9 @@ header {
         }
 
         h1 {
-            letter-spacing: -.5rem;
+            @media screen and ( min-width: @screen-md-min ) {
+                letter-spacing: -.5rem;
+            }
         }
 
         h3 {

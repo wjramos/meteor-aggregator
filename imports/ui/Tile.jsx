@@ -61,5 +61,5 @@ Tile.propTypes = {
   // This component gets the tile to display through a React prop.
   // We can use propTypes to indicate it is required
   tile:                PropTypes.object.isRequired,
-  showPublishedButton: React.PropTypes.bool.isRequired,
+  // showPublishedButton: React.PropTypes.bool.isRequired,
 };
