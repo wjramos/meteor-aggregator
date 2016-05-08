@@ -115,12 +115,21 @@ class App extends Component {
   }
   renderNav ( ) {
     return (
-      <section className = "container-fluid overlay-dark-2">
-        <nav   className = "row row-flex">
-          <ul  className = "col-xs-12 btn-group inline-group text-center text-uppercase">
-            <li>Test</li>
-            <li>Test</li>
-          </ul>
+      <section  className = "container-fluid overlay-dark-2">
+        <nav    className = "row row-flex">
+          <form className = "col-xs-12 text-center text-uppercase">
+            <fieldset>
+              <label>Filter By:</label>
+              <div className = "btn-group inline-group">
+                {/* TODO: Generate these */}
+                <button type="button" className = "btn btn-xs text-uppercase">Activities</button>
+                <button type="button" className = "btn btn-xs text-uppercase">Events</button>
+                <button type="button" className = "btn btn-xs text-uppercase">Blog</button>
+                <button type="button" className = "btn btn-xs text-uppercase">Photos</button>
+                <button type="button" className = "btn btn-xs text-uppercase">Show All</button>
+              </div>
+            </fieldset>
+          </form>
         </nav>
       </section>
     );

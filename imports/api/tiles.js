@@ -13,7 +13,7 @@ if ( Meteor.isServer ) {
       return Tiles.find( {
         $or: [
           {
-            private: {
+            published: {
               $ne: true
             }
           },
