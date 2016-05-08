@@ -15,6 +15,37 @@
 // };
 // export const Events = new Mongo.Collection( 'events' );
 //
-// // if ( Meteor.isServer ) {
-// //
-// // }
+// if ( Meteor.isServer ) {
+//     Meteor.publish(
+//         'events', () => {
+//         const publishedKeys = {};
+//
+//         const poll = () => {
+//             // Let's assume the data comes back as an array of JSON documents, with an _id field, for simplicity
+//             const data = HTTP.get( EVENTS, OPTIONS );
+//
+//             data.events.forEach(
+//                 event => {
+//                     if ( publishedKeys[ event.sessionId ] ) {
+//                         this.changed( 'events', event.sessionId, event );
+//                     } else {
+//                         publishedKeys[ event.sessionId ] = true;
+//
+//                         if ( publishedKeys[ event.sessionId ] ) {
+//                             this.added( 'events', event.sessionId, event );
+//                         }
+//                     }
+//                 }
+//             );
+//         };
+//
+//         poll();
+//         this.ready();
+//
+//         const interval = Meteor.setInterval( poll, INTERVAL );
+//
+//         this.onStop( () => {
+//             Meteor.clearInterval( interval );
+//         } );
+//     } );
+// }

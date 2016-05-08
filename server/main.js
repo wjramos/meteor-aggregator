@@ -1,1 +1,1 @@
-import '../imports/api/tiles.js';
+import '../imports/api/social.js';

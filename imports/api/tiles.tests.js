@@ -7,7 +7,7 @@ import { assert } from 'meteor/practicalmeteor:chai';
 import { Tiles }  from './tiles';
 
 if ( Meteor.isServer ) {
-    describe( 'Tiles', () => {
+    xdescribe( 'Tiles', () => {
         describe( 'methods', () => {
             const userId = Random.id();
             let tileId;
