@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM   from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Social } from '../api/social';
+import { Social } from '../../imports/api/social';
 
-import Tile from './Tile.jsx';
+//Sample Data
+import { curalateData } from '../../imports/data/curalate';
+
+import Tile   from './Tile.jsx';
 import Header from './Header.jsx';
-import Nav from './Nav.jsx';
+import Nav    from './Nav.jsx';
 // import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 // App component - represents the whole app
@@ -15,48 +18,43 @@ class App extends Component {
   constructor ( props ) {
     super( props );
 
-    this.state = {
-      hideExpired: true
-    };
+    // this.state = {
+    //   hideExpired: true
+    // };
   }
 
-  handleSubmit ( event ) {
-    event.preventDefault();
+  // handleSubmit ( event ) {
+  //   event.preventDefault();
+  //
+  //   // Find the text field via the React ref
+  //   const text = ReactDOM.findDOMNode( this.refs.textInput ).value.trim();
+  //
+  //   Meteor.call( 'tiles.insert', text );
+  //
+  //   // Clear form
+  //   ReactDOM.findDOMNode( this.refs.textInput ).value = '';
+  // }
 
-    // Find the text field via the React ref
-    const text = ReactDOM.findDOMNode( this.refs.textInput ).value.trim();
+  // toggleHideCompleted ( ) {
+  //   this.setState( {
+  //     hideExpired: !this.state.hideExpired,
+  //   } );
+  // }
 
-    Meteor.call( 'tiles.insert', text );
-
-    // Clear form
-    ReactDOM.findDOMNode( this.refs.textInput ).value = '';
-  }
-
-  toggleHideCompleted ( ) {
-    this.setState( {
-      hideExpired: !this.state.hideExpired,
-    } );
-  }
-
-  renderSocial ( ) {
-    let data = {};
-    let social = Meteor.subscribe( 'social' );
-    if ( social.ready( ) ){
-      data.tiles = Social.find().fetch();
-    }
-
-    {/*
-    if ( this.state.hideExpired ) {
-      filteredTiles = filteredTiles.filter( tile => !tile.expired );
-    }
-    */}
-    return data.tiles.map( tile => ( <Tile key = { tile._id } tile = { tile } /> ) );
+  renderTiles ( ) {
+    let tiles = this.props.tiles;
+    return tiles.map(
+      tile => (
+        <Tile
+          key  = { tile._id }
+          tile = { tile }
+        />
+      )
+    );
   }
 
   renderHeader ( ) {
-    return (
-      <Header />
-    );
+    return ( <Header /> );
   }
 
   renderMain ( ) {
@@ -64,7 +62,7 @@ class App extends Component {
       <main  className = "container-fluid">
         <div className = "row row-flex tile grid js-isotope"
              data-isotope = "{ 'itemSelector': '.grid-item', 'masonry': { 'columnWidth': 200 } }">
-          { this.renderSocial() }
+          { this.renderTiles() }
         </div>
       </main>
     );
@@ -89,17 +87,20 @@ class App extends Component {
 }
 
 App.propTypes = {
-  // social:      PropTypes.array.isRequired,
+  tiles:      PropTypes.array.isRequired,
   // currentUser: PropTypes.object,
 };
 
 export default createContainer(
   function() {
-    // let social = Meteor.subscribe( 'social' );
+    // Meteor.subscribe( 'social' );
+    let social = Meteor.subscribe( 'social' );
+
     if ( social.ready( ) ){
       return {
         // social:          social,
         // currentUser:     Meteor.user(),
+        tiles: curalateData.items//Social.find( {}, { sort: { createdAt: -1 } }).fetch(),
       };
     }
   },

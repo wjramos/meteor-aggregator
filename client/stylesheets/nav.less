@@ -12,19 +12,17 @@ nav {
         line-height: .75 !important;
         font-size: 2.4rem !important;
         padding: 0 2.4rem !important;
+        &:extend( .h3 );
+        &:extend( .btn-xs );
     }
 
-    label {
-        &:extend( .h3 );
-        font-family: "Interstate Bold Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
     button {
         background: transparent;
         box-sizing: content-box;
         transition: .25s ease all;
 
         &:not( :first-of-type ) {
-            border-left: .15rem solid #fff;
+            border-left: .15rem solid @color-base;
         }
 
         &:hover,

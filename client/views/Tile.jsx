@@ -4,12 +4,12 @@ import classnames from 'classnames';
 
 // Tile component - represents a single todo item
 export default class Tile extends Component {
-  deleteThisTile ( ) {
-    Meteor.call(
-      'tiles.remove',
-      this.props.tile._id
-    );
-  }
+  // deleteThisTile ( ) {
+  //   Meteor.call(
+  //     'tiles.remove',
+  //     this.props.tile._id
+  //   );
+  // }
   //
   // togglePublished ( ) {
   //   Meteor.call(
@@ -20,6 +20,7 @@ export default class Tile extends Component {
   // }
 
   render ( ) {
+    const tile = this.props.tile;
     // Give tiles a different className when they are checked off,
     // so that we can style them nicely in CSS
     const tileClassName = classnames( {
@@ -30,12 +31,12 @@ export default class Tile extends Component {
       // colMd:     `col-md-${ this.props.tile.cols.md || 3 }`,
       // colLg:     `col-xs-${ this.props.tile.cols.lg || 2 }`
     } );
-document.write( this );
+
     return (
       <li className = { tileClassName }>
-          <button className = "icon icon-rei-close"
+          {/*<button className = "icon icon-rei-close"
                   onClick   = { this.deleteThisTile.bind( this ) }
-          ></button>
+          ></button>*/}
 
         {/*{ this.props.showPublishedButton ? (*/}
           {/*
@@ -50,8 +51,11 @@ document.write( this );
             />
             { this.props.tile.published ? 'Unpublished' : 'Published }
           </label>
-          */}
         ) : '' }
+        */}
+        <span className = 'text'>
+          { tile.text }
+        </span>
       </li>
     );
   }
