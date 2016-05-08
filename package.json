@@ -10,6 +10,7 @@
     "react": "^15.0.2",
     "react-addons-pure-render-mixin": "^15.0.2",
     "react-dom": "^15.0.2",
-    "rei-cedar": "git+https://github.com/rei/rei-cedar.git"
+    "rei-cedar": "git+https://github.com/rei/rei-cedar.git",
+    "wordpress-rest-api": "^0.6.0"
   }
 }

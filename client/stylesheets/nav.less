@@ -1,0 +1,15 @@
+@import ( reference ) "../../node_modules/rei-cedar/src/less/main.less";
+
+nav {
+    padding: 1rem 0;
+
+    li {
+        margin: 0;
+        &:extend( .h3 );
+        &:extend( .btn );
+        &:extend( .btn-xs );
+        &:not( :first-of-type ) {
+            border-left: .15rem solid #fff;
+        }
+    }
+}
