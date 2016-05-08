@@ -6,6 +6,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Tiles } from '../api/tiles';
 
 import Tile from './Tile.jsx';
+import Header from './Header.jsx';
+import Nav from './Nav.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 // App component - represents the whole app
@@ -61,76 +63,29 @@ class App extends Component {
 
   renderHeader ( ) {
     return (
-      <header className = "container-fluid">
-        <div className = "row">
-          <div className = "col-xs-12 text-center">
-            <div className = "card">
-              {/* TODO: Make headings authorable */}
-              <h1 className = "heading-announce">United Outside</h1>
-              <h3 className = "text-uppercase">Scelerisque consectetur consequat porta aenean in taciti phasellus congue facilisi lacus nascetur fusce...</h3>
-
-              {/* TODO: Toggle "Past Events" visibility -- Only visible to admin */}
-              {/*
-              <label className = "hide-completed">
-                <input
-                  type    = "checkbox"
-                  checked = { this.state.hideCompleted }
-                  onClick = { this.toggleHideCompleted.bind( this ) }
-                  readOnly
-                />
-                Hide Completed Events
-              </label>
-              */}
-              {/* TODO: Create admin route -- remove this */}
-              {/* <AccountsUIWrapper /> */}
-
-              {/* TODO: Display admin status */}
-              {/*
-              { this.props.currentUser ?
-                <form className = "new-tile"
-                      onSubmit  = { this.handleSubmit.bind( this ) }
-                  >
-                  <input
-                    type        = "text"
-                    ref         = "textInput"
-                    placeholder = "Type to add new tiles"
-                  />
-                </form> : ''
-              */}
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
     );
   }
 
   renderMain ( ) {
     return (
       <main className = "container-fluid">
-        <ul className = "row row-flex tile masonry">
-          { this.renderTiles() }
-        </ul>
+        <div className = "row row-flex tile grid js-isotope"
+            data-isotope = "{ 'itemSelector': '.grid-item', 'masonry': { 'columnWidth': 200 } }">
+            <div className = "grid-item col-xs-3" style={{ background:'red', height: '80px' }}></div>
+            <div className = "grid-item col-xs-3" style={{ background:'blue', height: '40px' }}></div>
+            <div className = "grid-item col-xs-3" style={{ background:'green', height: '30px' }}></div>
+            <div className = "grid-item col-xs-3" style={{ background:'grey', height: '60px' }}></div>
+            <div className = "grid-item col-xs-3" style={{ background:'yellow', height: '10px' }}></div>
+          {/* this.renderTiles() */}
+        </div>
       </main>
     );
   }
   renderNav ( ) {
     return (
       <section  className = "container-fluid overlay-dark-2">
-        <nav    className = "row row-flex">
-          <form className = "col-xs-12 text-center text-uppercase">
-            <fieldset>
-              <label>Filter By:</label>
-              <div className = "btn-group inline-group">
-                {/* TODO: Generate these */}
-                <button type="button" className = "btn btn-xs text-uppercase">Activities</button>
-                <button type="button" className = "btn btn-xs text-uppercase">Events</button>
-                <button type="button" className = "btn btn-xs text-uppercase">Blog</button>
-                <button type="button" className = "btn btn-xs text-uppercase">Photos</button>
-                <button type="button" className = "btn btn-xs text-uppercase">Show All</button>
-              </div>
-            </fieldset>
-          </form>
-        </nav>
+        <Nav />
       </section>
     );
   }
@@ -153,8 +108,7 @@ App.propTypes = {
 
 export default createContainer(
   () => {
-    Meteor.subscribe('tiles');
-    Meteor.subscribe('events');
+    Meteor.subscribe( 'tiles' );
 
     return {
       tiles:           Tiles.find( {}, { sort: { createdAt: -1 } } ).fetch(),

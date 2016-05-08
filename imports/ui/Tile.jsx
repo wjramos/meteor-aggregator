@@ -34,7 +34,7 @@ export default class Tile extends Component {
     return (
       <li className = { tileClassName }>
           <button className = "icon icon-rei-close"
-                onClick   = { this.deleteThisTile.bind( this ) }
+                  onClick   = { this.deleteThisTile.bind( this ) }
           ></button>
 
         { this.props.showPublishedButton ? (
