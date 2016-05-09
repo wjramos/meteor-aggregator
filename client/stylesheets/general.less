@@ -1,8 +1,98 @@
 @import ( reference ) "../../node_modules/rei-cedar/src/less/main.less";
 
+@card-hover-offset: 3px;
+
+body {
+    background-color: @color-base;
+}
+
 .container-fluid {
     & > .row {
         margin: auto;
         max-width: 120rem;
+    }
+}
+
+.row.row-flex {
+    padding: 0;
+
+    [class*=col-],
+    [class^=col-] {
+        display: inline-flex;
+        flex-flow: column nowrap;
+        float: none;
+    }
+}
+
+.card {
+    display: inline-flex;
+    flex-flow: column nowrap;
+    position: relative;
+    overflow: hidden;
+    margin: 2rem;
+    padding: 1rem 2rem;
+    width: 100%;
+    background-color: #fff;
+    flex-grow: 0;
+    a& {
+        cursor: pointer;
+        transition: 0.25s ease;
+        &[ href ] {
+            backface-visibility: hidden;
+            transform: translateY( 0 );
+            box-shadow: none;
+            &:focus,
+            &:hover {
+                z-index: 5;
+                border: none;
+                box-shadow: 0 @card-hover-offset 3px -1px rgba( 0, 0, 0, 0.35 );
+                transform: translateY( -@card-hover-offset );
+            }
+        }
+    }
+    &.rounded {
+        border-radius: 10px;
+    }
+}
+
+.row-flex {
+    &.fixed {
+        align-items: stretch;
+    }
+    &.tile {
+        [class*=col-],
+        [class^=col-] {
+            padding: 0;
+        }
+
+        &.masonry {
+            padding: 0;
+            min-width: 100%;
+            margin: 0 auto;
+        }
+
+        .card {
+            margin: 0;
+            border-radius: 0;
+        }
+    }
+    &.overflow {
+        overflow: auto;
+        flex-wrap: nowrap;
+        align-items: center;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        cursor: pointer;
+        padding-right: 25%;
+        /* Scroll-snapping */
+        scroll-snap-type: mandatory;
+        scroll-snap-align: left;
+        /* Older spec implementation  -- Remove when polyfill updated */
+        scroll-snap-destination: 0 75%;
+        scroll-snap-points-x: repeat( 100% );
+        &.fixed,
+        &.tile {
+            align-items: stretch;
+        }
     }
 }

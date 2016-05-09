@@ -2,22 +2,20 @@
 @import ( reference ) "variables";
 
 header {
-    .card {
-        padding: 4rem 2rem;
+    padding: 4rem 2rem;
 
-        h1,
-        h3 {
-            color: @color-primary;
-        }
+    h1,
+    h3 {
+        color: @color-primary !important;
+    }
 
-        h1 {
-            @media screen and ( min-width: @screen-md-min ) {
-                letter-spacing: -.5rem;
-            }
+    h1 {
+        @media screen and ( min-width: @screen-md-min ) {
+            letter-spacing: -.5rem;
         }
+    }
 
-        h3 {
-            line-height: 1.75
-        }
+    h3 {
+        line-height: 1.75
     }
 }

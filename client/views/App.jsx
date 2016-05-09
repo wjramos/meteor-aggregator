@@ -3,14 +3,16 @@ import ReactDOM   from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Social } from '../../imports/api/social';
+// import { Social } from '../../imports/api/social';
 
 //Sample Data
+import { eventsData }   from '../../imports/data/events';
 import { curalateData } from '../../imports/data/curalate';
 
-import Tile   from './Tile.jsx';
 import Header from './Header.jsx';
 import Nav    from './Nav.jsx';
+import Tile   from './Tile.jsx';
+
 // import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 // App component - represents the whole app
@@ -41,17 +43,65 @@ class App extends Component {
   //   } );
   // }
 
-  renderTiles ( ) {
-    let tiles = this.props.tiles;
-    return tiles.map(
-      tile => (
-        <Tile
-          key  = { tile._id }
-          tile = { tile }
-        />
-      )
+  renderSocial ( ) {
+    let social = this.props.social;
+
+    return social.map(
+      tile => {
+        return ( <Tile
+          key         = { tile.id }
+          type        = 'social'
+          time        = { tile.start }
+          title       = { tile.user.username }
+          description = { tile.caption }
+          tile        = { tile }
+        /> )
+      }
     );
   }
+
+  renderEvents ( ) {
+    let events = this.props.events;
+    let now = Date.parse( new Date() );
+
+    return events.map(
+      tile => {
+        let timestamp = Date.parse( tile.start );
+
+        if (  timestamp > now && (
+              tile.registration.status === 'OPEN' ||
+              tile.registration.status === 'NOT_REI' ) ) {
+
+          return ( <Tile
+            key         = { tile.sessionId }
+            type        = 'events'
+            time        = { timestamp }
+            title       = { tile.title }
+            status      = { tile.registration.status }
+            description = { tile.summary }
+            tile        = { tile }
+          /> )
+        }
+      }
+    );
+  }
+
+  // renderPosts ( ) {
+  //   let posts = this.props.posts;
+  //
+  //   return posts.map(
+  //     tile => {
+  //       return ( <Tile
+  //         key         = { tile.id }
+  //         type        = 'social'
+  //         time        = { tile.start }
+  //         title       = { tile.user.username }
+  //         description = { tile.caption }
+  //         tile        = { tile }
+  //       /> )
+  //     }
+  //   );
+  // }
 
   renderHeader ( ) {
     return ( <Header /> );
@@ -62,7 +112,8 @@ class App extends Component {
       <main  className = "container-fluid">
         <div className = "row row-flex tile grid js-isotope"
              data-isotope = "{ 'itemSelector': '.grid-item', 'masonry': { 'columnWidth': 200 } }">
-          { this.renderTiles() }
+          { this.renderEvents() }
+          { this.renderSocial() }
         </div>
       </main>
     );
@@ -87,22 +138,24 @@ class App extends Component {
 }
 
 App.propTypes = {
-  tiles:      PropTypes.array.isRequired,
+  events:      PropTypes.array.isRequired,
+  social:      PropTypes.array.isRequired,
   // currentUser: PropTypes.object,
 };
 
 export default createContainer(
   function() {
     // Meteor.subscribe( 'social' );
-    let social = Meteor.subscribe( 'social' );
+    // let social = Meteor.subscribe( 'social' );
 
-    if ( social.ready( ) ){
+    // if ( social.ready( ) ){
       return {
         // social:          social,
         // currentUser:     Meteor.user(),
-        tiles: curalateData.items//Social.find( {}, { sort: { createdAt: -1 } }).fetch(),
+        events: eventsData.events,//Events.find( {}, { sort: { createdAt: -1 } }).fetch()
+        social: curalateData.items//Social.find( {}, { sort: { createdAt: -1 } }).fetch(),
       };
-    }
+    // }
   },
   App
 );
