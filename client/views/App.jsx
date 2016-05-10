@@ -49,9 +49,9 @@ class App extends Component {
     return social.map(
       tile => {
         return ( <Tile
-          key         = { tile.id }
           type        = 'social'
-          time        = { tile.start }
+          key         = { tile.id }
+          time        = { tile.timestamp }
           title       = { tile.user.username }
           description = { tile.caption }
           tile        = { tile }
@@ -68,18 +68,16 @@ class App extends Component {
       tile => {
         let timestamp = Date.parse( tile.start );
 
-        if (  timestamp > now && (
-              tile.registration.status === 'OPEN' ||
-              tile.registration.status === 'NOT_REI' ) ) {
+        if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
 
           return ( <Tile
-            key         = { tile.sessionId }
             type        = 'events'
+            key         = { tile.sessionId }
             time        = { timestamp }
             title       = { tile.title }
-            status      = { tile.registration.status }
             description = { tile.summary }
             tile        = { tile }
+            status      = { tile.registration.status }
           /> )
         }
       }

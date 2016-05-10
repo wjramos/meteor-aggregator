@@ -55,6 +55,7 @@ export default class Tile extends Component {
             </label>
           ) : '' }
           */}
+          <h2>{ new Date( this.props.time ).toLocaleDateString() }</h2>
           <h3>{ this.props.title.replace(/&nbsp;/gi,'') }</h3>
           <p>{ this.props.description.replace(/&nbsp;/gi,'') }</p>
         </div>
@@ -68,6 +69,7 @@ Tile.propTypes = {
   // We can use propTypes to indicate it is required
   tile:        PropTypes.object.isRequired,
   type:        PropTypes.string.isRequired,
+  time:        PropTypes.number.isRequired,
   title:       PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   // showPublishedButton: React.PropTypes.bool.isRequired,
