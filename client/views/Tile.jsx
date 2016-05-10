@@ -31,34 +31,71 @@ export default class Tile extends Component {
     //   // colMd:     `col-md-${ this.props.tile.cols.md || 3 }`,
     //   // colLg:     `col-xs-${ this.props.tile.cols.lg || 2 }`
     // } );
+    let inner;
+    const content = (
+      <div className = 'well'>
+        {/*<button className = "icon icon-rei-close"
+                onClick   = { this.deleteThisTile.bind( this ) }
+        ></button>*/}
+
+        {/*{ this.props.showPublishedButton ? (*/}
+          {/*
+          <label className = "toggle-published"
+                  onClick  = { this.togglePublished.bind( this ) }
+            >
+            <input
+              type    = "checkbox"
+              checked = { this.props.tile.published }
+              onClick = { this.togglePublished.bind( this ) }
+              readOnly
+            />
+            { this.props.tile.published ? 'Unpublished' : 'Published }
+          </label>
+        ) : '' }
+        */}
+        <h2>{ new Date( this.props.time ).toLocaleDateString() }</h2>
+        <h3>{ this.props.title }</h3>
+        <p>{ this.props.description }</p>
+        </div>
+    );
+
+
+    if ( this.props.link && this.props.media ) {
+      inner = (
+        <a href = { this.props.link }
+           target = "_blank"
+           className = 'card img-frame center fill' >
+          <img src = { this.props.media } />
+          { content }
+        </a>
+      )
+    }
+
+    if ( this.props.link && !this.props.media ) {
+      inner = (
+        <a href = { this.props.link }
+           target = "_blank"
+           className = 'card' >
+           { content }
+        </a>
+      )
+    }
+
+    if ( !this.props.link && this.props.media ) {
+      inner = (
+        <div className = 'card img-frame center fill' >
+          <img src = { this.props.media }
+               alt = { this.props.alt }/>
+          { content }
+        </div>
+      )
+    }
 
     return (
-      // <li className = { tileClassName }>
-      <li className = { 'col-xs-6 col-sm-4 col-md-3 ' + this.props.type }>
-        <div className = 'card'>
-          {/*<button className = "icon icon-rei-close"
-                  onClick   = { this.deleteThisTile.bind( this ) }
-          ></button>*/}
-
-          {/*{ this.props.showPublishedButton ? (*/}
-            {/*
-            <label className = "toggle-published"
-                    onClick  = { this.togglePublished.bind( this ) }
-              >
-              <input
-                type    = "checkbox"
-                checked = { this.props.tile.published }
-                onClick = { this.togglePublished.bind( this ) }
-                readOnly
-              />
-              { this.props.tile.published ? 'Unpublished' : 'Published }
-            </label>
-          ) : '' }
-          */}
-          <h2>{ new Date( this.props.time ).toLocaleDateString() }</h2>
-          <h3>{ this.props.title.replace(/&nbsp;/gi,'') }</h3>
-          <p>{ this.props.description.replace(/&nbsp;/gi,'') }</p>
-        </div>
+      <li className = { 'col-xs-6 col-sm-4 col-md-3 ' + this.props.type }
+          data-category = { this.props.type }
+          data-time = { this.props.time } >
+        { inner }
       </li>
     );
   }
@@ -69,8 +106,11 @@ Tile.propTypes = {
   // We can use propTypes to indicate it is required
   tile:        PropTypes.object.isRequired,
   type:        PropTypes.string.isRequired,
-  time:        PropTypes.number.isRequired,
-  title:       PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  time:        PropTypes.number,
+  link:        PropTypes.string,
+  title:       PropTypes.string,
+  media:       PropTypes.string,
+  alt:         PropTypes.string,
+  description: PropTypes.string,
   // showPublishedButton: React.PropTypes.bool.isRequired,
 };

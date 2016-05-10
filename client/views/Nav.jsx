@@ -10,27 +10,27 @@ export default class Nav extends Component {
         <form className = "col-xs-12">
           <fieldset className = "text-center text-uppercase">
             <label>Filter By:</label>
-            <div className = "btn-group button-group filter-button-group">
+            <div className = "btn-group js-filters">
 
               {/* TODO: Generate these */}
               <button type="button"
                       className = "btn btn-xs text-uppercase filter-item"
-                      data-filter = "events">Activities</button>
+                      data-category = ".events">Activities</button>
               <button type="button"
                       className = "btn btn-xs text-uppercase filter-item"
-                      data-filter = "events">Events</button>
+                      data-category = ".events">Events</button>
               <button type="button"
                       className = "btn btn-xs text-uppercase filter-item"
-                      data-filter = "social">Social</button>
+                      data-category = ".social">Social</button>
               <button type="button"
                       className = "btn btn-xs text-uppercase filter-item"
-                      data-filter = "blog">Blog</button>
+                      data-category = ".blog">Blog</button>
               <button type="button"
                       className = "btn btn-xs text-uppercase filter-item"
-                      data-filter = "media">Photos</button>
+                      data-category = ".media">Photos</button>
               <button type="button"
                       className = "btn btn-xs text-uppercase filter-item"
-                      data-filter = "*">Show All</button>
+                      data-category = "*">Show All</button>
 
             </div>
           </fieldset>

@@ -23,7 +23,7 @@ if ( Meteor.isServer ) {
         const poll = () => {
             // Let's assume the data comes back as an array of JSON documents, with an _id field, for simplicity
             const data = HTTP.get( EVENTS, OPTIONS );
-
+console.log( data )
             data.events.forEach(
                 event => {
                     if ( publishedKeys[ event.sessionId ] ) {

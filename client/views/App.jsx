@@ -51,9 +51,12 @@ class App extends Component {
         return ( <Tile
           type        = 'social'
           key         = { tile.id }
-          time        = { tile.timestamp }
+          time        = { tile.timestamp * 1000 }
           title       = { tile.user.username }
+          href        = { tile.user.username }
           description = { tile.caption }
+          media       = { tile.photo.original.url }
+          link        = { tile.url }
           tile        = { tile }
         /> )
       }
@@ -108,14 +111,14 @@ class App extends Component {
   renderMain ( ) {
     return (
       <main  className = "container-fluid">
-        <div className = "row row-flex tile grid js-isotope"
-             data-isotope = "{ 'itemSelector': '.grid-item', 'masonry': { 'columnWidth': 200 } }">
+        <div className = "row row-flex tile grid js-isotope">
           { this.renderEvents() }
           { this.renderSocial() }
         </div>
       </main>
     );
   }
+
   renderNav ( ) {
     return (
       <section className = "container-fluid overlay-dark-2">
