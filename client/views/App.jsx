@@ -3,11 +3,13 @@ import ReactDOM   from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-// import { Social } from '../../imports/api/social';
+import { Events } from '../../imports/collections/events';
+import { Posts }  from '../../imports/collections/posts';
+import { Social } from '../../imports/collections/social';
 
 //Sample Data
-import { eventsData }   from '../../imports/data/events';
-import { curalateData } from '../../imports/data/curalate';
+// import { eventsData }   from '../../imports/data/events';
+// import { curalateData } from '../../imports/data/curalate';
 
 import Header from './Header.jsx';
 import Nav    from './Nav.jsx';
@@ -46,50 +48,60 @@ class App extends Component {
   renderSocial ( ) {
     let social = this.props.social;
 
-    return social.map(
-      tile => {
-        return ( <Tile
-          type        = 'social'
-          key         = { tile.id }
-          time        = { tile.timestamp * 1000 }
-          title       = { tile.user.username }
-          href        = { tile.user.username }
-          description = { tile.caption }
-          media       = { tile.photo.original.url }
-          link        = { tile.url }
-          tile        = { tile }
-        /> )
-      }
-    );
+    Meteor.call( 'getCuralateData', function( err, response ) {
+         console.log( response );
+    } );
+
+    // return social.map(
+    //   tile => {
+    //     return ( <Tile
+    //       type        = 'social'
+    //       key         = { tile.id }
+    //       time        = { tile.timestamp * 1000 }
+    //       title       = { tile.user.username }
+    //       href        = { tile.user.username }
+    //       description = { tile.caption }
+    //       media       = { tile.photo.original.url }
+    //       link        = { tile.url }
+    //       tile        = { tile }
+    //     /> )
+    //   }
+    // );
   }
 
   renderEvents ( ) {
     let events = this.props.events;
-    let now = Date.parse( new Date() );
 
-    return events.map(
-      tile => {
-        let timestamp = Date.parse( tile.start );
-
-        if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
-
-          return ( <Tile
-            type        = 'events'
-            key         = { tile.sessionId }
-            time        = { timestamp }
-            title       = { tile.title }
-            description = { tile.summary }
-            tile        = { tile }
-            status      = { tile.registration.status }
-          /> )
-        }
-      }
-    );
+    Meteor.call( 'getEventData', function( err, response ) {
+         console.log( response );
+    } );
+    // let now = Date.parse( new Date() );
+    //
+    // return events.map(
+    //   tile => {
+    //     let timestamp = Date.parse( tile.start );
+    //
+    //     if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
+    //
+    //       return ( <Tile
+    //         type        = 'events'
+    //         key         = { tile.sessionId }
+    //         time        = { timestamp }
+    //         title       = { tile.title }
+    //         description = { tile.summary }
+    //         tile        = { tile }
+    //         status      = { tile.registration.status }
+    //       /> )
+    //     }
+    //   }
+    // );
   }
 
-  // renderPosts ( ) {
-  //   let posts = this.props.posts;
-  //
+  renderPosts ( ) {
+    let posts = this.props.posts;
+    Meteor.call( 'getWpData', function( err, response ) {
+         console.log( response );
+    } );
   //   return posts.map(
   //     tile => {
   //       return ( <Tile
@@ -102,7 +114,7 @@ class App extends Component {
   //       /> )
   //     }
   //   );
-  // }
+  }
 
   renderHeader ( ) {
     return ( <Header /> );
@@ -113,6 +125,7 @@ class App extends Component {
       <main  className = "container-fluid">
         <div className = "row row-flex tile grid js-isotope">
           { this.renderEvents() }
+          { this.renderPosts() }
           { this.renderSocial() }
         </div>
       </main>
@@ -139,8 +152,9 @@ class App extends Component {
 }
 
 App.propTypes = {
-  events:      PropTypes.array.isRequired,
-  social:      PropTypes.array.isRequired,
+  events: PropTypes.array.isRequired,
+  social: PropTypes.array.isRequired,
+  posts:  PropTypes.array.isRequired,
   // currentUser: PropTypes.object,
 };
 
@@ -153,8 +167,9 @@ export default createContainer(
       return {
         // social:          social,
         // currentUser:     Meteor.user(),
-        events: eventsData.events,//Events.find( {}, { sort: { createdAt: -1 } }).fetch()
-        social: curalateData.items//Social.find( {}, { sort: { createdAt: -1 } }).fetch(),
+        events: Events.find( {}, { sort: { createdAt: -1 } }).fetch(),
+        social: Social.find( {}, { sort: { createdAt: -1 } } ).fetch(),
+        posts:  Posts.find( {},  { sort: { createdAt: -1 } } ).fetch()
       };
     // }
   },

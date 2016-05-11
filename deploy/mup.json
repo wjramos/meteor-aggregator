@@ -1,0 +1,23 @@
+{
+    "servers": [
+        {
+            "host": "159.203.247.166",
+            "username": "root",
+            "env": {}
+        }
+    ],
+    "setupMongo": true,
+    "setupNode": true,
+    "nodeVersion": "0.10.36",
+    "setupPhantom": true,
+    "appName": "app",
+    "app": "../",
+    "env": {
+        "ROOT_URL": "http://localhost",
+        "PORT": 3000,
+        "UPSTART_UID": "meteoruser",
+        "METEOR_ENV": "production"
+    },
+    "deployCheckWaitTime": 15,
+    "enableUploadProgressBar": true
+}

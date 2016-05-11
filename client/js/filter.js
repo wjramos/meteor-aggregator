@@ -17,7 +17,7 @@ $(
         },
         filter: '*'
     }
-console.log( isotope.filter );
+
     $grid.each( function ( ) {
         $( this ).isotope( isotope );
     } );
@@ -25,9 +25,8 @@ console.log( isotope.filter );
     $filters.on( 'click', 'button', function () {
         var $this = $( this );
         isotope.filter = $this.attr( 'data-category' );
-console.log( isotope.filter );
         return $grid.each( function () {
-          $( this ).isotope( isotope );
+          $this.isotope( isotope );
         } );
     } );
   }

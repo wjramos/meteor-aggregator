@@ -56,7 +56,7 @@ export default class Tile extends Component {
         <h2>{ new Date( this.props.time ).toLocaleDateString() }</h2>
         <h3>{ this.props.title }</h3>
         <p>{ this.props.description }</p>
-        </div>
+      </div>
     );
 
 
