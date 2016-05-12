@@ -1,63 +1,52 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo }  from 'meteor/mongo';
-
 import Wp from 'wordpress-rest-api';
-import { WP, CURALATE, EVENTS } from './endpoints';
 
-import { Social } from '../imports/collections/social';
-import { Posts }  from '../imports/collections/posts';
-import { Events } from '../imports/collections/events';
-const EVENT_OPTIONS = {
-  params: {
-      sortBy:        'date',
-      sortDirection: 'asc',
-      offset:        0,
-      limit:         20,
-      distance:      50,
-      location:      20500,
-      // sa:            'Adventure',
-      // ca:            'Women Only'
-  }
-}
+import { WP, WP_QUERY, CURALATE, CURALATE_QUERY, EVENTS, EVENTS_QUERY } from './endpoints';
 
 Meteor.methods( {
   getWpData ( ) {
     this.unblock();
+    console.log( 'Retrieving WordPress Data' );
+    let results = HTTP.get(
+      WP,
+      WP_QUERY
+    ).data;
 
-    let results = WP.map(
-      endpoint => new Wp( { endpoint: endpoint } ).posts( )
-        .then( data => data )
-        .catch( err => console.error( err ) )
-    );
-
-    Posts.insert( results );
-
-    return results;
+    if ( results.posts ) {
+      console.log( `Wordpress request finished: ${ results.posts.length } posts retrieved` );
+      return results;
+    }
   },
 
   getEventData ( ) {
     this.unblock();
-
+    console.log( 'Retrieving Events Data' );
     let results = HTTP.get(
       EVENTS,
-      EVENT_OPTIONS
-    );
+      EVENTS_QUERY
+    ).data;
 
-    Events.insert( results );
-
-    return results;
+    if ( results.events ) {
+      console.log( `Events request finished: ${ results.events.length } events retrieved` );
+      return results;
+    }
   },
 
   getCuralateData ( ) {
     this.unblock();
-
+    console.log( 'Retrieving Curalate Data' );
     let results = HTTP.get(
       CURALATE,
-      {}
-    );
+      CURALATE_QUERY
+    ).data;
 
-    Social.insert( results );
+    // Get and update store if delta
+    if ( results.items ) {
+      console.log( `Curalate request finished: ${ results.items.length } items retrieved` );
+      return results;
+    }
 
-    return results;
+    //Else return local store
   }
 } );

@@ -12,7 +12,6 @@
 //     image
 // } );
 //
-// if ( Meteor.isServer ) {
 //   // This code only runs on the server
 //   // Only publish tiles that are public or belong to the current user
 //   Meteor.publish(
@@ -39,7 +38,6 @@
 //       // } );
 //     }
 //   );
-// }
 // //
 // // Meteor.methods( {
 // //   'tiles.insert'( text ) {

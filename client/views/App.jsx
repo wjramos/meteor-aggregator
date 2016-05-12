@@ -3,9 +3,7 @@ import ReactDOM   from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Events } from '../../imports/collections/events';
-import { Posts }  from '../../imports/collections/posts';
-import { Social } from '../../imports/collections/social';
+import { Events, Posts, Social } from '../../imports/collections';
 
 //Sample Data
 // import { eventsData }   from '../../imports/data/events';
@@ -48,72 +46,67 @@ class App extends Component {
   renderSocial ( ) {
     let social = this.props.social;
 
-    Meteor.call( 'getCuralateData', function( err, response ) {
-         console.log( response );
-    } );
-
-    // return social.map(
-    //   tile => {
-    //     return ( <Tile
-    //       type        = 'social'
-    //       key         = { tile.id }
-    //       time        = { tile.timestamp * 1000 }
-    //       title       = { tile.user.username }
-    //       href        = { tile.user.username }
-    //       description = { tile.caption }
-    //       media       = { tile.photo.original.url }
-    //       link        = { tile.url }
-    //       tile        = { tile }
-    //     /> )
-    //   }
-    // );
+    return social.map(
+      tile => {
+        return (
+          <Tile
+            type        = 'social'
+            key         = { tile.id }
+            time        = { tile.timestamp * 1000 }
+            title       = { tile.user.username }
+            href        = { tile.user.username }
+            description = { tile.caption }
+            media       = { tile.photo.original.url }
+            link        = { tile.url }
+            tile        = { tile }
+          />
+        )
+      }
+    );
   }
 
   renderEvents ( ) {
     let events = this.props.events;
+    let now = Date.parse( new Date() );
 
-    Meteor.call( 'getEventData', function( err, response ) {
-         console.log( response );
-    } );
-    // let now = Date.parse( new Date() );
-    //
-    // return events.map(
-    //   tile => {
-    //     let timestamp = Date.parse( tile.start );
-    //
-    //     if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
-    //
-    //       return ( <Tile
-    //         type        = 'events'
-    //         key         = { tile.sessionId }
-    //         time        = { timestamp }
-    //         title       = { tile.title }
-    //         description = { tile.summary }
-    //         tile        = { tile }
-    //         status      = { tile.registration.status }
-    //       /> )
-    //     }
-    //   }
-    // );
+    return events.map(
+      tile => {
+        let timestamp = Date.parse( tile.start );
+
+        if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
+          return (
+            <Tile
+              type        = 'events'
+              key         = { tile.sessionId }
+              time        = { timestamp }
+              title       = { tile.title }
+              description = { tile.summary }
+              tile        = { tile }
+              status      = { tile.registration.status }
+            />
+          )
+        }
+      }
+    );
   }
 
   renderPosts ( ) {
     let posts = this.props.posts;
-    Meteor.call( 'getWpData', function( err, response ) {
-         console.log( response );
-    } );
-  //   return posts.map(
-  //     tile => {
-  //       return ( <Tile
-  //         key         = { tile.id }
-  //         type        = 'social'
-  //         time        = { tile.start }
-  //         title       = { tile.user.username }
-  //         description = { tile.caption }
-  //         tile        = { tile }
-  //       /> )
-  //     }
-  //   );
+
+    return posts.map(
+      tile => {
+        return (
+          <Tile
+            key         = { tile.id }
+            type        = 'social'
+            time        = { tile.start }
+            title       = { tile.user.username }
+            description = { tile.caption }
+            tile        = { tile }
+          />
+        )
+      }
+    );
   }
 
   renderHeader ( ) {
@@ -159,19 +152,14 @@ App.propTypes = {
 };
 
 export default createContainer(
-  function() {
-    // Meteor.subscribe( 'social' );
-    // let social = Meteor.subscribe( 'social' );
-
-    // if ( social.ready( ) ){
+  ( ) => {
       return {
         // social:          social,
         // currentUser:     Meteor.user(),
-        events: Events.find( {}, { sort: { createdAt: -1 } }).fetch(),
+        events: Events.find( {}, { sort: { createdAt: -1 } } ).fetch(),
         social: Social.find( {}, { sort: { createdAt: -1 } } ).fetch(),
-        posts:  Posts.find( {},  { sort: { createdAt: -1 } } ).fetch()
+        posts:  Posts.find(  {}, { sort: { createdAt: -1 } } ).fetch()
       };
-    // }
   },
   App
 );
