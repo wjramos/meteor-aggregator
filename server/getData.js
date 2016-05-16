@@ -39,14 +39,14 @@ Meteor.methods( {
     let results = HTTP.get(
       CURALATE,
       CURALATE_QUERY
-    ).data;
+    ).data.items;
 
     // Get and update store if delta
-    if ( results.items ) {
-      console.log( `Curalate request finished: ${ results.items.length } items retrieved` );
+    if ( results ) {
+      console.log( `Curalate request finished: ${ results.length } items retrieved` );
       return results;
     }
 
-    //Else return local store
+    return [];
   }
 } );

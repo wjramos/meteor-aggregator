@@ -5,10 +5,6 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Events, Posts, Social } from '../../imports/collections';
 
-//Sample Data
-// import { eventsData }   from '../../imports/data/events';
-// import { curalateData } from '../../imports/data/curalate';
-
 import Header from './Header.jsx';
 import Nav    from './Nav.jsx';
 import Tile   from './Tile.jsx';
@@ -44,9 +40,9 @@ class App extends Component {
   // }
 
   renderSocial ( ) {
-    let social = this.props.social;
+    let tiles = this.props.social;
 
-    return social.map(
+    return tiles.map(
       tile => {
         return (
           <Tile
@@ -54,10 +50,9 @@ class App extends Component {
             key         = { tile.id }
             time        = { tile.timestamp * 1000 }
             title       = { tile.user.username }
-            href        = { tile.user.username }
+            link        = { tile.url }
             description = { tile.caption }
             media       = { tile.photo.original.url }
-            link        = { tile.url }
             tile        = { tile }
           />
         )
@@ -65,49 +60,49 @@ class App extends Component {
     );
   }
 
-  renderEvents ( ) {
-    let events = this.props.events;
-    let now = Date.parse( new Date() );
+  // renderEvents ( ) {
+  //   let events = this.props.events;
+  //   let now = Date.parse( new Date() );
+  //   console.log( events );
+  //   return events.map(
+  //     tile => {
+  //       let timestamp = Date.parse( tile.start );
+  //
+  //       if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
+  //         return (
+  //           <Tile
+  //             type        = 'events'
+  //             key         = { tile.sessionId }
+  //             time        = { timestamp }
+  //             title       = { tile.title }
+  //             description = { tile.summary }
+  //             tile        = { tile }
+  //             status      = { tile.registration.status }
+  //           />
+  //         )
+  //       }
+  //     }
+  //   );
+  // }
 
-    return events.map(
-      tile => {
-        let timestamp = Date.parse( tile.start );
-
-        if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
-          return (
-            <Tile
-              type        = 'events'
-              key         = { tile.sessionId }
-              time        = { timestamp }
-              title       = { tile.title }
-              description = { tile.summary }
-              tile        = { tile }
-              status      = { tile.registration.status }
-            />
-          )
-        }
-      }
-    );
-  }
-
-  renderPosts ( ) {
-    let posts = this.props.posts;
-
-    return posts.map(
-      tile => {
-        return (
-          <Tile
-            key         = { tile.id }
-            type        = 'social'
-            time        = { tile.start }
-            title       = { tile.user.username }
-            description = { tile.caption }
-            tile        = { tile }
-          />
-        )
-      }
-    );
-  }
+  // renderPosts ( ) {
+  //   let posts = this.props.posts;
+  //   console.log( posts )
+  //   return posts.map(
+  //     tile => {
+  //       return (
+  //         <Tile
+  //           key         = { tile.id }
+  //           type        = 'social'
+  //           time        = { tile.start }
+  //           title       = { tile.user.username }
+  //           description = { tile.caption }
+  //           tile        = { tile }
+  //         />
+  //       )
+  //     }
+  //   );
+  // }
 
   renderHeader ( ) {
     return ( <Header /> );
@@ -116,9 +111,9 @@ class App extends Component {
   renderMain ( ) {
     return (
       <main  className = "container-fluid">
-        <div className = "row row-flex tile grid js-isotope">
-          { this.renderEvents() }
-          { this.renderPosts() }
+        <div className = "row row-flex tile js-isotope">
+          {/*{ this.renderEvents() }
+          { this.renderPosts() }*/}
           { this.renderSocial() }
         </div>
       </main>
@@ -145,20 +140,31 @@ class App extends Component {
 }
 
 App.propTypes = {
-  events: PropTypes.array.isRequired,
-  social: PropTypes.array.isRequired,
-  posts:  PropTypes.array.isRequired,
+  // events: PropTypes.array.isRequired,
+  social: PropTypes.array,
+  // posts:  PropTypes.array.isRequired,
   // currentUser: PropTypes.object,
 };
 
 export default createContainer(
   ( ) => {
+      // return {
+      //   social: []
+      // }
+      //
+      // let social = Meteor.subscribe( 'social.public' );
+      //
+      // if ( social.ready( ) ) {
+      //   props.social = Social.find().fetch();
+      //   return props;
+      // }
+      Meteor.subscribe( 'social.public' );
       return {
         // social:          social,
         // currentUser:     Meteor.user(),
-        events: Events.find( {}, { sort: { createdAt: -1 } } ).fetch(),
+        // events: Events.find( {}, { sort: { createdAt: -1 } } ).fetch(),
         social: Social.find( {}, { sort: { createdAt: -1 } } ).fetch(),
-        posts:  Posts.find(  {}, { sort: { createdAt: -1 } } ).fetch()
+        // posts:  Posts.find(  {}, { sort: { createdAt: -1 } } ).fetch()
       };
   },
   App

@@ -10,10 +10,26 @@ function poll ( ) {
     let events = Meteor.call( 'getEventData' );
     let posts  = Meteor.call( 'getWpData' )
 
-    Social.insert( social );
-    Events.insert( events );
-    Posts.insert( posts );
+    // Purge collections -- should try and find a way to check dupes
+    Social.remove( {} );
+
+    // TODO: Apply Schema, consolidate and sort into a proxy collection
+    social.forEach( item => Social.insert( item, { _id : item.id } ) );
+
+    // Events.insert( events );
+    // Posts.insert( posts );
 }
+
+// Publish generic collection -- split out into new publications file
+Meteor.publish( 'social.public', function() {
+  Meteor._sleepForMs( 2000 );
+  const entries = Social.find( );
+  if ( entries ) {
+    return entries;
+  }
+
+  return this.ready();
+} );
 
 poll( );
 

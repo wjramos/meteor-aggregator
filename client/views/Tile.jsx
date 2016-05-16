@@ -92,7 +92,7 @@ export default class Tile extends Component {
     }
 
     return (
-      <li className = { 'col-xs-6 col-sm-4 col-md-3 ' + this.props.type }
+      <li className = { 'col-xs-6 col-sm-4 col-md-3 grid-item ' + this.props.type }
           data-category = { this.props.type }
           data-time = { this.props.time } >
         { inner }
