@@ -11,10 +11,10 @@ Meteor.methods( {
     let results = HTTP.get(
       WP,
       WP_QUERY
-    ).data;
+    ).data.posts;
 
-    if ( results.posts ) {
-      console.log( `Wordpress request finished: ${ results.posts.length } posts retrieved` );
+    if ( results ) {
+      console.log( `Wordpress request finished: ${ results.length } posts retrieved` );
       return results;
     }
   },
@@ -25,12 +25,14 @@ Meteor.methods( {
     let results = HTTP.get(
       EVENTS,
       EVENTS_QUERY
-    ).data;
+    ).data.events;
 
-    if ( results.events ) {
-      console.log( `Events request finished: ${ results.events.length } events retrieved` );
+    if ( results ) {
+      console.log( `Events request finished: ${ results.length } events retrieved` );
       return results;
     }
+
+    return [];
   },
 
   getCuralateData ( ) {

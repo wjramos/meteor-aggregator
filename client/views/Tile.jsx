@@ -19,6 +19,10 @@ export default class Tile extends Component {
   //   );
   // }
 
+  rawTitle( ) { return { __html: this.props.title .replace( /<(?:.|\n)*?>/gm, '' ) }; }
+
+  rawDesc( ) { return { __html: this.props.description .replace( /<(?:.|\n)*?>/gm, '' ) }; }
+
   render ( ) {
     // const tile = this.props.tile;
     // Give tiles a different className when they are checked off,
@@ -54,8 +58,8 @@ export default class Tile extends Component {
         ) : '' }
         */}
         <h2>{ new Date( this.props.time ).toLocaleDateString() }</h2>
-        <h3>{ this.props.title }</h3>
-        <p>{ this.props.description }</p>
+        <h3 dangerouslySetInnerHTML = { this.rawTitle() }></h3>
+        <p dangerouslySetInnerHTML = { this.rawDesc() }></p>
       </div>
     );
 

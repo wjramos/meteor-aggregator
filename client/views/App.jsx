@@ -60,49 +60,56 @@ class App extends Component {
     );
   }
 
-  // renderEvents ( ) {
-  //   let events = this.props.events;
-  //   let now = Date.parse( new Date() );
-  //   console.log( events );
-  //   return events.map(
-  //     tile => {
-  //       let timestamp = Date.parse( tile.start );
-  //
-  //       if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
-  //         return (
-  //           <Tile
-  //             type        = 'events'
-  //             key         = { tile.sessionId }
-  //             time        = { timestamp }
-  //             title       = { tile.title }
-  //             description = { tile.summary }
-  //             tile        = { tile }
-  //             status      = { tile.registration.status }
-  //           />
-  //         )
-  //       }
-  //     }
-  //   );
-  // }
+  renderEvents ( ) {
+    let tiles = this.props.events;
+    let now = Date.parse( new Date() );
 
-  // renderPosts ( ) {
-  //   let posts = this.props.posts;
-  //   console.log( posts )
-  //   return posts.map(
-  //     tile => {
-  //       return (
-  //         <Tile
-  //           key         = { tile.id }
-  //           type        = 'social'
-  //           time        = { tile.start }
-  //           title       = { tile.user.username }
-  //           description = { tile.caption }
-  //           tile        = { tile }
-  //         />
-  //       )
-  //     }
-  //   );
-  // }
+    return tiles.map(
+      tile => {
+        let timestamp = Date.parse( tile.start );
+
+        if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
+          return (
+            <Tile
+              type        = 'events'
+              key         = { tile.sessionId }
+              time        = { timestamp }
+              title       = { tile.title }
+              link        = { 'https://rei.com' + tile.uri }
+              description = { tile.summary }
+              media       = 'http://placehold.it/350x150'
+              tile        = { tile }
+            />
+          )
+        }
+      }
+    );
+  }
+
+  renderPosts ( ) {
+    let tiles = this.props.posts;
+
+    return tiles.map(
+      tile => {
+        if ( tile.status === 'publish' ) {
+          let timestamp = Date.parse( tile.date );
+
+          return (
+            <Tile
+              key         = { tile.id }
+              type        = 'blog'
+              time        = { timestamp }
+              title       = { tile.title }
+              link        = { tile.url }
+              description = { tile.excerpt }
+              media       = { tile.attachments[0].images.featured_banner.url }
+              tile        = { tile }
+            />
+          );
+        }
+      }
+    );
+  }
 
   renderHeader ( ) {
     return ( <Header /> );
@@ -112,8 +119,8 @@ class App extends Component {
     return (
       <main  className = "container-fluid">
         <div className = "row row-flex tile js-isotope">
-          {/*{ this.renderEvents() }
-          { this.renderPosts() }*/}
+          { this.renderEvents() }
+          { this.renderPosts() }
           { this.renderSocial() }
         </div>
       </main>
@@ -140,31 +147,24 @@ class App extends Component {
 }
 
 App.propTypes = {
-  // events: PropTypes.array.isRequired,
+  events: PropTypes.array,
   social: PropTypes.array,
-  // posts:  PropTypes.array.isRequired,
+  posts:  PropTypes.array,
   // currentUser: PropTypes.object,
 };
 
 export default createContainer(
   ( ) => {
-      // return {
-      //   social: []
-      // }
-      //
-      // let social = Meteor.subscribe( 'social.public' );
-      //
-      // if ( social.ready( ) ) {
-      //   props.social = Social.find().fetch();
-      //   return props;
-      // }
       Meteor.subscribe( 'social.public' );
+      Meteor.subscribe( 'events.public' );
+      Meteor.subscribe( 'posts.public' );
+
       return {
         // social:          social,
         // currentUser:     Meteor.user(),
-        // events: Events.find( {}, { sort: { createdAt: -1 } } ).fetch(),
         social: Social.find( {}, { sort: { createdAt: -1 } } ).fetch(),
-        // posts:  Posts.find(  {}, { sort: { createdAt: -1 } } ).fetch()
+        events: Events.find( {}, { sort: { createdAt: -1 } } ).fetch(),
+        posts:  Posts.find(  {}, { sort: { createdAt: -1 } } ).fetch()
       };
   },
   App
