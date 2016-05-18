@@ -71,13 +71,6 @@ jQuery( document ).ready( function ( $ ) {
     var $win = $( window );
     var $grid = $( '.js-isotope' );
     var $filters = $( '.js-filters' );
-    var $images = $grid.find( 'img' );
-
-    $images.each( function ( index ) {
-        var $cur = $( this );
-        var height = $cur.attr( 'height' );
-        $cur.parent().parent().css( 'height', height );
-    } );
 
     $grid.isotope( config );
 
@@ -86,24 +79,21 @@ jQuery( document ).ready( function ( $ ) {
     } );
 
     $filters.find( 'button' ).click( function () {
-            var $this = $( this );
-            if ( $this.parent().hasClass( 'selected' ) ) {
-                return false;
-            }
-            var $optionSet = $this.parents();
-            $optionSet.find( '.selected' ).removeClass( 'selected' );
-            $this.addClass( 'selected' );
-            var sortName = $this.attr( 'href' ).slice( 1 );
+        var $this = $( this );
+        var sort = $this.data( 'category' );
+        var $optionSet = $this.parents();
 
-            $grid.isotope( {
-                sortBy: sortName
-            } );
-
+        if ( $this.parent().hasClass( 'active' ) ) {
             return false;
+        }
+
+        $optionSet.find( '.active' ).removeClass( 'active' );
+        $this.addClass( 'active' );
+
+        $grid.isotope( {
+            sortBy: sort
         } );
 
-
-    $images.unveil( {
-        failure_limit: Math.max( $images.length - 1, 0 )
-    } )
+        return false;
+    } );
 } );

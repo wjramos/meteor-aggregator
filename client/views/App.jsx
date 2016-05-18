@@ -74,6 +74,7 @@ class App extends Component {
               type        = 'events'
               key         = { tile.sessionId }
               time        = { timestamp }
+              end         = { Date.parse( tile.end ) }
               title       = { tile.title }
               link        = { 'https://rei.com' + tile.uri }
               description = { tile.summary }
@@ -160,11 +161,10 @@ export default createContainer(
       Meteor.subscribe( 'posts.public' );
 
       return {
-        // social:          social,
-        // currentUser:     Meteor.user(),
         social: Social.find( {}, { sort: { createdAt: -1 } } ).fetch(),
         events: Events.find( {}, { sort: { createdAt: -1 } } ).fetch(),
-        posts:  Posts.find(  {}, { sort: { createdAt: -1 } } ).fetch()
+        posts:  Posts.find(  {}, { sort: { createdAt: -1 } } ).fetch(),
+        // currentUser:     Meteor.user(),
       };
   },
   App

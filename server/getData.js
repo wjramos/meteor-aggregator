@@ -16,6 +16,8 @@ Meteor.methods( {
       console.log( `Wordpress request finished: ${ results.length } posts retrieved` );
       return results;
     }
+
+    return [];
   },
 
   getEventData ( ) {

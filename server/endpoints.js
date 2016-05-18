@@ -8,12 +8,14 @@ export const CURALATE_QUERY = {
     limit: 10
   }
 };
+
 export const WP_QUERY = {
   params: {
     limit: 10,
     search: 'REI'
   }
 };
+
 export const EVENTS_QUERY = {
   params: {
     limit:         10,
