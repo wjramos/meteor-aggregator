@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import LazyLoad   from 'react-lazyload';
 import { Meteor } from 'meteor/meteor';
 import classnames from 'classnames';
 
@@ -19,9 +20,9 @@ export default class Tile extends Component {
   //   );
   // }
 
-  rawTitle( ) { return { __html: this.props.title .replace( /<(?:.|\n)*?>/gm, '' ) }; }
+  rawTitle( ) { return { __html: this.props.title.replace( /<(?:.|\n)*?>/gm, '' ) }; }
 
-  rawDesc( ) { return { __html: this.props.description .replace( /<(?:.|\n)*?>/gm, '' ) }; }
+  rawDesc( ) {  return { __html: this.props.description.replace( /<(?:.|\n)*?>/gm, '' ) }; }
 
   render ( ) {
     // const tile = this.props.tile;
@@ -37,7 +38,7 @@ export default class Tile extends Component {
     // } );
     let inner;
     const content = (
-      <div className = 'well'>
+      <div className = 'well well-lg'>
         {/*<button className = "icon icon-rei-close"
                 onClick   = { this.deleteThisTile.bind( this ) }
         ></button>*/}
@@ -59,7 +60,7 @@ export default class Tile extends Component {
         */}
         <h2>{ new Date( this.props.time ).toLocaleDateString() }</h2>
         <h3 dangerouslySetInnerHTML = { this.rawTitle() }></h3>
-        <p dangerouslySetInnerHTML = { this.rawDesc() }></p>
+        <p  dangerouslySetInnerHTML = { this.rawDesc() }></p>
       </div>
     );
 
@@ -69,7 +70,11 @@ export default class Tile extends Component {
         <a href = { this.props.link }
            target = "_blank"
            className = 'card img-frame center fill' >
-          <img src = { this.props.media } />
+
+          <LazyLoad offset = { 100 }>
+            <img src = { this.props.media }
+                 alt = { this.props.alt } />
+          </LazyLoad>
           { content }
         </a>
       )
@@ -88,19 +93,21 @@ export default class Tile extends Component {
     if ( !this.props.link && this.props.media ) {
       inner = (
         <div className = 'card img-frame center fill' >
-          <img src = { this.props.media }
-               alt = { this.props.alt }/>
+          <LazyLoad offset = { 100 }>
+            <img src = { this.props.media }
+                 alt = { this.props.alt } />
+          </LazyLoad>
           { content }
         </div>
       )
     }
 
     return (
-      <li className = { 'col-xs-6 col-sm-4 col-md-3 grid-item ' + this.props.type }
-          data-category = { this.props.type }
-          data-time = { this.props.time } >
-        { inner }
-      </li>
+        <li className = { 'col-xs-6 col-sm-4 col-md-3 item ' + this.props.type }
+            data-category = { this.props.type }
+            data-time = { this.props.time } >
+          { inner }
+        </li>
     );
   }
 }

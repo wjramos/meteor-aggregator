@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo }  from 'meteor/mongo';
-import Wp from 'wordpress-rest-api';
 
 import { WP, WP_QUERY, CURALATE, CURALATE_QUERY, EVENTS, EVENTS_QUERY } from './endpoints';
 
