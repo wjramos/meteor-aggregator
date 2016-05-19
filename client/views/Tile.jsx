@@ -54,15 +54,6 @@ export default class Tile extends Component {
       desc = <p dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></p>
     }
 
-    if ( this.props.caption && this.props.media ) {
-      caption = (
-        <div className = 'caption'>
-          <p className = 'well well-lg position left'
-             dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></p>
-        </div>
-      );
-    }
-
     if ( title || label || desc ) {
       content = (
         <div className = 'well well-lg'>
@@ -92,6 +83,14 @@ export default class Tile extends Component {
       );
     }
 
+    if ( this.props.caption && this.props.media ) {
+      caption = (
+        <div className = 'caption'>
+          { content }
+        </div>
+      );
+    }
+
     if ( this.props.badge ) {
       badge = (
         <span className = 'position top right'>
@@ -110,7 +109,9 @@ export default class Tile extends Component {
               <img src = { this.props.media }
                    alt = { this.props.alt } />
             </LazyLoad>
-            { content }
+            <div style = { { 'visibility' : 'hidden' } }>
+              { content }
+            </div>
             { caption }
             { badge }
           </div>
