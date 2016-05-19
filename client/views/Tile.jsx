@@ -56,7 +56,7 @@ export default class Tile extends Component {
 
     if ( title || label || desc ) {
       content = (
-        <div className = 'well well-lg'>
+        <div className = 'well well-lg position left'>
           {/*<button className = 'icon icon-rei-close'
                   onClick   = { this.deleteThisTile.bind( this ) }
           ></button>*/}
