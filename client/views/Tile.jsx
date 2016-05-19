@@ -20,9 +20,7 @@ export default class Tile extends Component {
   //   );
   // }
 
-  rawTitle( ) { return { __html: this.props.title.replace( /<(?:.|\n)*?>/gm, '' ) }; }
-
-  rawDesc( ) {  return { __html: this.props.description.replace( /<(?:.|\n)*?>/gm, '' ) }; }
+  raw( str ) { return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) }; }
 
   render ( ) {
     // const tile = this.props.tile;
@@ -36,46 +34,86 @@ export default class Tile extends Component {
     //   // colMd:     `col-md-${ this.props.tile.cols.md || 3 }`,
     //   // colLg:     `col-xs-${ this.props.tile.cols.lg || 2 }`
     // } );
+    let label;
+    let title;
+    let desc;
+    let caption;
+    let badge;
+    let content;
     let inner;
-    const content = (
-      <div className = 'well well-lg'>
-        {/*<button className = "icon icon-rei-close"
-                onClick   = { this.deleteThisTile.bind( this ) }
-        ></button>*/}
 
-        {/*{ this.props.showPublishedButton ? (*/}
-          {/*
-          <label className = "toggle-published"
-                  onClick  = { this.togglePublished.bind( this ) }
-            >
-            <input
-              type    = "checkbox"
-              checked = { this.props.tile.published }
-              onClick = { this.togglePublished.bind( this ) }
-              readOnly
-            />
-            { this.props.tile.published ? 'Unpublished' : 'Published }
-          </label>
-        ) : '' }
-        */}
-        <h2>{ new Date( this.props.time ).toLocaleDateString() }</h2>
-        <h3 dangerouslySetInnerHTML = { this.rawTitle() }></h3>
-        <p  dangerouslySetInnerHTML = { this.rawDesc() }></p>
-      </div>
-    );
+    if ( this.props.title ) {
+      title = ( <h3 dangerouslySetInnerHTML = { this.raw( this.props.title ) }></h3> );
+    }
 
+    if ( this.props.label ) {
+      label = ( <p className = 'label-classification'>{ this.props.label }</p> );
+    }
+
+    if ( this.props.caption ) {
+      desc = <p dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></p>
+    }
+
+    if ( this.props.caption && this.props.media ) {
+      caption = (
+        <div className = 'caption'>
+          <p className = 'well well-lg position left'
+             dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></p>
+        </div>
+      );
+    }
+
+    if ( title || label || desc ) {
+      content = (
+        <div className = 'well well-lg'>
+          {/*<button className = 'icon icon-rei-close'
+                  onClick   = { this.deleteThisTile.bind( this ) }
+          ></button>*/}
+
+          {/*{ this.props.showPublishedButton ? (*/}
+            {/*
+            <label className = 'toggle-published'
+                    onClick  = { this.togglePublished.bind( this ) }
+              >
+              <input
+                type    = 'checkbox'
+                checked = { this.props.tile.published }
+                onClick = { this.togglePublished.bind( this ) }
+                readOnly
+              />
+              { this.props.tile.published ? 'Unpublished' : 'Published }
+            </label>
+          ) : '' }
+          */}
+          { label }
+          { title }
+          { desc }
+        </div>
+      );
+    }
+
+    if ( this.props.badge ) {
+      badge = (
+        <span className = 'position top right'>
+          { this.props.badge }
+        </span>
+      );
+    }
 
     if ( this.props.link && this.props.media ) {
       inner = (
         <a href = { this.props.link }
-           target = "_blank"
-           className = 'card img-frame center fill' >
-
-          <LazyLoad offset = { 100 }>
-            <img src = { this.props.media }
-                 alt = { this.props.alt } />
-          </LazyLoad>
-          { content }
+           target = '_blank'
+           className = 'card' >
+          <div className = 'img-frame center fill'>
+            <LazyLoad offset = { 100 }>
+              <img src = { this.props.media }
+                   alt = { this.props.alt } />
+            </LazyLoad>
+            { content }
+            { caption }
+            { badge }
+          </div>
         </a>
       )
     }
@@ -83,29 +121,33 @@ export default class Tile extends Component {
     if ( this.props.link && !this.props.media ) {
       inner = (
         <a href = { this.props.link }
-           target = "_blank"
+           target = '_blank'
            className = 'card' >
            { content }
+           { caption }
         </a>
       )
     }
 
     if ( !this.props.link && this.props.media ) {
       inner = (
-        <div className = 'card img-frame center fill' >
-          <LazyLoad offset = { 100 }>
-            <img src = { this.props.media }
-                 alt = { this.props.alt } />
-          </LazyLoad>
-          { content }
+        <div className = 'card'>
+          <div className = 'img-frame center fill' >
+            <LazyLoad offset = { 100 }>
+              <img src = { this.props.media }
+                   alt = { this.props.alt } />
+            </LazyLoad>
+            { content }
+            { caption }
+          </div>
         </div>
       )
     }
 
     return (
         <li className = { 'col-xs-6 col-sm-4 col-md-3 item ' + this.props.type }
-            data-category = { this.props.type }
-            data-time = { this.props.time } >
+            data-category  = { this.props.type }
+            data-timestamp = { this.props.timestamp } >
           { inner }
         </li>
     );
@@ -113,15 +155,15 @@ export default class Tile extends Component {
 }
 
 Tile.propTypes = {
-  // This component gets the tile to display through a React prop.
-  // We can use propTypes to indicate it is required
   tile:        PropTypes.object.isRequired,
   type:        PropTypes.string.isRequired,
-  time:        PropTypes.number,
+  timestamp:   PropTypes.number,
+  label:       PropTypes.string,
   link:        PropTypes.string,
   title:       PropTypes.string,
   media:       PropTypes.string,
   alt:         PropTypes.string,
-  description: PropTypes.string,
+  badge:       PropTypes.string,
+  caption:     PropTypes.string,
   // showPublishedButton: React.PropTypes.bool.isRequired,
 };

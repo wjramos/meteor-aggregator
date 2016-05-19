@@ -11,22 +11,26 @@ function poll ( ) {
     let posts  = Meteor.call( 'getWpData' )
 
     // Purge collections -- should try and find a way to check dupes
-    Social.remove( {} );
-    Events.remove( {} );
-    Posts.remove(  {} );
+    // TODO: Apply Schema, consolidate and sort into a proxy collection, only update on new items
+    if ( social.length ) {
+      Social.remove( {} );
+      social.forEach( item => Social.insert( item/*, { _id : item.id }*/ ) );
+    }
 
-    // TODO: Apply Schema, consolidate and sort into a proxy collection
-    social.forEach( item => Social.insert( item/*, { _id : item.id }*/ ) );
-    events.forEach( item => Events.insert( item/*, { _id : item.sessionId }*/ ) );
-    posts.forEach(  item => Posts.insert(  item/*, { _id : item.id }*/ ) );
+    if ( events.length ) {
+      Events.remove( {} );
+      events.forEach( item => Events.insert( item/*, { _id : item.sessionId }*/ ) );
+    }
 
-    // Events.insert( events );
-    // Posts.insert( posts );
+    if ( posts.length ) {
+      Posts.remove( {} );
+      posts.forEach(  item => Posts.insert(  item/*, { _id : item.id }*/ ) );
+    }
 }
 
 // Publish generic collection -- split out into new publications file
 Meteor.publish( 'social.public', function() {
-  Meteor._sleepForMs( 2000 );
+  // Meteor._sleepForMs( 2000 );
   const entries = Social.find( );
   if ( entries ) {
     return entries;
@@ -36,7 +40,7 @@ Meteor.publish( 'social.public', function() {
 } );
 
 Meteor.publish( 'events.public', function() {
-  Meteor._sleepForMs( 2000 );
+  // Meteor._sleepForMs( 2000 );
   const entries = Events.find( );
   if ( entries ) {
     return entries;
@@ -46,7 +50,7 @@ Meteor.publish( 'events.public', function() {
 } );
 
 Meteor.publish( 'posts.public', function() {
-  Meteor._sleepForMs( 2000 );
+  // Meteor._sleepForMs( 2000 );
   const entries = Posts.find( );
   if ( entries ) {
     return entries;

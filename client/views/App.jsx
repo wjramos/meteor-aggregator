@@ -1,13 +1,13 @@
-import React, { Component, PropTypes } from 'react';
-// import ReactDOM   from 'react-dom';
 import { Meteor } from 'meteor/meteor';
+import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
+// import ReactDOM   from 'react-dom';
 
 import { Events, Posts, Social } from '../../imports/collections';
 
 import Header from './Header.jsx';
 import Nav    from './Nav.jsx';
-import Tile   from './Tile.jsx';
+import Grid   from './Grid.jsx';
 
 // import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
@@ -39,98 +39,25 @@ class App extends Component {
   //   } );
   // }
 
-  renderSocial ( ) {
-    let tiles = this.props.social;
-
-    return tiles.map(
-      tile => {
-        return (
-          <Tile
-            type        = 'social'
-            key         = { tile.id }
-            time        = { tile.timestamp * 1000 }
-            title       = { tile.user.username }
-            link        = { tile.url }
-            description = { tile.caption }
-            media       = { tile.photo.original.url }
-            tile        = { tile }
-          />
-        )
-      }
-    );
-  }
-
-  renderEvents ( ) {
-    let tiles = this.props.events;
-    let now = Date.parse( new Date() );
-
-    return tiles.map(
-      tile => {
-        let timestamp = Date.parse( tile.start );
-
-        if ( timestamp > now && tile.registration.status !== 'CLOSED' ) {
-          return (
-            <Tile
-              type        = 'events'
-              key         = { tile.sessionId }
-              time        = { timestamp }
-              end         = { Date.parse( tile.end ) }
-              title       = { tile.title }
-              link        = { 'https://rei.com' + tile.uri }
-              description = { tile.summary }
-              media       = 'http://placehold.it/350x150'
-              tile        = { tile }
-            />
-          )
-        }
-      }
-    );
-  }
-
-  renderPosts ( ) {
-    let tiles = this.props.posts;
-
-    return tiles.map(
-      tile => {
-        if ( tile.status === 'publish' ) {
-          let timestamp = Date.parse( tile.date );
-
-          return (
-            <Tile
-              key         = { tile.id }
-              type        = 'blog'
-              time        = { timestamp }
-              title       = { tile.title }
-              link        = { tile.url }
-              description = { tile.excerpt }
-              media       = { tile.attachments[0].images.featured_banner.url }
-              tile        = { tile }
-            />
-          );
-        }
-      }
-    );
-  }
-
   renderHeader ( ) {
-    return ( <Header /> );
+    return (
+      <Header />
+    );
   }
 
   renderMain ( ) {
     return (
-      <main  className = "container-fluid">
-        <div className = "row row-flex tile js-isotope">
-          { this.renderEvents() }
-          { this.renderPosts() }
-          { this.renderSocial() }
-        </div>
+      <main  className = 'container-fluid'>
+        <Grid events = { this.props.events }
+              social = { this.props.social }
+              posts  = { this.props.posts } />
       </main>
     );
   }
 
   renderNav ( ) {
     return (
-      <section className = "container-fluid overlay-dark-2">
+      <section className = 'container-fluid overlay-dark-2'>
         <Nav />
       </section>
     );

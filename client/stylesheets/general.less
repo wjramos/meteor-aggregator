@@ -6,39 +6,90 @@ main {
     &:extend( .overlay-dark-2 );
 }
 
+.img-frame {
+    .overlay {
+        height: 100%;
+        width: 100%;
+        display: block;
+        background-color: rgba( 0, 0, 0, .5 );
+        transition: .5s ease;
+    }
+
+    .caption {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: block;
+        background-color: rgba( 0, 0, 0, .5 );
+        transition: .5s ease;
+        transform: translate( 0, 0 );
+    }
+
+    &:hover,
+    &:focus {
+        .overlay {
+            background-color: transparent;
+        }
+        .caption {
+            top: 0;
+        }
+    }
+}
+
+
+.card .img-frame {
+    color: #fff;
+    padding: 2rem 1rem;
+    background: transparent;
+    text-shadow: 0px 0px 2px #000;
+    // text-shadow:
+    //  -1px -1px 0 #000,
+    //   1px -1px 0 #000,
+    //   -1px 1px 0 #000,
+    //    1px 1px 0 #000;
+}
+
 .img-frame > img {
     image-rendering: auto!important;
 }
 
-.container-fluid {
-    padding-left: 0;
-    padding-right: 0;
+/* Pending Cedar update */
 
-    & > .row {
-        margin: auto;
-    }
+// Size.less
+.fill ( ) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
-.row.row-flex {
-    padding: 0;
-
-    [class*=col-],
-    [class^=col-] {
-        display: inline-flex;
-        flex-flow: column nowrap;
-        float: none;
-    }
+.fill-block ( ) {
+  position: relative;
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
+
+// Cards.less
 .card {
     display: inline-flex;
     flex-flow: column nowrap;
     position: relative;
     overflow: hidden;
-    margin: 2rem;
-    width: 100%;
     background-color: #fff;
+    border: 1px solid #eee;
     flex-grow: 0;
+    border-radius: .2rem;
+    margin: 1rem;
+
+    @media ( min-width: @screen-md-min ) {
+        margin: 1.6rem;
+    }
+
     a& {
         cursor: pointer;
         transition: 0.25s ease;
@@ -50,74 +101,107 @@ main {
             &:hover {
                 cursor: pointer;
                 z-index: 5;
-                border: none;
                 box-shadow: 0 @card-hover-offset 3px -1px rgba( 0, 0, 0, 0.35 );
                 text-decoration: none;
                 transform: translateY( -@card-hover-offset );
             }
         }
     }
-    &.rounded {
-        border-radius: 10px;
-    }
 
     .well {
         position: relative;
         width: fit-content;
     }
-    &.img-frame {
-        color: #fff;
-        padding: 2rem 1rem;
-        background: transparent;
-        text-shadow: 0px 0px 2px #000;
-        // text-shadow:
-        //  -1px -1px 0 #000,
-        //   1px -1px 0 #000,
-        //   -1px 1px 0 #000,
-        //    1px 1px 0 #000;
+}
+
+
+// Grid.less
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+
+    & > .row {
+        margin: auto;
     }
 }
 
-.row-flex {
-    align-items: flex-start;
+.row {
+    .make-row();
 
-    &.fixed {
-        align-items: stretch;
-    }
-    &.tile {
-        [class*=col-],
-        [class^=col-] {
-            padding: 0;
-        }
+    // Floated -- Default
+    &:not( &-flex ) {
+        &:extend( .clearfix all );
 
-        &.masonry {
-            padding: 0;
-            min-width: 100%;
-            margin: 0 auto;
-        }
-
-        .card {
-            margin: 0;
-            border-radius: 0;
+        & > [class^=col-],
+        & > [class*=col-] {
+            float: left;
         }
     }
-    &.overflow {
-        overflow: auto;
-        flex-wrap: nowrap;
-        align-items: center;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        cursor: pointer;
-        padding-right: 25%;
-        /* Scroll-snapping */
-        scroll-snap-type: mandatory;
-        scroll-snap-align: left;
-        /* Older spec implementation  -- Remove when polyfill updated */
-        scroll-snap-destination: 0 75%;
-        scroll-snap-points-x: repeat( 100% );
-        &.fixed,
-        &.tile {
+
+    // Flex
+    &&-flex {
+        align-items: flex-start;
+        display: flex;
+        flex-flow: row wrap;
+        padding: 0 .6rem;
+
+        @media ( min-width: @screen-sm-min ) {
+            padding: 0 1rem;
+        }
+
+        @media ( min-width: @screen-md-min ) {
+            padding: 0 1.6rem;
+        }
+
+        &.fixed {
             align-items: stretch;
+        }
+
+        &.tile {
+            padding: 0;
+
+            &.masonry {
+                min-width: 100%;
+                margin: 0 auto;
+            }
+
+            & > [class*=col-],
+            & > [class^=col-] {
+                & > .card {
+                    margin: 0;
+                    border-radius: 0;
+                    flex-grow: 1;
+                }
+            }
+        }
+
+        &.overflow {
+            overflow: auto;
+            flex-wrap: nowrap;
+            align-items: center;
+
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+
+            cursor: pointer;
+
+            padding-right: 25%;
+
+            /* Scroll-snapping */
+            scroll-snap-type: mandatory;
+            scroll-snap-align: left;
+
+            /* Older spec implementation  -- Remove when polyfill updated */
+            scroll-snap-destination: 0% 75%;
+            scroll-snap-points-x: repeat( 100% );
+        }
+
+        & > [class^=col-],
+        & > [class*=col-] {
+            display: inline-flex;
+            flex-flow: column nowrap;
+            float: none;
+            padding: 0;
         }
     }
 }

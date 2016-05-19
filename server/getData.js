@@ -1,7 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo }  from 'meteor/mongo';
 
-import { WP, WP_QUERY, CURALATE, CURALATE_QUERY, EVENTS, EVENTS_QUERY } from './endpoints';
+import {
+  WP,       WP_QUERY,
+  CURALATE, CURALATE_QUERY,
+  EVENTS,   EVENTS_QUERY
+} from './endpoints';
 
 Meteor.methods( {
   getWpData ( ) {
