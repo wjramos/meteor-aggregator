@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Events, Posts, Social, Tiles } from '../imports/collections';
+import { /*Events, Posts, Social, */Tiles } from '../lib/collections';
 
 import {
   WP,       WP_QUERY,
@@ -14,16 +14,7 @@ function poll ( ) {
   const social = Meteor.call( 'getData', CURALATE, CURALATE_QUERY );
   const events = Meteor.call( 'getData', EVENTS,   EVENTS_QUERY );
   const posts  = Meteor.call( 'getData', WP,       WP_QUERY );
-
-  // if ( social && social.items ) {
-  //   social.items.forEach(
-  //       item => Social.update(
-  //           { id:     item.id },
-  //           { $set:   item },
-  //           { upsert: true }
-  //       )
-  //   );
-  // }
+console.log( Tiles );
   if ( social && social.items ) {
     social.items.forEach(
       tile => Tiles.update(
@@ -34,55 +25,57 @@ function poll ( ) {
     );
   }
 
-  if ( events && events.events ) {
-    events.events.forEach(
-        item => Events.update(
-            { sessionId: item.sessionId },
-            { $set:      item },
-            { upsert:    true }
-        )
-    );
-  }
-
   if ( posts && posts.posts ) {
     posts.posts.forEach(
-        item => Posts.update(
-            { id:     item.id },
-            { $set:   item },
-            { upsert: true }
-        )
+      tile => Tiles.update(
+        { key:    tile.id },
+        { $set:   Meteor.call( 'mapPost', tile ) },
+        { upsert: true }
+      )
     );
   }
+
+  if ( events && events.events ) {
+    events.events.forEach(
+      tile => Tiles.update(
+        { key:    tile.sessionId },
+        { $set:   Meteor.call( 'mapEvent', tile ) },
+        { upsert: true }
+      )
+    );
+  }
+
+
+  // if ( social && social.items ) {
+  //   social.items.forEach(
+  //       item => Social.update(
+  //           { id:     item.id },
+  //           { $set:   item },
+  //           { upsert: true }
+  //       )
+  //   );
+  // }
+
+  // if ( events && events.events ) {
+  //   events.events.forEach(
+  //       item => Events.update(
+  //           { sessionId: item.sessionId },
+  //           { $set:      item },
+  //           { upsert:    true }
+  //       )
+  //   );
+  // }
+
+  // if ( posts && posts.posts ) {
+  //   posts.posts.forEach(
+  //       item => Posts.update(
+  //           { id:     item.id },
+  //           { $set:   item },
+  //           { upsert: true }
+  //       )
+  //   );
+  // }
 }
-
-// Publish generic collection -- split out into new publications file
-Meteor.publish( 'social.public', ( ) => {
-  const entries = Social.find( );
-  if ( entries ) {
-    return entries;
-  }
-
-  return this.ready();
-} );
-
-Meteor.publish( 'events.public', ( ) => {
-  const entries = Events.find( );
-  if ( entries ) {
-    return entries;
-  }
-
-  return this.ready();
-} );
-
-Meteor.publish( 'posts.public', ( ) => {
-  const entries = Posts.find( );
-  if ( entries ) {
-    return entries;
-  }
-
-  return this.ready();
-} );
-
 
 poll( );
 
