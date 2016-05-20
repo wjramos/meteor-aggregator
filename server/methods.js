@@ -120,11 +120,15 @@ Meteor.methods( {
     if ( items ) {
       console.log( `\nMapping and inserting ${ items.length } tiles using ${ map }...\n` );
       return items.forEach(
-        tile => Tiles.update(
-          { key:    map === 'mapEvent' ? tile.sessionId : tile.id },
-          { $set:   Meteor.call( map, tile ) },
-          { upsert: true }
-        )
+        tile => {
+          const mapped = Meteor.call( map, tile );
+          
+          Tiles.update(
+            { key:    mapped.key },
+            { $set:   mapped },
+            { upsert: true }
+          )
+        }
       );
     }
 
