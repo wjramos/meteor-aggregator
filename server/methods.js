@@ -4,6 +4,24 @@ import { check } from 'meteor/check';
 
 Meteor.methods( {
 
+  mapSocial ( tile ) {
+    check( tile, Match.Any );
+
+    const SocialMap = {
+      type:      'social',
+      key:       tile.id,
+      timestamp: tile.timestamp,
+      title:     tile.user.username,
+      link:      tile.url,
+      caption:   tile.caption,
+      media:     []
+    };
+
+    Object.keys( tile.photo ).forEach( key => SocialMap.media.push( tile.photo[ key ] ) );
+
+    return SocialMap;
+  },
+
   getData ( endpoint, query ) {
     let response;
     check( endpoint, Match.Any );
@@ -16,21 +34,19 @@ Meteor.methods( {
                    `Endpoint: ${ endpoint }\n`,
                    `Query:`
                  );
-      query.params.keys.forEach( param => console.log( `\t${ param } : ${ query.params[ param ] }`) );
+
+      Object.keys( query.params ).forEach( param => console.log( `\t${ param } : ${ query.params[ param ] }` ) );
 
       response = HTTP.get(
         endpoint,
         query
       );
-
-      console.log( `\n**** Result ****\n`, `\tSUCCESS`);
+      console.log( `\n**** Result ****\n`, `\tSUCCESS` );
 
       return response.data;
 
     } catch ( e ) {
       console.log( `\n**** Result ****\n`, `\tERROR - ${ e.code }` );
     }
-
-    return false;
   }
 } );

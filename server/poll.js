@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Events, Posts, Social } from '../imports/collections';
+import { Events, Posts, Social, Tiles } from '../imports/collections';
 
 import {
   WP,       WP_QUERY,
@@ -15,13 +15,22 @@ function poll ( ) {
   const events = Meteor.call( 'getData', EVENTS,   EVENTS_QUERY );
   const posts  = Meteor.call( 'getData', WP,       WP_QUERY );
 
+  // if ( social && social.items ) {
+  //   social.items.forEach(
+  //       item => Social.update(
+  //           { id:     item.id },
+  //           { $set:   item },
+  //           { upsert: true }
+  //       )
+  //   );
+  // }
   if ( social && social.items ) {
     social.items.forEach(
-        item => Social.update(
-            { id:     item.id },
-            { $set:   item },
-            { upsert: true }
-        )
+      tile => Tiles.update(
+        { key:    tile.id },
+        { $set:   Meteor.call( 'mapSocial', tile ) },
+        { upsert: true }
+      )
     );
   }
 
