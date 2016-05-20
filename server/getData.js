@@ -1,24 +1,26 @@
 import { Meteor } from 'meteor/meteor';
-import { Mongo }  from 'meteor/mongo';
+import { HTTP } from 'meteor/http';
+import { check } from 'meteor/check';
 
 Meteor.methods( {
 
-  getData ( ENDPOINT, QUERY ) {
+  getData ( endpoint, query ) {
     let response;
+    check( endpoint, Match.Any );
+    check( query, Match.Any );
 
     this.unblock();
 
     try {
       console.log( `\n::::::: Retrieving Data :::::::\n`,
-                   `Endpoint: ${ ENDPOINT }\n`,
+                   `Endpoint: ${ endpoint }\n`,
                    `Query:`
                  );
-      for( let PARAM in QUERY.params ) {
-        console.log( `\t${ PARAM } : ${ QUERY.params[ PARAM ] }`);
-      }
+      query.params.keys.forEach( param => console.log( `\t${ param } : ${ query.params[ param ] }`) );
+
       response = HTTP.get(
-        ENDPOINT,
-        QUERY
+        endpoint,
+        query
       );
 
       console.log( `\n**** Result ****\n`, `\tSUCCESS`);
@@ -26,8 +28,9 @@ Meteor.methods( {
       return response.data;
 
     } catch ( e ) {
-      console.log( `\n**** Result ****\n`, `\tERROR\n`, e );
+      console.log( `\n**** Result ****\n`, `\tERROR - ${ e.code }` );
     }
-  }
 
+    return false;
+  }
 } );

@@ -1,8 +1,93 @@
 {
-  "name": "simple-todos",
+  "name": "content-aggregator",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "lint": "eslint .",
+    "pretest": "npm run lint --silent"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended"
+    ],
+    "rules": {
+      "import/no-unresolved": [
+        "error",
+        {
+          "ignore": [
+            "^meteor/"
+          ]
+        }
+      ],
+      "indent": [
+        "warn",
+        2
+      ],
+      "max-len": [
+        "warn",
+        80
+      ],
+      "space-in-parens": [
+        "warn",
+        "always"
+      ],
+      "template-curly-spacing": [
+        "warn",
+        "always"
+      ],
+      "comma-dangle": [
+        "warn",
+        "only-multiline"
+      ],
+      "quotes": [
+        "error",
+        "single",
+        {
+          "allowTemplateLiterals": true
+        }
+      ],
+      "computed-property-spacing": [
+        "warn",
+        "always"
+      ],
+      "padded-blocks": [
+        "warn",
+        {
+          "switches": "always",
+          "classes": "always"
+        }
+      ],
+      "key-spacing": [
+        "warn",
+        {
+          "align": "value"
+        }
+      ],
+      "no-multi-spaces": [
+        "warn",
+        {
+          "exceptions": {
+            "VariableDeclarator": true,
+            "ImportDeclaration": true
+          }
+        }
+      ],
+      "array-bracket-spacing": [
+        "warn",
+        "always"
+      ],
+      "space-before-function-paren": [
+        "warn",
+        {
+          "anonymous": "ignore",
+          "named": "always"
+        }
+      ]
+    }
   },
   "dependencies": {
     "classnames": "^2.2.3",
@@ -11,6 +96,14 @@
     "react-addons-pure-render-mixin": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-lazyload": "^2.0.4",
-    "rei-cedar": "git+https://github.com/rei/rei-cedar.git"
+    "rei-cedar": "rei/rei-cedar#v1.2.7"
+  },
+  "devDependencies": {
+    "eslint": "^2.10.2",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.8.0",
+    "eslint-plugin-jsx-a11y": "^1.2.1",
+    "eslint-plugin-meteor": "^3.5.2",
+    "eslint-plugin-react": "^5.1.1"
   }
 }

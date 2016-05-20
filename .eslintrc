@@ -1,0 +1,98 @@
+{
+  "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+          "jsx": true
+      }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "meteor": true,
+    "es6": true,
+    "jquery": true,
+    "mongo": true
+  },
+  "plugins": [
+    "meteor",
+    "react"
+  ],
+  "extends": [
+    "airbnb",
+    "plugin:meteor/recommended"
+  ],
+  "rules": {
+    "import/no-unresolved": [
+      "error", {
+        "ignore": [
+          "^meteor/"
+        ]
+      }
+    ],
+    "indent": [
+      "warn",
+      2
+    ],
+    "max-len": [
+      "warn",
+      80
+    ],
+    "space-in-parens": [
+      "warn",
+      "always"
+    ],
+    "template-curly-spacing": [
+      "warn",
+      "always"
+    ],
+    "comma-dangle": [
+      "warn",
+      "only-multiline"
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
+    "computed-property-spacing": [
+      "warn",
+      "always"
+    ],
+    "padded-blocks": [
+      "warn",
+      {
+        "switches": "always",
+        "classes": "always"
+      }
+    ],
+    "key-spacing": [
+      "warn",
+      {
+        "align": "value"
+      }
+    ],
+    "no-multi-spaces": [
+      "warn",
+      {
+        "exceptions": {
+          "VariableDeclarator": true,
+          "ImportDeclaration": true
+        }
+      }
+    ],
+    "array-bracket-spacing": [
+      "warn",
+      "always"
+    ],
+    "space-before-function-paren": [
+      "warn",
+      {
+        "anonymous": "ignore",
+        "named": "always"
+      }
+    ]
+  }
+}

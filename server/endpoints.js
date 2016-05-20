@@ -1,14 +1,13 @@
-export const WP       = 'http://brightestyoungthings.com/api/get_search_results';
-export const EVENTS   = 'https://rei.com/rest/events/nearby';
-export const CURALATE = 'https://api.curalate.com/v1/reels/optoutside';
 
-// Queries: TODO: Make authorable by admin
+// TODO: Make authorable by admin
+export const CURALATE = 'https://api.curalate.com/v1/reels/optoutside';
 export const CURALATE_QUERY = {
   params: {
     limit: 10
   }
 };
 
+export const WP       = 'http://brightestyoungthings.com/api/get_search_results';
 export const WP_QUERY = {
   params: {
     limit: 10,
@@ -16,6 +15,7 @@ export const WP_QUERY = {
   }
 };
 
+export const EVENTS   = 'https://rei.com/rest/events/nearby';
 export const EVENTS_QUERY = {
   params: {
     limit:         10,
@@ -27,4 +27,4 @@ export const EVENTS_QUERY = {
     // sa:            'Adventure',
     // ca:            'Women Only'
   }
-}
+};
