@@ -1,7 +1,4 @@
-// import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
-
-// import { createContainer } from 'meteor/react-meteor-data';
 
 import Tile from './Tile.jsx';
 
@@ -13,15 +10,16 @@ export default class Grid extends Component {
     return tiles.map(
     tile => (
         <Tile
-          type = { tile.type }
-          key = { tile.key }
-          timestamp = { tile.timestamp }
-          title = { tile.title }
-          link = { tile.link }
-          caption = { tile.caption }
-          media = { tile.media }
-          badge = { tile.badge }
-          label = { tile.label }
+          type         = { tile.type }
+          key          = { tile.key }
+          timestamp    = { tile.timestamp }
+          relTimestamp = { tile.relTimestamp }
+          title        = { tile.title }
+          link         = { tile.link }
+          caption      = { tile.caption }
+          media        = { tile.media }
+          badge        = { tile.badge }
+          label        = { tile.label }
         />
       )
     );

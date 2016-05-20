@@ -6,6 +6,8 @@ import { Tiles } from '../lib/collections';
 
 import { months } from '../imports/months';
 
+const now = Date.parse( new Date( ) );
+
 Meteor.methods( {
 
   getDateStr ( tile ) {
@@ -50,14 +52,17 @@ Meteor.methods( {
   mapSocial ( tile ) {
     check( tile, Match.Any );
 
+    const timestamp = tile.timestamp * 1000;
+
     const SocialMap = {
-      type:      'social',
-      key:       tile.id,
-      timestamp: tile.timestamp * 1000,
-      title:     tile.user.username,
-      link:      tile.url,
-      caption:   tile.caption,
-      media:     []
+      type:         'social',
+      key:          tile.id,
+      timestamp:    timestamp,
+      relTimestamp: Math.abs( timestamp - now ),
+      title:        tile.user.username,
+      link:         tile.url,
+      caption:      tile.caption,
+      media:        []
     };
 
     Object.keys( tile.photo ).forEach(
@@ -70,18 +75,21 @@ Meteor.methods( {
   mapEvent ( tile ) {
     check( tile, Match.Any );
 
+    const timestamp = Date.parse( tile.start );
+
     const EventMap = {
-      type      : 'events',
-      key       : tile.sessionId,
-      timestamp : Date.parse( tile.start ),
-      label     : Meteor.call( 'getDateStr', tile ),
-      title     : tile.title,
-      link      : 'https://rei.com' + tile.uri,
-      caption   : tile.summary,
-      badge     : tile.registration.status,
+      type:         'events',
+      key:          tile.sessionId,
+      timestamp:    timestamp,
+      relTimestamp: Math.abs( timestamp - now ),
+      label:        Meteor.call( 'getDateStr', tile ),
+      title:        tile.title,
+      link:         'https://rei.com' + tile.uri,
+      caption:      tile.summary,
+      badge:        tile.registration.status,
 
       // Replace when images added to service
-      media     : [ { url: 'https://placehold.it/350x150' } ]
+      media:        [ { url: 'https://placehold.it/350x150' } ]
     };
 
     // Object.keys( tile.photo ).forEach(
@@ -93,16 +101,18 @@ Meteor.methods( {
 
   mapPost ( tile ) {
     check( tile, Match.Any );
+    const timestamp = Date.parse( tile.date );
 
     const PostMap = {
-      type      : 'blog',
-      key       : tile.id,
-      timestamp : Date.parse( tile.date ),
-      label     : 'blog',
-      title     : tile.title,
-      link      : tile.url,
-      caption   : tile.excerpt,
-      media     : []
+      type:         'blog',
+      key:          tile.id,
+      timestamp:    timestamp,
+      relTimestamp: Math.abs( timestamp - now ),
+      label:        'blog',
+      title:        tile.title,
+      link:         tile.url,
+      caption:      tile.excerpt,
+      media:        []
     };
 
     Object.keys( tile.attachments[0].images ).forEach(
@@ -122,12 +132,12 @@ Meteor.methods( {
       return items.forEach(
         tile => {
           const mapped = Meteor.call( map, tile );
-          
+
           Tiles.update(
             { key:    mapped.key },
             { $set:   mapped },
             { upsert: true }
-          )
+          );
         }
       );
     }

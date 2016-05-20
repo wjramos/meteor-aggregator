@@ -139,7 +139,8 @@ export default class Tile extends Component {
     return (
         <li className = { 'col-xs-6 col-sm-4 col-md-3 item ' + this.props.type }
             data-category  = { this.props.type }
-            data-timestamp = { this.props.timestamp } >
+            data-timestamp = { this.props.timestamp }
+            data-rel-timestamp = { this.props.relTimestamp } >
           { inner }
         </li>
     );
@@ -147,15 +148,15 @@ export default class Tile extends Component {
 }
 
 Tile.propTypes = {
-  tile:        PropTypes.object.isRequired,
-  media:       PropTypes.object.isRequired,
-  timestamp:   PropTypes.number.isRequired,
-  type:        PropTypes.string.isRequired,
-  label:       PropTypes.string,
-  link:        PropTypes.string,
-  title:       PropTypes.string,
-  alt:         PropTypes.string,
-  badge:       PropTypes.string,
-  caption:     PropTypes.string,
+  media:        PropTypes.array.isRequired,
+  timestamp:    PropTypes.number.isRequired,
+  relTimestamp: PropTypes.number,
+  type:         PropTypes.string.isRequired,
+  label:        PropTypes.string,
+  link:         PropTypes.string,
+  title:        PropTypes.string,
+  alt:          PropTypes.string,
+  badge:        PropTypes.string,
+  caption:      PropTypes.string,
   // showPublishedButton: React.PropTypes.bool.isRequired,
 };

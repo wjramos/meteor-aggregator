@@ -19,7 +19,7 @@ function poll ( ) {
   Meteor.call( 'upsert', posts.posts,   'mapPost' );
   Meteor.call( 'upsert', events.events, 'mapEvent' );
 
-  console.log( `\nNew Tiles collection size: ${ Tiles.find( ).fetch( ).length } tiles\n` )
+  console.log( `\nNew Tiles collection size: ${ Tiles.find( ).fetch( ).length } tiles\n` );
 }
 
 poll( );

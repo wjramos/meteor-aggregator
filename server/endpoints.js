@@ -7,11 +7,11 @@ export const CURALATE_QUERY = {
   }
 };
 
-export const WP       = 'http://brightestyoungthings.com/api/get_search_results';
+export const WP       = 'http://brightestyoungthings.com/api/get_recent_posts';
 export const WP_QUERY = {
   params: {
     limit: 10,
-    search: 'REI'
+    // search: 'REI'
   }
 };
 

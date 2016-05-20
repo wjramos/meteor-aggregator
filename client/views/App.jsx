@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 // import ReactDOM   from 'react-dom';
 
-import { /*Events, Posts, Social, */Tiles } from '../../lib/collections';
+import { Tiles } from '../../lib/collections';
 
 import Header from './Header.jsx';
 import Nav    from './Nav.jsx';
@@ -82,7 +82,7 @@ export default createContainer(
       Meteor.subscribe( 'tiles.public' );
 
       return {
-        tiles: Tiles.find( {}, { sort: { createdAt: -1 } } ).fetch(),
+        tiles: Tiles.find( {}, { sort: { relTimestamp: 1 } } ).fetch(),
         // currentUser:     Meteor.user(),
       };
   },
