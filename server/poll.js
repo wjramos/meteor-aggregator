@@ -2,29 +2,48 @@ import { Meteor } from 'meteor/meteor';
 import { Events, Posts, Social } from '../imports/collections';
 import { Schemas } from '../imports/schemas';
 
+import {
+  WP,       WP_QUERY,
+  CURALATE, CURALATE_QUERY,
+  EVENTS,   EVENTS_QUERY
+} from './endpoints';
+
 const POLL_INTERVAL = 300000; // 5 min
 
 function poll ( ) {
-    console.log( 'polling' );
-    let social = Meteor.call( 'getCuralateData' );
-    let events = Meteor.call( 'getEventData' );
-    let posts  = Meteor.call( 'getWpData' )
+    console.log( `---------------- POLLING ( ${ ( POLL_INTERVAL / 1000 / 60 ).toFixed( 1 ) } minute interval )----------------` );
+    let social = Meteor.call( 'getData', CURALATE, CURALATE_QUERY );
+    let events = Meteor.call( 'getData', EVENTS,   EVENTS_QUERY   );
+    let posts  = Meteor.call( 'getData', WP,       WP_QUERY       );
 
-    // Purge collections -- should try and find a way to check dupes
-    // TODO: Apply Schema, consolidate and sort into a proxy collection, only update on new items
-    if ( social.length ) {
-      Social.remove( {} );
-      social.forEach( item => Social.insert( item/*, { _id : item.id }*/ ) );
+    if ( social.items ) {
+      social.items.forEach(
+          item => Social.update(
+              { id: item.id },
+              { $set: item },
+              { upsert: true }
+          )
+      );
     }
 
-    if ( events.length ) {
-      Events.remove( {} );
-      events.forEach( item => Events.insert( item/*, { _id : item.sessionId }*/ ) );
+    if ( events.events ) {
+      events.events.forEach(
+          item => Events.update(
+              { sessionId: item.sessionId },
+              { $set: item },
+              { upsert: true }
+          )
+      );
     }
 
-    if ( posts.length ) {
-      Posts.remove( {} );
-      posts.forEach(  item => Posts.insert(  item/*, { _id : item.id }*/ ) );
+    if ( posts.posts ) {
+      posts.posts.forEach(
+          item => Posts.update(
+              { id: item.id },
+              { $set: item },
+              { upsert: true }
+          )
+      );
     }
 }
 
