@@ -48,9 +48,7 @@ class App extends Component {
   renderMain ( ) {
     return (
       <main  className = 'container-fluid'>
-        <Grid events = { this.props.events }
-              social = { this.props.social }
-              posts  = { this.props.posts } />
+        <Grid tiles = { this.props.tiles } />
       </main>
     );
   }
@@ -76,24 +74,15 @@ class App extends Component {
 
 App.propTypes = {
   tiles: PropTypes.array,
-  // events: PropTypes.array,
-  // social: PropTypes.array,
-  // posts:  PropTypes.array,
   // currentUser: PropTypes.object,
 };
 
 export default createContainer(
   ( ) => {
       Meteor.subscribe( 'tiles.public' );
-      // Meteor.subscribe( 'social.public' );
-      // Meteor.subscribe( 'events.public' );
-      // Meteor.subscribe( 'posts.public' );
 
       return {
         tiles: Tiles.find( {}, { sort: { createdAt: -1 } } ).fetch(),
-        // social: Social.find( {}, { sort: { createdAt: -1 } } ).fetch(),
-        // events: Events.find( {}, { sort: { createdAt: -1 } } ).fetch(),
-        // posts:  Posts.find(  {}, { sort: { createdAt: -1 } } ).fetch(),
         // currentUser:     Meteor.user(),
       };
   },

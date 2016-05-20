@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP }   from 'meteor/http';
 import { check }  from 'meteor/check';
 
+import { Tiles } from '../lib/collections';
+
 import { months } from '../imports/months';
 
 Meteor.methods( {
@@ -79,7 +81,7 @@ Meteor.methods( {
       badge     : tile.registration.status,
 
       // Replace when images added to service
-      media     : [ { url: 'http://placehold.it/350x150' } ]
+      media     : [ { url: 'https://placehold.it/350x150' } ]
     };
 
     // Object.keys( tile.photo ).forEach(
@@ -109,6 +111,26 @@ Meteor.methods( {
 
     return PostMap;
   },
+
+
+  upsert ( items, map ) {
+    check( items, Match.Any );
+    check( map, Match.Any );
+
+    if ( items ) {
+      console.log( `\nMapping and inserting ${ items.length } tiles using ${ map }...\n` );
+      return items.forEach(
+        tile => Tiles.update(
+          { key:    map === 'mapEvent' ? tile.sessionId : tile.id },
+          { $set:   Meteor.call( map, tile ) },
+          { upsert: true }
+        )
+      );
+    }
+
+    return [];
+  },
+
 
   getData ( endpoint, query ) {
     let response;

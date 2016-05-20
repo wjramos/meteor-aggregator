@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import LazyLoad   from 'react-lazyload';
 import { Meteor } from 'meteor/meteor';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 
 // Tile component - represents a single todo item
 export default class Tile extends Component {
@@ -23,17 +23,6 @@ export default class Tile extends Component {
   raw( str ) { return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) }; }
 
   render ( ) {
-    // const tile = this.props.tile;
-    // Give tiles a different className when they are checked off,
-    // so that we can style them nicely in CSS
-    // const tileClassName = classnames( {
-    //   card:      'card',
-    //   // published: this.props.tile.published,
-    //   // colXs:     `col-xs-${ this.props.tile.cols.xs || 6 }`,
-    //   // colSm:     `col-sm-${ this.props.tile.cols.sm || 4 }`,
-    //   // colMd:     `col-md-${ this.props.tile.cols.md || 3 }`,
-    //   // colLg:     `col-xs-${ this.props.tile.cols.lg || 2 }`
-    // } );
     let label;
     let title;
     let desc;
@@ -106,7 +95,8 @@ export default class Tile extends Component {
            className = 'card' >
           <div className = 'img-frame center fill'>
             <LazyLoad offset = { 100 }>
-              <img src = { this.props.media }
+              <img src = { this.props.media[ this.props.media.length - 1 ].url }
+                   // srcset
                    alt = { this.props.alt } />
             </LazyLoad>
             <div style = { { 'visibility' : 'hidden' } }>
@@ -135,7 +125,8 @@ export default class Tile extends Component {
         <div className = 'card'>
           <div className = 'img-frame center fill' >
             <LazyLoad offset = { 100 }>
-              <img src = { this.props.media }
+              <img src = { this.props.media[ this.props.media.length - 1 ].url }
+                   // srcset
                    alt = { this.props.alt } />
             </LazyLoad>
             { content }
@@ -157,12 +148,12 @@ export default class Tile extends Component {
 
 Tile.propTypes = {
   tile:        PropTypes.object.isRequired,
+  media:       PropTypes.object.isRequired,
+  timestamp:   PropTypes.number.isRequired,
   type:        PropTypes.string.isRequired,
-  timestamp:   PropTypes.number,
   label:       PropTypes.string,
   link:        PropTypes.string,
   title:       PropTypes.string,
-  media:       PropTypes.string,
   alt:         PropTypes.string,
   badge:       PropTypes.string,
   caption:     PropTypes.string,
