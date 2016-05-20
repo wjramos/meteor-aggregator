@@ -47,17 +47,7 @@ function poll ( ) {
 }
 
 // Publish generic collection -- split out into new publications file
-// Meteor.publish( 'collection.public', function( Collection ) {
-//   const entries = Posts.find( );
-//   if ( entries ) {
-//     return entries;
-//   }
-//
-//   return this.ready();
-// } );
-
-
-Meteor.publish( 'social.public', function( ) {
+Meteor.publish( 'social.public', ( ) => {
   const entries = Social.find( );
   if ( entries ) {
     return entries;
@@ -66,7 +56,7 @@ Meteor.publish( 'social.public', function( ) {
   return this.ready();
 } );
 
-Meteor.publish( 'events.public', function() {
+Meteor.publish( 'events.public', ( ) => {
   const entries = Events.find( );
   if ( entries ) {
     return entries;
@@ -75,7 +65,7 @@ Meteor.publish( 'events.public', function() {
   return this.ready();
 } );
 
-Meteor.publish( 'posts.public', function() {
+Meteor.publish( 'posts.public', ( ) => {
   const entries = Posts.find( );
   if ( entries ) {
     return entries;
