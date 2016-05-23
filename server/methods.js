@@ -53,16 +53,15 @@ Meteor.methods( {
     check( tile, Match.Any );
 
     const timestamp = tile.timestamp * 1000;
-
     const SocialMap = {
       type:         'social',
       key:          tile.id,
-      timestamp:    timestamp,
       relTimestamp: Math.abs( timestamp - now ),
       title:        tile.user.username,
       link:         tile.url,
       caption:      tile.caption,
-      media:        []
+      media:        [],
+      timestamp
     };
 
     Object.keys( tile.photo ).forEach(
@@ -76,20 +75,19 @@ Meteor.methods( {
     check( tile, Match.Any );
 
     const timestamp = Date.parse( tile.start );
-
     const EventMap = {
       type:         'events',
       key:          tile.sessionId,
-      timestamp:    timestamp,
       relTimestamp: Math.abs( timestamp - now ),
       label:        Meteor.call( 'getDateStr', tile ),
       title:        tile.title,
-      link:         'https://rei.com' + tile.uri,
+      link:         `https://rei.com${ tile.uri }`,
       caption:      tile.summary,
       badge:        tile.registration.status,
 
       // Replace when images added to service
-      media:        [ { url: 'https://placehold.it/350x150' } ]
+      media:        [ { url: 'https://placehold.it/350x150' } ],
+      timestamp
     };
 
     // Object.keys( tile.photo ).forEach(
@@ -101,18 +99,18 @@ Meteor.methods( {
 
   mapPost ( tile ) {
     check( tile, Match.Any );
-    const timestamp = Date.parse( tile.date );
 
+    const timestamp = Date.parse( tile.date );
     const PostMap = {
       type:         'blog',
       key:          tile.id,
-      timestamp:    timestamp,
       relTimestamp: Math.abs( timestamp - now ),
       label:        'blog',
       title:        tile.title,
       link:         tile.url,
       caption:      tile.excerpt,
-      media:        []
+      media:        [],
+      timestamp
     };
 
     Object.keys( tile.attachments[0].images ).forEach(
@@ -128,7 +126,7 @@ Meteor.methods( {
     check( map, Match.Any );
 
     if ( items ) {
-      console.log( `\nMapping and inserting ${ items.length } tiles using ${ map }...\n` );
+      console.log( `Mapping and inserting ${ items.length } tiles using ${ map } schema adaptor...` );
       return items.forEach(
         tile => {
           const mapped = Meteor.call( map, tile );
@@ -165,12 +163,12 @@ Meteor.methods( {
         endpoint,
         query
       );
-      console.log( `\n**** Result ****\n`, `\tSUCCESS` );
+      console.log( `\n**** Result ****\n`, `\tSUCCESS\n` );
 
       return response.data;
 
     } catch ( e ) {
-      console.log( `\n**** Result ****\n`, `\tERROR - ${ e.code }` );
+      console.log( `\n**** Result ****\n`, `\tERROR - ${ e.code }\n` );
 
       return false;
     }

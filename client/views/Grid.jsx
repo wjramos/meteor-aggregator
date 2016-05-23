@@ -8,20 +8,27 @@ export default class Grid extends Component {
     const tiles = this.props.tiles;
 
     return tiles.map(
-    tile => (
-        <Tile
-          type         = { tile.type }
-          key          = { tile.key }
-          timestamp    = { tile.timestamp }
-          relTimestamp = { tile.relTimestamp }
-          title        = { tile.title }
-          link         = { tile.link }
-          caption      = { tile.caption }
-          media        = { tile.media }
-          badge        = { tile.badge }
-          label        = { tile.label }
-        />
-      )
+      tile => {
+
+        if ( tile.badge !== 'CANCELLED' &&
+             tile.badge !== 'CLOSED' ) {
+
+          return (
+            <Tile
+              type         = { tile.type }
+              key          = { tile.key }
+              timestamp    = { tile.timestamp }
+              relTimestamp = { tile.relTimestamp }
+              title        = { tile.title }
+              link         = { tile.link }
+              caption      = { tile.caption }
+              media        = { tile.media }
+              badge        = { tile.badge }
+              label        = { tile.label }
+            />
+          );
+        }
+      }
     );
   }
 
