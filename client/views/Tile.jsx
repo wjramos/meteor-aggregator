@@ -107,12 +107,29 @@ export default class Tile extends Component {
           <div className = 'img-frame center fill'>
             { image }
             <div style = { { 'visibility' : 'hidden' } }>
+              {/* Frame Sizer -- can replace conditionally with ratios, min-height : fit-content */}
               { content }
             </div>
             { caption }
             { badge }
           </div>
         </a>
+      )
+    }
+
+    if ( !this.props.link && this.props.media ) {
+      inner = (
+        <div className = 'card'>
+          <div className = 'img-frame center fill' >
+            { image }
+            <div style = { { 'visibility' : 'hidden' } }>
+              {/* Frame Sizer */}
+              { content }
+            </div>
+            { content }
+            { caption }
+          </div>
+        </div>
       )
     }
 
@@ -124,21 +141,6 @@ export default class Tile extends Component {
            { content }
            { caption }
         </a>
-      )
-    }
-
-    if ( !this.props.link && this.props.media ) {
-      inner = (
-        <div className = 'card'>
-          <div className = 'img-frame center fill' >
-            { image }
-            <div style = { { 'visibility' : 'hidden' } }>
-              { content }
-            </div>
-            { content }
-            { caption }
-          </div>
-        </div>
       )
     }
 
