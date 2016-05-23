@@ -24,10 +24,8 @@ accounts-ui
 accounts-password
 grove:less
 http
-shcherbin:isotope
 dburles:collection-helpers
 random
-shcherbin:imagesloaded
 aldeed:simple-schema
 audit-argument-checks
 check

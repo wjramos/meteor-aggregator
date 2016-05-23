@@ -23,6 +23,7 @@ export default class Tile extends Component {
   raw( str ) { return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) }; }
 
   render ( ) {
+    let image;
     let label;
     let title;
     let desc;
@@ -30,6 +31,16 @@ export default class Tile extends Component {
     let badge;
     let content;
     let inner;
+
+    if ( this.props.media[0] ) {
+      image = (
+        <LazyLoad offset = { 200 } height = { 0 }>
+          <img src = { this.props.media[ this.props.media.length - 1 ].url }
+               // srcset
+               alt = { this.props.alt } />
+        </LazyLoad>
+      )
+    }
 
     if ( this.props.title ) {
       title = ( <h3 dangerouslySetInnerHTML = { this.raw( this.props.title ) }></h3> );
@@ -94,11 +105,7 @@ export default class Tile extends Component {
            target = '_blank'
            className = 'card' >
           <div className = 'img-frame center fill'>
-            <LazyLoad offset = { 100 }>
-              <img src = { this.props.media[ this.props.media.length - 1 ].url }
-                   // srcset
-                   alt = { this.props.alt } />
-            </LazyLoad>
+            { image }
             <div style = { { 'visibility' : 'hidden' } }>
               { content }
             </div>
@@ -124,11 +131,10 @@ export default class Tile extends Component {
       inner = (
         <div className = 'card'>
           <div className = 'img-frame center fill' >
-            <LazyLoad offset = { 100 }>
-              <img src = { this.props.media[ this.props.media.length - 1 ].url }
-                   // srcset
-                   alt = { this.props.alt } />
-            </LazyLoad>
+            { image }
+            <div style = { { 'visibility' : 'hidden' } }>
+              { content }
+            </div>
             { content }
             { caption }
           </div>
@@ -148,6 +154,7 @@ export default class Tile extends Component {
 }
 
 Tile.propTypes = {
+  masonry:      PropTypes.object,
   media:        PropTypes.array.isRequired,
   timestamp:    PropTypes.number.isRequired,
   relTimestamp: PropTypes.number,

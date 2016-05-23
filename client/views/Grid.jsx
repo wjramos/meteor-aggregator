@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import Masonry from 'react-masonry-component';
 
 import Tile from './Tile.jsx';
+
+import { config } from '../../imports/masonry-config';
 
 export default class Grid extends Component {
 
@@ -15,6 +18,7 @@ export default class Grid extends Component {
 
           return (
             <Tile
+              masonry      = { this.masonry }
               type         = { tile.type }
               key          = { tile.key }
               timestamp    = { tile.timestamp }
@@ -33,10 +37,17 @@ export default class Grid extends Component {
   }
 
   render ( ) {
+    let masonry;
+
     return (
-      <div className = 'row row-flex tile js-isotope'>
-        { this.renderTiles() }
-      </div>
+      <Masonry className   = { 'row row-flex tile' }
+               elementType = { 'ul' }
+               ref = { function( c ) { return c ? this.masonry = c.masonry : null }.bind( this ) }
+               //options     = { config }
+               //disableImagesLoaded = { false }
+              >
+        { this.renderTiles( ) }
+      </Masonry>
     )
   }
 }
