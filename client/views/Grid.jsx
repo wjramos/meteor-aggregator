@@ -18,7 +18,6 @@ export default class Grid extends Component {
 
           return (
             <Tile
-              masonry      = { this.masonry }
               type         = { tile.type }
               key          = { tile.key }
               timestamp    = { tile.timestamp }
@@ -42,7 +41,6 @@ export default class Grid extends Component {
     return (
       <Masonry className   = { 'row row-flex tile' }
                elementType = { 'ul' }
-               ref = { function( c ) { return c ? this.masonry = c.masonry : null }.bind( this ) }
                //options     = { config }
                //disableImagesLoaded = { false }
               >

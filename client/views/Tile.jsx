@@ -156,7 +156,6 @@ export default class Tile extends Component {
 }
 
 Tile.propTypes = {
-  masonry:      PropTypes.object,
   media:        PropTypes.array.isRequired,
   timestamp:    PropTypes.number.isRequired,
   relTimestamp: PropTypes.number,
