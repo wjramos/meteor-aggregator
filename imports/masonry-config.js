@@ -3,7 +3,7 @@ export const config = {
   columnWidth:  '.item',
   // layoutMode: 'masonry',
   // masonry: {
-  percentPosition: true,
+  // percentPosition: true,
   // fitWidth: true,
   // columnWidth: 5,
   // gutter: 0

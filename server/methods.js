@@ -5,8 +5,7 @@ import { check }  from 'meteor/check';
 import { Tiles } from '../lib/collections';
 
 import { months } from '../imports/months';
-
-const now = Date.parse( new Date( ) );
+import { config } from '../imports/tile-config';
 
 Meteor.methods( {
 
@@ -52,6 +51,7 @@ Meteor.methods( {
   mapSocial ( tile ) {
     check( tile, Match.Any );
 
+    const now = Date.parse( new Date( ) );
     const timestamp = tile.timestamp * 1000;
     const SocialMap = {
       type:         'social',
@@ -61,6 +61,7 @@ Meteor.methods( {
       link:         tile.url,
       caption:      tile.caption,
       media:        [],
+      config,
       timestamp
     };
 
@@ -74,6 +75,7 @@ Meteor.methods( {
   mapEvent ( tile ) {
     check( tile, Match.Any );
 
+    const now = Date.parse( new Date( ) );
     const timestamp = Date.parse( tile.start );
     const EventMap = {
       type:         'events',
@@ -87,9 +89,11 @@ Meteor.methods( {
 
       // Replace when images added to service
       media:        [ { url: 'https://placehold.it/350x150' } ],
+      config,
       timestamp
     };
 
+    // Use this when images provided by response
     // Object.keys( tile.photo ).forEach(
     //   key => EventMap.media.push( tile.photo[ key ] )
     // );
@@ -100,6 +104,7 @@ Meteor.methods( {
   mapPost ( tile ) {
     check( tile, Match.Any );
 
+    const now = Date.parse( new Date( ) );
     const timestamp = Date.parse( tile.date );
     const PostMap = {
       type:         'blog',
@@ -110,6 +115,7 @@ Meteor.methods( {
       link:         tile.url,
       caption:      tile.excerpt,
       media:        [],
+      config,
       timestamp
     };
 
@@ -132,22 +138,21 @@ Meteor.methods( {
           const mapped = Meteor.call( map, tile );
 
           Tiles.update(
-            { key:    mapped.key },
+            { _id:    mapped.key },
             { $set:   mapped },
             { upsert: true }
           );
         }
       );
     }
-
-    return [];
   },
 
 
   getData ( endpoint, query ) {
-    let response;
     check( endpoint, Match.Any );
     check( query, Match.Any );
+
+    let response;
 
     this.unblock();
 
@@ -168,7 +173,7 @@ Meteor.methods( {
       return response.data;
 
     } catch ( e ) {
-      console.log( `\n**** Result ****\n`, `\tERROR - ${ e.code }\n` );
+      console.log( `\n**** Result ****\n`, `\tERROR - CODE: ${ e.code }\n` );
 
       return false;
     }

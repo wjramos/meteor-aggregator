@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import LazyLoad   from 'react-lazyload';
 import { Meteor } from 'meteor/meteor';
-// import classnames from 'classnames';
+import classNames from 'classnames';
 
 // Tile component - represents a single todo item
 export default class Tile extends Component {
@@ -23,6 +23,15 @@ export default class Tile extends Component {
   raw( str ) { return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) }; }
 
   render ( ) {
+    const classes = [
+      'item',
+      this.props.type,
+      `col-xs-${ this.props.cols.xs || 6 }`,
+      `col-sm-${ this.props.cols.sm || 4 }`,
+      `col-md-${ this.props.cols.md || 3 }`,
+      `col-lg-${ this.props.cols.lg || 3 }`
+    ];
+
     let image;
     let label;
     let title;
@@ -34,8 +43,9 @@ export default class Tile extends Component {
 
     if ( this.props.media[0] ) {
       image = (
-        <LazyLoad offset = { 200 } height = { 0 }>
-          <img src = { this.props.media[ this.props.media.length - 1 ].url }
+        <LazyLoad offset = { [ 200, 200 ] } height = { 0 } throttle = { 200 } once >
+          <img className = 'fade in'
+               src = { this.props.media[ this.props.media.length - 1 ].url }
                // srcset
                alt = { this.props.alt } />
         </LazyLoad>
@@ -138,14 +148,14 @@ export default class Tile extends Component {
         <a href = { this.props.link }
            target = '_blank'
            className = 'card' >
-           { content }
-           { caption }
+          { content }
+          { caption }
         </a>
       )
     }
 
     return (
-        <li className = { 'col-xs-6 col-sm-4 col-md-3 item ' + this.props.type }
+        <li className = { classNames( classes ) }
             data-category  = { this.props.type }
             data-timestamp = { this.props.timestamp }
             data-rel-timestamp = { this.props.relTimestamp } >
@@ -156,6 +166,11 @@ export default class Tile extends Component {
 }
 
 Tile.propTypes = {
+  // Configured
+  cols:         PropTypes.object,
+  // published:    PropTypes.boolean,
+
+  // Collection
   media:        PropTypes.array.isRequired,
   timestamp:    PropTypes.number.isRequired,
   relTimestamp: PropTypes.number,
@@ -166,5 +181,7 @@ Tile.propTypes = {
   alt:          PropTypes.string,
   badge:        PropTypes.string,
   caption:      PropTypes.string,
+
+  // System
   // showPublishedButton: React.PropTypes.bool.isRequired,
 };

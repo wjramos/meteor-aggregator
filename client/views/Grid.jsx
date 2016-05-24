@@ -28,6 +28,12 @@ export default class Grid extends Component {
               media        = { tile.media }
               badge        = { tile.badge }
               label        = { tile.label }
+              cols         = { {
+                xs: null,
+                sm: null,
+                md: null,
+                lg: 3
+              } }
             />
           );
         }
@@ -39,7 +45,7 @@ export default class Grid extends Component {
     let masonry;
 
     return (
-      <Masonry className   = { 'row row-flex tile' }
+      <Masonry className   = { 'row row-flex tile masonry' }
                elementType = { 'ul' }
                //options     = { config }
                //disableImagesLoaded = { false }
@@ -52,6 +58,6 @@ export default class Grid extends Component {
 
 
 Grid.propTypes = {
-  tiles: PropTypes.array,
+  tiles: PropTypes.array
   // currentUser: PropTypes.object,
 };
