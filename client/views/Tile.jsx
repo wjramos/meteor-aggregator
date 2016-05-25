@@ -61,7 +61,7 @@ export default class Tile extends Component {
     }
 
     if ( this.props.caption ) {
-      desc = <p dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></p>
+      desc = <div className = 'description' dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></div>
     }
 
     if ( title || label || desc ) {

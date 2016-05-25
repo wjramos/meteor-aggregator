@@ -7,16 +7,20 @@ import { Tiles } from '../lib/collections';
 import { months } from '../imports/months';
 import { config } from '../imports/tile-config';
 
+_ = lodash;
+
+const TRUNCATE_LENGTH = 200;
+
 Meteor.methods( {
 
   getDateStr ( tile ) {
+    check( tile, Match.Any );
+
     const startDate = new Date( tile.start );
     const endDate   = new Date( tile.end );
     let start;
     let end;
     let date = '';
-
-    check( tile, Match.Any );
 
     if ( tile.start ) {
       start = {
@@ -48,82 +52,96 @@ Meteor.methods( {
     return date;
   },
 
+
+  truncateText ( text, length = 200 ) {
+    check( text,   String );
+    check( length, Number );
+    return `<p>${ _.truncate( text,
+      {
+        'length': length,
+        'separator': /,? +/,
+        'omission': ' […]<br><span class = "position bottom right btn btn-text">Read More</span>'
+      }
+    ) }</p>`;
+  },
+
+
+  getMedia ( mediaObj ) {
+    check( mediaObj, Object );
+
+    let media = [];
+
+    Object.keys( mediaObj ).forEach(
+      key => media.push( mediaObj[ key ] )
+    );
+
+    return media;
+  },
+
+
   mapSocial ( tile ) {
     check( tile, Match.Any );
 
     const now = Date.parse( new Date( ) );
     const timestamp = tile.timestamp * 1000;
-    const SocialMap = {
+
+    return {
       type:         'social',
       key:          tile.id,
       relTimestamp: Math.abs( timestamp - now ),
       title:        tile.user.username,
       link:         tile.url,
-      caption:      tile.caption,
-      media:        [],
+      caption:      Meteor.call( 'truncateText', tile.caption, TRUNCATE_LENGTH ),
+      media:        Meteor.call( 'getMedia', tile.photo ),
       config,
       timestamp
     };
-
-    Object.keys( tile.photo ).forEach(
-      key => SocialMap.media.push( tile.photo[ key ] )
-    );
-
-    return SocialMap;
   },
+
 
   mapEvent ( tile ) {
     check( tile, Match.Any );
 
-    const now = Date.parse( new Date( ) );
+    const now       = Date.parse( new Date( ) );
     const timestamp = Date.parse( tile.start );
-    const EventMap = {
-      type:         'events',
+
+    return {
+      type:         tile.registration.status === 'NOT_REQUIRED' ? 'event' : 'activity',
+      subtype:      tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
       key:          tile.sessionId,
       relTimestamp: Math.abs( timestamp - now ),
       label:        Meteor.call( 'getDateStr', tile ),
       title:        tile.title,
       link:         `https://rei.com${ tile.uri }`,
-      caption:      tile.summary,
+      caption:      Meteor.call( 'truncateText', tile.summary, TRUNCATE_LENGTH ),
       badge:        tile.registration.status,
 
       // Replace when images added to service
-      media:        [ { url: 'https://placehold.it/350x150' } ],
+      media:        Meteor.call( 'getMedia', { placeholder: { url: 'https://placehold.it/350x150' } } ),
       config,
       timestamp
     };
-
-    // Use this when images provided by response
-    // Object.keys( tile.photo ).forEach(
-    //   key => EventMap.media.push( tile.photo[ key ] )
-    // );
-
-    return EventMap;
   },
+
 
   mapPost ( tile ) {
     check( tile, Match.Any );
 
-    const now = Date.parse( new Date( ) );
+    const now       = Date.parse( new Date( ) );
     const timestamp = Date.parse( tile.date );
-    const PostMap = {
+
+    return {
       type:         'blog',
       key:          tile.id,
       relTimestamp: Math.abs( timestamp - now ),
       label:        'blog',
       title:        tile.title,
       link:         tile.url,
-      caption:      tile.excerpt,
-      media:        [],
+      caption:      Meteor.call( 'truncateText', tile.excerpt, TRUNCATE_LENGTH ),
+      media:        Meteor.call( 'getMedia', tile.attachments[0].images ),
       config,
       timestamp
     };
-
-    Object.keys( tile.attachments[0].images ).forEach(
-      key => PostMap.media.push( tile.attachments[0].images[ key ] )
-    );
-
-    return PostMap;
   },
 
 
@@ -133,6 +151,7 @@ Meteor.methods( {
 
     if ( items ) {
       console.log( `Mapping and inserting ${ items.length } tiles using ${ map } schema adaptor...` );
+
       return items.forEach(
         tile => {
           const mapped = Meteor.call( map, tile );

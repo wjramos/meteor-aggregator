@@ -31,3 +31,5 @@ audit-argument-checks
 check
 aldeed:collection2
 meteorhacks:kadira
+iron:router
+stevezhu:lodash
