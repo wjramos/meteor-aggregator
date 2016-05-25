@@ -1,40 +1,47 @@
 @import ( reference ) "../../node_modules/rei-cedar/src/less/main.less";
 
 main {
-    &:extend( .overlay-dark-2 );
+  &:extend( .overlay-dark-2 );
+  background-image: url( '//www.transparenttextures.com/patterns/grunge-wall.png' );
 }
 
 .img-frame {
-    .overlay {
-        height: 100%;
-        width: 100%;
-        display: block;
-        background-color: rgba( 0, 0, 0, .5 );
-        transition: .5s ease;
+  .center {
+    > img {
+      min-height: calc( ~'100% + 2px' )!important;
+      min-width: calc( ~'100% + 2px' )!important;
+      transform: translate( ~'-50% + 1px', ~'-50% + 1px' )!important;
     }
+  }
 
+  .overlay,
+  .caption {
+    height: 100%;
+    width: 100%;
+    display: block;
+    background-color: rgba( 0, 0, 0, .5 );
+    transition: .5s ease;
+    transform: translate( 0, 0 );
+    z-index: 1;
+  }
+
+  .caption {
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      right: 0;
+  }
+
+  &:hover,
+  &:focus {
     .caption {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        display: block;
-        background-color: rgba( 0, 0, 0, .5 );
-        transition: .5s ease;
-        transform: translate( 0, 0 );
-        z-index: 1;
+      bottom: 0;
     }
 
-    &:hover,
-    &:focus {
-        .overlay {
-            background-color: transparent;
-        }
-        .caption {
-            top: 0;
-        }
+    .overlay {
+      background-color: transparent;
     }
+  }
 }
 
 
@@ -157,7 +164,7 @@ main {
         &.masonry {
           padding: 0;
         }
-        
+
         &.tile {
             &.masonry {
                 min-width: 100%;
