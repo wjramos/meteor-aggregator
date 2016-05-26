@@ -9,7 +9,7 @@ import { config } from '../imports/tile-config';
 
 _ = lodash;
 
-const TRUNCATE_LENGTH = 200;
+const TRUNCATE_LENGTH = 360;
 
 Meteor.methods( {
 
@@ -53,7 +53,7 @@ Meteor.methods( {
   },
 
 
-  truncateText ( text, length = 200 ) {
+  truncateText ( text, length = 360 ) {
     check( text,   String );
     check( length, Number );
     return `<p>${ _.truncate( text,
@@ -117,7 +117,7 @@ Meteor.methods( {
       badge:        tile.registration.status,
 
       // Replace when images added to service
-      media:        Meteor.call( 'getMedia', { placeholder: { url: 'https://placehold.it/350x150' } } ),
+      media:        Meteor.call( 'getMedia', { placeholder: { url: '/img/test.jpg' } } ),
       config,
       timestamp
     };

@@ -4,7 +4,9 @@
   "scripts": {
     "start": "meteor run",
     "lint": "eslint .",
-    "pretest": "npm run lint --silent"
+    "pretest": "npm run lint --silent",
+    "docker-build": "docker build -t rapd/united-outside .",
+    "docker-run": "docker run -d \n -e ROOT_URL=http://localhost/ \n -e MONGO_URL=mongodb://127.0.0.1 \n -e MONGO_OPLOG_URL=mongodb://127.0.0.1/local \n -p 8080:80 \n rapd/united-outside"
   },
   "dependencies": {
     "classnames": "^2.2.3",

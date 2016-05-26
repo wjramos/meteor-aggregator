@@ -3,6 +3,13 @@
 
 nav {
     &:extend( .overlay-dark-2 );
+    position: relative;
+    z-index: 999;
+
+    &.fixed {
+        position: fixed;
+        top: 0;
+    }
 
     fieldset {
         padding: 2rem 0;
@@ -11,13 +18,13 @@ nav {
 
     label,
     button {
+        &:extend( .h3 );
+        &:extend( .btn-xs );
         vertical-align: middle;
         margin: 0 !important;
         line-height: .75 !important;
         font-size: 2.4rem !important;
         padding: 0 2.4rem !important;
-        &:extend( .h3 );
-        &:extend( .btn-xs );
     }
 
     button {
