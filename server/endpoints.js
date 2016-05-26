@@ -3,14 +3,14 @@
 export const CURALATE = 'https://api.curalate.com/v1/reels/optoutside';
 export const CURALATE_QUERY = {
   params: {
-    limit: 10
+    limit: 100,
   }
 };
 
 export const WP       = 'http://brightestyoungthings.com/api/get_recent_posts';
 export const WP_QUERY = {
   params: {
-    limit: 10,
+    limit: 100,
     // search: 'REI'
   }
 };
@@ -18,7 +18,7 @@ export const WP_QUERY = {
 export const EVENTS   = 'https://rei.com/rest/events/nearby';
 export const EVENTS_QUERY = {
   params: {
-    limit:         10,
+    limit:         100,
     sortBy:        'date',
     sortDirection: 'asc',
     offset:        0,
