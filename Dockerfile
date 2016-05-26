@@ -4,8 +4,6 @@
 # Inherit from chriswessels/meteor-tupperware image
 FROM quay.io/chriswessels/meteor-tupperware
 
-RUN npm -g install npm@latest
-
 # The maintainer of your app image
 # MAINTAINER Darth Vader <darth@thedeathstar.io>
 

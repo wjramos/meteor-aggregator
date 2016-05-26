@@ -138,7 +138,7 @@ Meteor.methods( {
       title:        tile.title,
       link:         tile.url,
       caption:      Meteor.call( 'truncateText', tile.excerpt, TRUNCATE_LENGTH ),
-      media:        Meteor.call( 'getMedia', tile.attachments[0].images ),
+      media:        tile.attachments[0] ? Meteor.call( 'getMedia', tile.attachments[0].images ) : [],
       config,
       timestamp
     };
