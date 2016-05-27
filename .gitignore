@@ -1,1 +1,5 @@
+.meteor/local
+packages/*/.build*
+packages/*/.npm*
+.DS_Store
 node_modules/

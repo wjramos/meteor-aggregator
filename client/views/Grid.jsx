@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Tile from './Tile.jsx';
 
 export default class Grid extends Component {
@@ -14,7 +14,6 @@ export default class Grid extends Component {
 
           return (
             <Tile
-              masonry      = { this.masonry }
               type         = { tile.type }
               key          = { tile.key }
               timestamp    = { tile.timestamp }
@@ -25,6 +24,12 @@ export default class Grid extends Component {
               media        = { tile.media }
               badge        = { tile.badge }
               label        = { tile.label }
+              cols         = { {
+                xs: null,
+                sm: null,
+                md: null,
+                lg: 3
+              } }
             />
           );
         }
@@ -42,7 +47,7 @@ export default class Grid extends Component {
                 //options     = { config }
                 //disableImagesLoaded = { false }
             >
-                { this.renderTiles() }
+                { this.renderTiles( ) }
             </div>
         )
     }
@@ -92,6 +97,6 @@ export default class Grid extends Component {
 
 
 Grid.propTypes = {
-  tiles: PropTypes.array,
+  tiles: PropTypes.array
   // currentUser: PropTypes.object,
 };

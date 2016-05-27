@@ -19,3 +19,33 @@ You are now running a meteor app -- accessible at `localhost:3000`
 - public ( static assets )
 
 - config ( module configurations )
+
+### Bundling
+```
+meteor build ../build && cd ../build && tar -zxvf united-outside.tar.gz && cd bundle && touch Dockerfile
+```
+
+
+
+### Deployments
+https://github.com/chriswessels/meteor-tupperware
+
+#### Building
+```
+docker build -t rapd/united-outside .
+```
+
+#### Running
+```
+docker run -rm \
+    -e ROOT_URL=http://localhost/ \
+    -e MONGO_URL=mongodb://127.0.0.1 \
+    -e MONGO_OPLOG_URL=mongodb://127.0.0.1/local\
+    -p 8080:80\
+    rapd/united-outside
+```
+
+#### Deploying
+```
+docker push rapd/united-outside
+```

@@ -1,9 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Tiles } from '../lib/collections';
 
-// Publish generic collection -- split out into new publications file
+// Publish collections for consuming client-side
 Meteor.publish( 'tiles.public', ( ) => {
   const entries = Tiles.find( );
+  
   if ( entries ) {
     return entries;
   }
