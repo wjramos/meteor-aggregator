@@ -1,9 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import Masonry from 'react-masonry-component';
-
+import React, {Component, PropTypes} from 'react';
 import Tile from './Tile.jsx';
-
-import { config } from '../../imports/masonry-config';
 
 export default class Grid extends Component {
 
@@ -39,17 +35,59 @@ export default class Grid extends Component {
   render ( ) {
     let masonry;
 
-    return (
-      <Masonry className   = { 'row row-flex tile' }
-               elementType = { 'ul' }
-               ref = { function( c ) { return c ? this.masonry = c.masonry : null }.bind( this ) }
-               //options     = { config }
-               //disableImagesLoaded = { false }
-              >
-        { this.renderTiles( ) }
-      </Masonry>
-    )
-  }
+        return (
+            <div className={ 'row row-flex tile' }
+                 elementType={ 'ul' }
+                //     ref = { function( c ) { return c ? this.masonry = c.masonry : null }.bind( this ) }
+                //options     = { config }
+                //disableImagesLoaded = { false }
+            >
+                { this.renderTiles() }
+            </div>
+        )
+    }
+
+    initIsotope () {
+        var $container = $( '.tile' );
+        $container.isotope( {
+            itemSelector:      '.item',
+            columnWidth:       5,
+            isJQueryFiltering: true,
+            initLayout:        false
+        } );
+        //$container.one( 'arrangeComplete', function () {
+        console.log( 'arrange is complete' );
+        $( '.js-filters' ).on( 'click', 'button', function () {
+            var filterValue = $( this ).attr( 'data-category' );
+            console.log( 'button clicked' );
+            // use filterFn if matches value
+            filterValue = filterValue;
+            $container.isotope( { filter: filterValue } );
+        } );
+
+        //} );
+        $container.isotope();
+    }
+
+    removeIsotope () {
+        $( '.tile' ).isotope( 'destroy' );
+    }
+
+    componentDidMount () {
+        this.initIsotope();
+    }
+
+    componentWillUpdate () {
+        this.removeIsotope();
+    }
+
+    componentDidUpdate () {
+        this.initIsotope();
+    }
+
+    componentWillUnmount () {
+        this.removeIsotope();
+    }
 }
 
 
