@@ -38,12 +38,9 @@ export default class Grid extends Component {
   }
 
   render ( ) {
-    let masonry;
-
         return (
             <div className={ 'row row-flex tile' }
                  elementType={ 'ul' }
-                //     ref = { function( c ) { return c ? this.masonry = c.masonry : null }.bind( this ) }
                 //options     = { config }
                 //disableImagesLoaded = { false }
             >
