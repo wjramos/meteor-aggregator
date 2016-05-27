@@ -27,11 +27,17 @@ static-html
 http
 random
 check
+
 stevezhu:lodash
+
 grove:less
+isotope:isotope
+
 aldeed:collection2
 dburles:collection-helpers
 meteorhacks:subs-manager
+
 meteorhacks:fast-render
 kadira:flow-router
+
 meteorhacks:kadira
