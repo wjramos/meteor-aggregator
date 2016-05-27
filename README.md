@@ -6,7 +6,7 @@
 
 You are now running a meteor app -- accessible at `localhost:3000`
 
-### Structure:
+### Project Structure:
 - client ( runs only on the client )
  - js ( browser scripts )
  - stylesheets ( bundled less )
@@ -19,6 +19,16 @@ You are now running a meteor app -- accessible at `localhost:3000`
 - public ( static assets )
 
 - config ( module configurations )
+
+### Features
+- Replacement of underscore with [Lodash](https://atmospherejs.com/stevezhu/lodash)
+- On-the-fly Less compilation with [Less](https://atmospherejs.com/grove/less)
+- Validated data storage with [Collection2](https://atmospherejs.com/aldeed/collection2)
+- Routing path resolution with [Flow Router](https://atmospherejs.com/meteorhacks/flowrouter)
+- Back-end rendering with [Fast-Render](https://atmospherejs.com/meteorhacks/fast-render) [(coupled with flow-router)](https://github.com/kadirahq/flow-router#fast-render)
+- Subscription caching with [Subs Manager](https://atmospherejs.com/meteorhacks/subs-manager)
+- Performance monitoring with [Kadira](https://atmospherejs.com/meteorhacks/kadira)
+
 
 ### Bundling
 ```
