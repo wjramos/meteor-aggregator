@@ -39,9 +39,12 @@ export default class Grid extends Component {
 
   render ( ) {
     return (
-      <IsotopeComponent className = { 'row row-flex tile js-masonry' }
-               elementType = { 'ul' }
-               options = { config }>
+      <IsotopeComponent
+        className = { 'row row-flex tile' }
+        elementType = { 'ul' }
+        options = { config }
+        disableImagesLoaded = { true }
+      >
         { this.renderTiles( ) }
       </IsotopeComponent>
     )
