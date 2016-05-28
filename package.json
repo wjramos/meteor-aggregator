@@ -17,6 +17,7 @@
     "react-dom": "^15.0.2",
     "react-lazyload": "^2.0.4",
     "react-masonry-component": "^4.0.4",
+    "react-pure-render": "^1.0.2",
     "rei-cedar": "rei/rei-cedar#v1.2.7"
   },
   "devDependencies": {

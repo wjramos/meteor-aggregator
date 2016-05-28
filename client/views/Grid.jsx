@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import Tile from './Tile.jsx';
+import IsotopeComponent from './Isotope.jsx';
+import { config } from '../../imports/isotope-config';
 
 export default class Grid extends Component {
 
   renderTiles ( ) {
-    const tiles = this.props.tiles;
-
-    return tiles.map(
+    return this.props.tiles.map(
       tile => {
 
         if ( tile.badge !== 'CANCELLED' &&
@@ -38,58 +38,14 @@ export default class Grid extends Component {
   }
 
   render ( ) {
-        return (
-            <div className={ 'row row-flex tile' }
-                 elementType={ 'ul' }
-                //options     = { config }
-                //disableImagesLoaded = { false }
-            >
-                { this.renderTiles( ) }
-            </div>
-        )
-    }
-
-    initIsotope () {
-        var $container = $( '.tile' );
-        $container.isotope( {
-            itemSelector:      '.item',
-            columnWidth:       5,
-            isJQueryFiltering: true,
-            initLayout:        false
-        } );
-        //$container.one( 'arrangeComplete', function () {
-        console.log( 'arrange is complete' );
-        $( '.js-filters' ).on( 'click', 'button', function () {
-            var filterValue = $( this ).attr( 'data-category' );
-            console.log( 'button clicked' );
-            // use filterFn if matches value
-            filterValue = filterValue;
-            $container.isotope( { filter: filterValue } );
-        } );
-
-        //} );
-        $container.isotope();
-    }
-
-    removeIsotope () {
-        $( '.tile' ).isotope( 'destroy' );
-    }
-
-    componentDidMount () {
-        this.initIsotope();
-    }
-
-    componentWillUpdate () {
-        this.removeIsotope();
-    }
-
-    componentDidUpdate () {
-        this.initIsotope();
-    }
-
-    componentWillUnmount () {
-        this.removeIsotope();
-    }
+    return (
+      <IsotopeComponent className = { 'row row-flex tile js-masonry' }
+               elementType = { 'ul' }
+               options = { config }>
+        { this.renderTiles( ) }
+      </IsotopeComponent>
+    )
+  }
 }
 
 

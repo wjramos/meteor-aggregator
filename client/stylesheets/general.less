@@ -14,7 +14,14 @@ main {
   }
 }
 
+main .card {
+  background-color: #000;
+}
+
 .img-frame {
+  padding: 0 !important;
+  position: absolute !important;
+
   img {
     min-height: calc( ~'100% + 2px' )!important;
     min-width: calc( ~'100% + 2px' )!important;
@@ -65,7 +72,7 @@ main {
 /* Pending Cedar update */
 
 // Size.less
-.fill ( ) {
+.fill {
   position: absolute;
   top: 0;
   right: 0;
@@ -73,7 +80,7 @@ main {
   left: 0;
 }
 
-.fill-block ( ) {
+.fill-block {
   position: relative;
   display: block;
   height: 100%;
