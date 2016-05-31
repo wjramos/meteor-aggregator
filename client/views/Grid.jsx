@@ -40,7 +40,7 @@ export default class Grid extends Component {
   render ( ) {
     return (
       <IsotopeComponent
-        className = { 'row row-flex tile' }
+        className = { 'row row-flex tile isotope' }
         elementType = { 'ul' }
         options = { config }
         disableImagesLoaded = { true }

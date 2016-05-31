@@ -40,6 +40,7 @@ export default class Tile extends Component {
     let badge;
     let content;
     let inner;
+    let sizer;
 
     if ( this.props.media[0] ) {
       image = (
@@ -53,20 +54,20 @@ export default class Tile extends Component {
     }
 
     if ( this.props.title ) {
-      title = ( <h3 dangerouslySetInnerHTML = { this.raw( this.props.title ) }></h3> );
+      title = ( <h3 className = "caption-title" dangerouslySetInnerHTML = { this.raw( this.props.title ) }></h3> );
     }
 
     if ( this.props.label ) {
-      label = ( <p className = "label-classification">{ this.props.label }</p> );
+      label = ( <p className = "caption-label">{ this.props.label }</p> );
     }
 
     if ( this.props.caption ) {
-      desc = <div className = "description" dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></div>
+      desc = <div className = "caption-description" dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></div>
     }
 
     if ( title || label || desc ) {
       content = (
-        <div className = "well well-lg">
+        <div>
           {/*<button className = "icon icon-rei-close"
                   onClick   = { this.deleteThisTile.bind( this ) }
           ></button>*/}
@@ -88,7 +89,15 @@ export default class Tile extends Component {
           */}
           { label }
           { title }
-          { desc }
+          <div className = "expandable">
+            { desc }
+          </div>
+        </div>
+      );
+
+      sizer = (
+        <div className = "card-sizer" style = { { 'visibility' : 'hidden' } }>
+          { content }
         </div>
       );
     }
@@ -114,15 +123,12 @@ export default class Tile extends Component {
         <a href = { this.props.link }
            target = "_blank"
            className = "card" >
-          <div style = { { 'visibility' : 'hidden' } }>
-            {/* Frame Sizer -- can replace conditionally with ratios, min-height : fit-content */}
-            { content }
-          </div>
+          { sizer }
           <div className = "img-frame center fill">
             { image }
-            { caption }
             { badge }
           </div>
+          { caption }
         </a>
       )
     }
@@ -130,15 +136,12 @@ export default class Tile extends Component {
     if ( !this.props.link && this.props.media ) {
       inner = (
         <div className = "card">
-          <div style = { { 'visibility' : 'hidden' } }>
-            {/* Frame Sizer */}
-            { content }
-          </div>
+          { sizer }
           <div className = "img-frame center fill" >
             { image }
-            { content }
-            { caption }
+            { badge }
           </div>
+          { caption }
         </div>
       )
     }
@@ -149,7 +152,6 @@ export default class Tile extends Component {
            target = "_blank"
            className = "card" >
           { content }
-          { caption }
         </a>
       )
     }

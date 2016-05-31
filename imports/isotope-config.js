@@ -9,7 +9,7 @@ export const config = {
                     'subcategory'
                    ],
   masonry: {
-      columnWidth: 50,//'.item',
+      columnWidth: '.col-md-3',
       gutter:      0,
       fitWidth:    true
   },
