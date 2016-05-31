@@ -1,9 +1,15 @@
 @import ( reference ) "../../node_modules/rei-cedar/src/less/main.less";
 @import ( reference ) "variables";
 
-nav {
+.filters {
     &:extend( .overlay-dark-2 );
+    &:extend( .col-xs-12 );
+    &:extend( .row-flex );
+    &:extend( .text-uppercase );
+    letter-spacing: .1rem;
+    padding: 2rem 0;
     position: relative;
+    justify-content: center;
     z-index: 999;
 
     &.fixed {
@@ -13,43 +19,36 @@ nav {
         right: 0;
     }
 
-    .filters {
-        &:extend( .col-xs-12 );
-        &:extend( .row-flex );
-        letter-spacing: .1rem;
-        padding: 2rem 0;
+    label,
+    button {
+        &:extend( .h3 );
+        &:extend( .btn-xs );
+        vertical-align: middle;
+        margin: 0 !important;
+        line-height: .75 !important;
+        font-size: 2.4rem !important;
 
-        label,
-        button {
-            &:extend( .h3 );
-            &:extend( .btn-xs );
-            vertical-align: middle;
-            margin: 0 !important;
-            line-height: .75 !important;
-            font-size: 2.4rem !important;
+        @media screen and ( min-width: @screen-md-min ) {
+            padding: 0 2.4rem !important;
+        }
+    }
 
-            @media screen and ( min-width: @screen-md-min ) {
-                padding: 0 2.4rem !important;
+    button {
+        background: transparent;
+        box-sizing: content-box;
+        transition: .25s ease all;
+
+        @media screen and ( min-width: @screen-md-min ) {
+            &:not( :first-of-type ) {
+                border-left: .15rem solid @color-base;
             }
         }
 
-        button {
-            background: transparent;
-            box-sizing: content-box;
-            transition: .25s ease all;
-
-            @media screen and ( min-width: @screen-md-min ) {
-                &:not( :first-of-type ) {
-                    border-left: .15rem solid @color-base;
-                }
-            }
-
-            &:hover,
-            &:focus,
-            &:active,
-            &.active {
-                color: @color-secondary !important;
-            }
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            color: @color-secondary !important;
         }
     }
 }
