@@ -40,44 +40,45 @@ export default class Tile extends Component {
     let badge;
     let content;
     let inner;
+    let sizer;
 
     if ( this.props.media[0] ) {
       image = (
-        <LazyLoad offset = { [ 200, 200 ] } height = { 0 } throttle = { 200 } once >
-          <img className = 'fade in'
+        <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
+          <img className = "fade in"
                src = { this.props.media[ this.props.media.length - 1 ].url }
                // srcset
-               alt = { this.props.alt } />
+               alt = { this.props.alt || '' } />
         </LazyLoad>
       )
     }
 
     if ( this.props.title ) {
-      title = ( <h3 dangerouslySetInnerHTML = { this.raw( this.props.title ) }></h3> );
+      title = ( <h3 className = "caption-title" dangerouslySetInnerHTML = { this.raw( this.props.title ) }></h3> );
     }
 
     if ( this.props.label ) {
-      label = ( <p className = 'label-classification'>{ this.props.label }</p> );
+      label = ( <p className = "caption-label">{ this.props.label }</p> );
     }
 
     if ( this.props.caption ) {
-      desc = <div className = 'description' dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></div>
+      desc = <div className = "caption-description" dangerouslySetInnerHTML = { this.raw( this.props.caption ) }></div>
     }
 
     if ( title || label || desc ) {
       content = (
-        <div className = 'well well-lg position left'>
-          {/*<button className = 'icon icon-rei-close'
+        <div>
+          {/*<button className = "icon icon-rei-close"
                   onClick   = { this.deleteThisTile.bind( this ) }
           ></button>*/}
 
           {/*{ this.props.showPublishedButton ? (*/}
             {/*
-            <label className = 'toggle-published'
+            <label className = "toggle-published"
                     onClick  = { this.togglePublished.bind( this ) }
               >
               <input
-                type    = 'checkbox'
+                type    = "checkbox"
                 checked = { this.props.tile.published }
                 onClick = { this.togglePublished.bind( this ) }
                 readOnly
@@ -88,14 +89,22 @@ export default class Tile extends Component {
           */}
           { label }
           { title }
-          { desc }
+          <div className = "expandable">
+            { desc }
+          </div>
+        </div>
+      );
+
+      sizer = (
+        <div className = "card-sizer" style = { { 'visibility' : 'hidden' } }>
+          { content }
         </div>
       );
     }
 
     if ( this.props.caption && this.props.media ) {
       caption = (
-        <div className = 'caption'>
+        <div className = "caption">
           { content }
         </div>
       );
@@ -103,7 +112,7 @@ export default class Tile extends Component {
 
     if ( this.props.badge ) {
       badge = (
-        <span className = 'position top right'>
+        <span className = "position top right">
           { this.props.badge }
         </span>
       );
@@ -112,33 +121,27 @@ export default class Tile extends Component {
     if ( this.props.link && this.props.media ) {
       inner = (
         <a href = { this.props.link }
-           target = '_blank'
-           className = 'card' >
-          <div className = 'img-frame center fill'>
+           target = "_blank"
+           className = "card" >
+          { sizer }
+          <div className = "img-frame center fill">
             { image }
-            <div style = { { 'visibility' : 'hidden' } }>
-              {/* Frame Sizer -- can replace conditionally with ratios, min-height : fit-content */}
-              { content }
-            </div>
-            { caption }
             { badge }
           </div>
+          { caption }
         </a>
       )
     }
 
     if ( !this.props.link && this.props.media ) {
       inner = (
-        <div className = 'card'>
-          <div className = 'img-frame center fill' >
+        <div className = "card">
+          { sizer }
+          <div className = "img-frame center fill" >
             { image }
-            <div style = { { 'visibility' : 'hidden' } }>
-              {/* Frame Sizer */}
-              { content }
-            </div>
-            { content }
-            { caption }
+            { badge }
           </div>
+          { caption }
         </div>
       )
     }
@@ -146,10 +149,9 @@ export default class Tile extends Component {
     if ( this.props.link && !this.props.media ) {
       inner = (
         <a href = { this.props.link }
-           target = '_blank'
-           className = 'card' >
+           target = "_blank"
+           className = "card" >
           { content }
-          { caption }
         </a>
       )
     }

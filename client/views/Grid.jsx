@@ -1,16 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import Masonry from 'react-masonry-component';
-
 import Tile from './Tile.jsx';
-
-import { config } from '../../imports/masonry-config';
+import IsotopeComponent from './Isotope.jsx';
+import { config } from '../../imports/isotope-config';
 
 export default class Grid extends Component {
 
   renderTiles ( ) {
-    const tiles = this.props.tiles;
-
-    return tiles.map(
+    return this.props.tiles.map(
       tile => {
 
         if ( tile.badge !== 'CANCELLED' &&
@@ -42,16 +38,15 @@ export default class Grid extends Component {
   }
 
   render ( ) {
-    let masonry;
-
     return (
-      <Masonry className   = { 'row row-flex tile masonry' }
-               elementType = { 'ul' }
-               //options     = { config }
-               //disableImagesLoaded = { false }
-              >
+      <IsotopeComponent
+        className = { 'row row-flex tile isotope' }
+        elementType = { 'ul' }
+        options = { config }
+        disableImagesLoaded = { true }
+      >
         { this.renderTiles( ) }
-      </Masonry>
+      </IsotopeComponent>
     )
   }
 }
