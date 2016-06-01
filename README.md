@@ -37,8 +37,8 @@ meteor build ../build && cd ../build && tar -zxvf united-outside.tar.gz && cd bu
 
 
 
-### Deployments
-https://github.com/chriswessels/meteor-tupperware
+### Docker
+[Base image](https://github.com/chriswessels/meteor-tupperware)
 
 #### Building
 ```
@@ -47,15 +47,5 @@ docker build -t rapd/united-outside .
 
 #### Running
 ```
-docker run -rm \
-    -e ROOT_URL=http://localhost/ \
-    -e MONGO_URL=mongodb://127.0.0.1 \
-    -e MONGO_OPLOG_URL=mongodb://127.0.0.1/local\
-    -p 8080:80\
-    rapd/united-outside
-```
-
-#### Deploying
-```
-docker push rapd/united-outside
+docker run --rm -p 8080:80 rapd/united-outside
 ```
