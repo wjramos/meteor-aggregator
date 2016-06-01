@@ -1,9 +1,15 @@
 @import ( reference ) "../../node_modules/rei-cedar/src/less/main.less";
 @import ( reference ) "variables";
 
-nav {
+.filters {
     &:extend( .overlay-dark-2 );
+    &:extend( .col-xs-12 );
+    &:extend( .row-flex );
+    &:extend( .text-uppercase );
+    letter-spacing: .1rem;
+    padding: 2rem 0;
     position: relative;
+    justify-content: center;
     z-index: 999;
 
     &.fixed {
@@ -11,11 +17,6 @@ nav {
         top: 0;
         left: 0;
         right: 0;
-    }
-
-    fieldset {
-        padding: 2rem 0;
-        letter-spacing: .1rem;
     }
 
     label,
@@ -26,7 +27,10 @@ nav {
         margin: 0 !important;
         line-height: .75 !important;
         font-size: 2.4rem !important;
-        padding: 0 2.4rem !important;
+
+        @media screen and ( min-width: @screen-md-min ) {
+            padding: 0 2.4rem !important;
+        }
     }
 
     button {
@@ -34,8 +38,10 @@ nav {
         box-sizing: content-box;
         transition: .25s ease all;
 
-        &:not( :first-of-type ) {
-            border-left: .15rem solid @color-base;
+        @media screen and ( min-width: @screen-md-min ) {
+            &:not( :first-of-type ) {
+                border-left: .15rem solid @color-base;
+            }
         }
 
         &:hover,

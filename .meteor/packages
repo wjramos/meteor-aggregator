@@ -7,7 +7,6 @@
 meteor-base             # Packages every Meteor app needs to have
 mobile-experience       # Packages for a great mobile UX
 mongo                   # The database Meteor supports right now
-blaze-html-templates    # Compile .html files into Meteor Blaze views
 reactive-var            # Reactive variable for tracker
 jquery                  # Helpful client-side library
 tracker                 # Meteor's client-side reactive programming library
@@ -17,19 +16,28 @@ standard-minifier-js    # JS minifier run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-insecure                # Allow all DB writes from clients (for prototyping)
+#insecure                # Allow all DB writes from clients (for prototyping)
+#accounts-base
+#accounts-ui
+#accounts-password
+#audit-argument-checks
+
 react-meteor-data
-accounts-base
-accounts-ui
-accounts-password
-grove:less
+static-html
 http
-dburles:collection-helpers
 random
-aldeed:simple-schema
-audit-argument-checks
 check
-aldeed:collection2
-meteorhacks:kadira
-iron:router
+
 stevezhu:lodash
+
+grove:less
+isotope:isotope
+
+aldeed:collection2
+dburles:collection-helpers
+meteorhacks:subs-manager
+
+meteorhacks:fast-render
+kadira:flow-router
+
+meteorhacks:kadira

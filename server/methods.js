@@ -145,28 +145,6 @@ Meteor.methods( {
   },
 
 
-  upsert ( items, map ) {
-    check( items, Match.Any );
-    check( map, Match.Any );
-
-    if ( items ) {
-      console.log( `Mapping and inserting ${ items.length } tiles using ${ map } schema adaptor...` );
-
-      return items.forEach(
-        tile => {
-          const mapped = Meteor.call( map, tile );
-
-          Tiles.update(
-            { _id:    mapped.key },
-            { $set:   mapped },
-            { upsert: true }
-          );
-        }
-      );
-    }
-  },
-
-
   getData ( endpoint, query ) {
     check( endpoint, Match.Any );
     check( query, Match.Any );
@@ -181,11 +159,14 @@ Meteor.methods( {
                    `Query:`
                  );
 
-      Object.keys( query.params ).forEach( param => console.log( `\t${ param } : ${ query.params[ param ] }` ) );
+      Object.keys( query ).forEach( param => console.log( `\t${ param } : ${ query[ param ] }` ) );
 
       response = HTTP.get(
         endpoint,
-        query
+        {
+          params:  query,
+          timeout: 4000
+        }
       );
       console.log( `\n**** Result ****\n`, `\tSUCCESS\n` );
 
@@ -196,5 +177,27 @@ Meteor.methods( {
 
       return false;
     }
-  }
+  },
+
+
+  upsert ( items, map ) {
+    check( items, Match.Any );
+    check( map, Match.Any );
+
+    if ( items ) {
+      console.log( `Found ${ items.length } items – Mapping and inserting using ${ map } schema adaptor...` );
+
+      return items.forEach(
+        tile => {
+          const mapped = Meteor.call( map, tile );
+
+          Tiles.update(
+            { _id:    mapped.key },
+            { $set:   mapped },
+            { upsert: true }
+          );
+        }
+      );
+    }
+  },
 } );

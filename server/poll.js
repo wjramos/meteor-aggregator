@@ -38,6 +38,7 @@ function poll ( ) {
   let posts  = getPosts();
   let social = getSocial();
 
+  /* Result Reporting */
   const updatedEntries = Tiles.find( ).fetch( );
   const retrievedCount = events.length + posts.length + social.length;
   const difference     = updatedEntries.length - curEntries.length;
