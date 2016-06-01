@@ -20,12 +20,6 @@ You are now running a meteor app -- accessible at `localhost:3000`
 
 - config ( module configurations )
 
-### Bundling
-```
-meteor build ../build && cd ../build && tar -zxvf united-outside.tar.gz && cd bundle && touch Dockerfile
-```
-
-
 
 ### Deployments
 https://github.com/chriswessels/meteor-tupperware
