@@ -118,7 +118,7 @@ Meteor.methods( {
     const timestamp = Date.parse( tile.start );
 
     return {
-      type:         tile.registration.status === 'NOT_REQUIRED' ? 'event' : 'activity',
+      type:         /*tile.registration.status === 'NOT_REQUIRED' ? 'event' :*/ 'activity',
       subtype:      tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
       key:          tile.sessionId,
       relTimestamp: Math.abs( timestamp - now ),

@@ -20,24 +20,24 @@
     }
 
     label,
-    button {
+    .filter-item {
+        &:extend( .overlay-dark-2 );
         &:extend( .h3 );
         &:extend( .btn-xs );
         vertical-align: middle;
         margin: 0 !important;
         line-height: .75 !important;
         font-size: 2.4rem !important;
+        background: transparent;
+        box-sizing: content-box;
+        transition: .25s ease all;
 
         @media screen and ( min-width: @screen-md-min ) {
             padding: 0 2.4rem !important;
         }
     }
 
-    button {
-        background: transparent;
-        box-sizing: content-box;
-        transition: .25s ease all;
-
+    .filter-item {
         @media screen and ( min-width: @screen-md-min ) {
             &:not( :first-of-type ) {
                 border-left: .15rem solid @color-base;

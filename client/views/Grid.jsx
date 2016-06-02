@@ -3,6 +3,7 @@ import Tile from './Tile.jsx';
 import IsotopeComponent from './Isotope.jsx';
 import { config } from '../../imports/isotope-config';
 
+
 export default class Grid extends Component {
 
   renderTiles ( ) {
@@ -54,5 +55,4 @@ export default class Grid extends Component {
 
 Grid.propTypes = {
   tiles: PropTypes.array
-  // currentUser: PropTypes.object,
 };

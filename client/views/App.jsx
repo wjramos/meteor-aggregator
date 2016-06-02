@@ -9,35 +9,8 @@ import Header from './Header.jsx';
 import Nav    from './Nav.jsx';
 import Grid   from './Grid.jsx';
 
-// import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
-// App component - represents the whole app
 class App extends Component {
-  // constructor ( props ) {
-  //   super( props );
-  //
-  //   // this.state = {
-  //   //   hideExpired: true
-  //   // };
-  // }
-
-  // handleSubmit ( event ) {
-  //   event.preventDefault();
-  //
-  //   // Find the text field via the React ref
-  //   const text = ReactDOM.findDOMNode( this.refs.textInput ).value.trim();
-  //
-  //   Meteor.call( 'tiles.insert', text );
-  //
-  //   // Clear form
-  //   ReactDOM.findDOMNode( this.refs.textInput ).value = '';
-  // }
-
-  // toggleHideCompleted ( ) {
-  //   this.setState( {
-  //     hideExpired: !this.state.hideExpired,
-  //   } );
-  // }
 
   renderHeader ( ) {
     return (
@@ -56,7 +29,7 @@ class App extends Component {
   renderNav ( ) {
     return (
       <section className = 'container-fluid overlay-dark-2'>
-        <Nav />
+        <Nav tiles = { this.props.tiles } />
       </section>
     );
   }
@@ -73,8 +46,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  tiles: PropTypes.array,
-  // currentUser: PropTypes.object,
+  tiles: PropTypes.array
 };
 
 export default createContainer(
@@ -82,8 +54,7 @@ export default createContainer(
       Meteor.subscribe( 'tiles.public' );
 
       return {
-        tiles: Tiles.find( {}, { sort: { relTimestamp: 1 } } ).fetch(),
-        // currentUser:     Meteor.user(),
+        tiles: Tiles.find( {}, { sort: { relTimestamp: 1 } } ).fetch()
       };
   },
   App

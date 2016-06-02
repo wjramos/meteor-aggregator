@@ -1,34 +1,58 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
+
 // import classnames from 'classnames';
 
 // Tile component - represents a single todo item
 export default class Nav extends Component {
 
+  filterClick( event ) {
+      const $tileContainer =  $( '.isotope' );
+      const filterValue = event.target.getAttribute( 'data-category' );
+
+      return $tileContainer.isotope( { filter: `.${ filterValue }` } );
+  }
+
+  renderFilters ( ) {
+    let key = 'type';
+    let categories = this.props.tiles.reduce( ( carry, item ) => {
+      if ( item[ key ] && !~carry.indexOf( item[ key ] ) ) {
+        carry.push( item[ key ] );
+      }
+
+      return carry;
+
+    }, [] ).sort();
+
+
+    return categories.map(
+      category => {
+        return (
+            <a href = "#main"
+               className = "btn btn-xs text-uppercase filter-item"
+               data-category = { category }
+               onClick={ this.filterClick.bind( this ) }>{ category.charAt(0).toUpperCase() + category.substr(1) }</a>
+        );
+      }
+    )
+  }
+
   render ( ) {
     return (
       <nav className = "filters js-filters">
         <label class = "hidden-xs">Filter By:</label>
-        {/* TODO: Generate these */}
-        <button type = "button"
-                className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".events">Activities</button>
-        <button type = "button"
-                className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".events">Events</button>
-        <button type = "button"
-                className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".social">Social</button>
-        <button type = "button"
-                className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".blog">Blog</button>
-        <button type = "button"
-                className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".media">Photos</button>
-        <button type = "button"
-                className = "btn btn-xs text-uppercase filter-item"
-                data-category = "*">Show All</button>
+
+        { this.renderFilters( ) }
+
+        <a href = "#main"
+           className = "btn btn-xs text-uppercase filter-item"
+           data-category = "*"
+           onClick={ this.filterClick }>Show All</a>
       </nav>
     );
   }
 }
+
+Nav.propTypes = {
+  tiles: PropTypes.array
+};
