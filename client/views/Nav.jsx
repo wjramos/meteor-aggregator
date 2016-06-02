@@ -1,9 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
+
 // import classnames from 'classnames';
 
 // Tile component - represents a single todo item
 export default class Nav extends Component {
+
+    filterClick( event ) {
+        var $tileContainer =  $( '.isotope')
+        var filterValue = event.target.getAttribute('data-category');
+        $tileContainer.isotope( { filter: filterValue } );
+    }
+
   render ( ) {
     return (
       <nav className = "filters js-filters">
@@ -11,22 +19,28 @@ export default class Nav extends Component {
         {/* TODO: Generate these */}
         <button type = "button"
                 className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".events">Activities</button>
+                data-category = ".events"
+                onClick={ this.filterClick }>Activities</button>
         <button type = "button"
                 className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".events">Events</button>
+                data-category = ".events"
+                onClick={ this.filterClick }>Events</button>
         <button type = "button"
                 className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".social">Social</button>
+                data-category = ".social"
+                onClick={ this.filterClick }>Social</button>
         <button type = "button"
                 className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".blog">Blog</button>
+                data-category = ".blog"
+                onClick={ this.filterClick }>Blog</button>
         <button type = "button"
                 className = "btn btn-xs text-uppercase filter-item"
-                data-category = ".media">Photos</button>
+                data-category = ".media"
+                onClick={ this.filterClick }>Photos</button>
         <button type = "button"
                 className = "btn btn-xs text-uppercase filter-item"
-                data-category = "*">Show All</button>
+                data-category = "*"
+                onClick={ this.filterClick }>Show All</button>
       </nav>
     );
   }

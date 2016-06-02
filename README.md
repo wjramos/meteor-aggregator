@@ -1,4 +1,4 @@
-# Meteor Content Aggregator
+# United Outside ( Meteor Content Aggregator ) ![Build Status](https://travis-ci.org/rei/united-outside.svg)
 
 ### How to use:
 1. Install [Meteor](https://www.meteor.com/install)
@@ -28,13 +28,6 @@ You are now running a meteor app -- accessible at `localhost:3000`
 - Back-end rendering with [Fast-Render](https://atmospherejs.com/meteorhacks/fast-render) [(coupled with flow-router)](https://github.com/kadirahq/flow-router#fast-render)
 - Subscription caching with [Subs Manager](https://atmospherejs.com/meteorhacks/subs-manager)
 - Performance monitoring with [Kadira](https://atmospherejs.com/meteorhacks/kadira)
-
-
-### Bundling
-```
-meteor build ../build && cd ../build && tar -zxvf united-outside.tar.gz && cd bundle && touch Dockerfile
-```
-
 
 
 ### Docker
