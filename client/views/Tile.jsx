@@ -53,6 +53,17 @@ export default class Tile extends Component {
       )
     }
 
+    if ( !this.props.link && this.props.media[0] ) {
+      image = (
+        <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
+          <img className = "fade in img-responsive"
+               src = { this.props.media[ this.props.media.length - 1 ].url }
+               // srcset
+               alt = { this.props.alt || '' } />
+        </LazyLoad>
+      )
+    }
+
     if ( this.props.title ) {
       title = ( <h3 className = "caption-title" dangerouslySetInnerHTML = { this.raw( this.props.title ) }></h3> );
     }
@@ -136,12 +147,8 @@ export default class Tile extends Component {
     if ( !this.props.link && this.props.media ) {
       inner = (
         <div className = "card">
-          { sizer }
-          <div className = "img-frame center fill" >
             { image }
             { badge }
-          </div>
-          { caption }
         </div>
       )
     }

@@ -17,4 +17,7 @@ FROM quay.io/chriswessels/meteor-tupperware
 # MAINTAINER Darth Vader <darth@thedeathstar.io>
 
 # (optional) Bake runtime options into your image
-ENV ROOT_URL="http://localhost" PORT="3000" MONGO_URL="mongodb://127.0.0.1:27017/meteor" MONGO_OPLOG_URL="mongodb://127.0.0.1:27017/meteor/local"
+ENV ROOT_URL="http://localhost"
+ENV PORT="3000"
+ENV MONGO_URL="mongodb://127.0.0.1:3001/meteor"
+ENV MONGO_OPLOG_URL="mongodb://127.0.0.1:3001/local"

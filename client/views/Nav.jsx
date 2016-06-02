@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 // Tile component - represents a single todo item
 export default class Nav extends Component {
+
   render ( ) {
     return (
       <nav className = "filters js-filters">

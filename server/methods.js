@@ -53,7 +53,7 @@ Meteor.methods( {
   },
 
 
-  truncateText ( text, length = 360 ) {
+  truncateText ( text = '', length = 360 ) {
     check( text,   String );
     check( length, Number );
     return `<p>${ _.truncate( text,
@@ -85,14 +85,26 @@ Meteor.methods( {
     const now = Date.parse( new Date( ) );
     const timestamp = tile.timestamp * 1000;
 
+    if ( tile.url ) {
+
+      return {
+        type:         'social',
+        key:          tile.id,
+        relTimestamp: Math.abs( timestamp - now ),
+        title:        tile.user.username,
+        link:         tile.url,
+        caption:      tile.caption ? Meteor.call( 'truncateText', tile.caption, TRUNCATE_LENGTH ) : null,
+        media:        tile.photo ? Meteor.call( 'getMedia', tile.photo ) : null,
+        config,
+        timestamp
+      };
+    }
+
     return {
-      type:         'social',
+      type:         'photo',
       key:          tile.id,
       relTimestamp: Math.abs( timestamp - now ),
-      title:        tile.user.username,
-      link:         tile.url,
-      caption:      Meteor.call( 'truncateText', tile.caption, TRUNCATE_LENGTH ),
-      media:        Meteor.call( 'getMedia', tile.photo ),
+      media:        tile.photo ? [ tile.photo.original ] : null, //Meteor.call( 'getMedia', tile.photo ) : null,
       config,
       timestamp
     };
@@ -113,7 +125,7 @@ Meteor.methods( {
       label:        Meteor.call( 'getDateStr', tile ),
       title:        tile.title,
       link:         `https://rei.com${ tile.uri }`,
-      caption:      Meteor.call( 'truncateText', tile.summary, TRUNCATE_LENGTH ),
+      caption:      tile.summary ? Meteor.call( 'truncateText', tile.summary, TRUNCATE_LENGTH ) : null,
       badge:        tile.registration.status,
 
       // Replace when images added to service
