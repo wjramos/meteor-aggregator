@@ -40,5 +40,5 @@ docker build -t rapd/united-outside .
 
 #### Running
 ```
-docker run --rm -p 8080:80 rapd/united-outside
+docker-compose up
 ```

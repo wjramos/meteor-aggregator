@@ -29,6 +29,7 @@ export default class Nav extends Component {
       category => {
         return (
             <a href = "#main"
+               key = { category }
                className = "btn btn-xs text-uppercase filter-item"
                data-category = { category }
                onClick={ this.filterClick.bind( this ) }>{ category.charAt(0).toUpperCase() + category.substr(1) }</a>
