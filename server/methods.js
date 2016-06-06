@@ -137,7 +137,7 @@ Meteor.methods( {
       title:        tile.title,
       link:         `https://rei.com${ tile.uri }`,
       caption:      tile.summary ? Meteor.call( 'truncateText', tile.summary, TRUNCATE_LENGTH ) : null,
-      badge:        tile.registration.status === 'WAIT_LIST' ? 'Full' : null,
+      badge:        tile.registration.status === 'WAIT_LIST' ? 'Full – get notified' : null,
       label:        Meteor.call( 'getDateStr', tile.start, tile.end ),
 
       // Replace when images added to service

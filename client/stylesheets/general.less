@@ -14,6 +14,10 @@ main {
   }
 }
 
+.badge {
+  white-space: nowrap;
+}
+
 main .card {
   background-color: #000;
 }
@@ -54,6 +58,12 @@ main .card {
     }
   }
 
+  .overlay {
+    .caption {
+      background: transparent;
+    }
+  }
+
   .expandable {
     overflow: hidden;
     max-height: 0;
@@ -65,6 +75,10 @@ main .card {
   &:focus {
     .overlay {
       background-color: transparent;
+
+      .caption {
+        background: rgba( 0, 0, 0, .5 );
+      }
     }
 
     .caption {

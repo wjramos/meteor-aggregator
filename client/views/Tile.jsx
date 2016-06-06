@@ -91,14 +91,29 @@ export default class Tile extends Component {
     if ( this.props.badge ) {
       badge = (
         <div className = "fill-block overlay">
-          <h2 className = "position center text-uppercase">
+          <h2 className = "position center badge">
             { this.props.badge }
           </h2>
+          { caption }
         </div>
       );
     }
 
-    if ( this.props.link && this.props.media ) {
+    if ( this.props.link && this.props.media && !badge ) {
+      inner = (
+        <a href = { this.props.link }
+           target = "_blank"
+           className = "card" >
+          { sizer }
+          <div className = "img-frame center fill">
+            { image }
+          </div>
+          { caption }
+        </a>
+      )
+    }
+
+    if ( this.props.link && this.props.media && badge ) {
       inner = (
         <a href = { this.props.link }
            target = "_blank"
@@ -108,7 +123,6 @@ export default class Tile extends Component {
             { image }
             { badge }
           </div>
-          { caption }
         </a>
       )
     }
