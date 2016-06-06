@@ -54,10 +54,9 @@ Meteor.methods( {
     return date;
   },
 
-  getTimestampDiff ( timestamp ) {
+  getTimestampDiff ( timestamp, reference ) {
     /* Assuming the same data is retrieved, this will recalculate on upsert */
-    const now = Date.parse( new Date( ) );
-    return Math.abs( timestamp - now );
+    return Math.abs( timestamp - reference );
   },
 
   getUniqueValues ( collection, key ) {
@@ -205,11 +204,12 @@ Meteor.methods( {
 
     if ( items ) {
       console.log( `Found ${ items.length } items – Mapping and inserting using ${ map } schema adaptor...` );
+      const now = Date.parse( new Date( ) );
 
       return items.forEach(
         tile => {
           const mapped = Meteor.call( map, tile );
-          mapped.relTimestamp = Meteor.call( 'getTimestampDiff', mapped.timestamp );
+          mapped.relTimestamp = Meteor.call( 'getTimestampDiff', mapped.timestamp, now );
 
           Tiles.update(
             { _id:    mapped.key },
