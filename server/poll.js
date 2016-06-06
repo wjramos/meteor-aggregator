@@ -3,7 +3,8 @@ import { Tiles } from '../lib/collections';
 import {
   WP,       WP_QUERY,
   CURALATE, CURALATE_QUERY,
-  EVENTS,   EVENTS_QUERY
+  EVENTS,   EVENTS_QUERY,
+  PROGRAMS
 } from './endpoints';
 
 const POLL_INTERVAL = 300000; // 5 min
@@ -17,9 +18,19 @@ function poll ( ) {
   let newItems = 0;
 
   function getEvents ( ) {
-    const events = Meteor.call( 'getData', EVENTS, EVENTS_QUERY );
-    Meteor.call( 'upsert', events.events, 'mapEvent' );
-    return events.events || [];
+    let events = [];
+    for (program in PROGRAMS) {
+      let thisQuery        = EVENTS_QUERY;
+      thisQuery.programIds = PROGRAMS[program];
+      const data = Meteor.call( 'getData', EVENTS, thisQuery );
+
+      if (data.hasOwnProperty('events')) {
+        data.events.forEach( event => event.activityType = program );
+        events = events.concat( data.events );
+      }
+    }
+    Meteor.call( 'upsert', events, 'mapEvent' );
+    return events;
   }
 
   function getPosts ( ) {

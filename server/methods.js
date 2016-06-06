@@ -119,7 +119,7 @@ Meteor.methods( {
 
     return {
       type:         /*tile.registration.status === 'NOT_REQUIRED' ? 'event' :*/ 'activity',
-      subtype:      tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
+      activitytype:      tile.activityType ? tile.activityType : '',
       key:          tile.sessionId,
       relTimestamp: Math.abs( timestamp - now ),
       label:        Meteor.call( 'getDateStr', tile ),
@@ -202,7 +202,6 @@ Meteor.methods( {
       return items.forEach(
         tile => {
           const mapped = Meteor.call( map, tile );
-
           Tiles.update(
             { _id:    mapped.key },
             { $set:   mapped },

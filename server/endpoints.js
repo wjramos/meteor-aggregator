@@ -17,8 +17,14 @@ export const EVENTS_QUERY = {
   sortBy:        'date',
   sortDirection: 'asc',
   offset:        0,
-  distance:      50,
+  distance:      100,
   location:      20500,
   // sa:            'United DC',
   // ca:            'Women Only'
+};
+
+export const PROGRAMS = { 
+    climbing : 21,
+    cycling : 22,
+    'Outdoor Fitness' : 83
 };

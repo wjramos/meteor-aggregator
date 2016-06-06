@@ -26,6 +26,7 @@ export default class Tile extends Component {
     const classes = [
       'item',
       this.props.type,
+      this.props.activitytype,
       `col-xs-${ this.props.cols.xs || 6 }`,
       `col-sm-${ this.props.cols.sm || 4 }`,
       `col-md-${ this.props.cols.md || 3 }`,
@@ -166,6 +167,7 @@ export default class Tile extends Component {
     return (
         <li className = { classNames( classes ) }
             data-category  = { this.props.type }
+            data-sub-category = { this.props.activitytype }
             data-timestamp = { this.props.timestamp }
             data-rel-timestamp = { this.props.relTimestamp } >
           { inner }
@@ -184,6 +186,7 @@ Tile.propTypes = {
   timestamp:    PropTypes.number.isRequired,
   relTimestamp: PropTypes.number,
   type:         PropTypes.string.isRequired,
+  activitytype:      PropTypes.string,
   label:        PropTypes.string,
   link:         PropTypes.string,
   title:        PropTypes.string,

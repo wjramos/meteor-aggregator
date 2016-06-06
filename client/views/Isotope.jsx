@@ -154,7 +154,8 @@ export default class IsotopeComponent extends Component {
   componentWillReceiveProps ( ) {
     this._timer = setTimeout( ( ) => {
       this.isotope.reloadItems();
-      this.isMounted && this.isMounted() && this.forceUpdate();
+      // isMounted is deprecated
+      // this.isMounted && this.isMounted() && this.forceUpdate();
     } );
   }
 

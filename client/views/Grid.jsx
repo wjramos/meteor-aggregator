@@ -16,6 +16,7 @@ export default class Grid extends Component {
           return (
             <Tile
               type         = { tile.type }
+              activitytype  = { tile.activitytype }
               key          = { tile.key }
               timestamp    = { tile.timestamp }
               relTimestamp = { tile.relTimestamp }
