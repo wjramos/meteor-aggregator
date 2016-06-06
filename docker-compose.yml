@@ -1,15 +1,13 @@
 dashboard:
   image: rapd/united-outside
   ports:
-   - "8080:80"
+   - "80:80"
   links:
    - mongo
   environment:
    - ROOT_URL=http://127.0.0.1
-   # Use host IP
    - MONGO_URL=mongodb://mongo/meteor
    - MONGO_OPLOG=mongodb://mongo/local
-   # - MAIL_URL=smtp://some.mailserver.com:25
 
 mongo:
   image: mongo:latest
