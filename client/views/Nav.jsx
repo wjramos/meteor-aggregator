@@ -8,7 +8,7 @@ export default class Nav extends Component {
       const $tileContainer =  $( '.isotope' );
       const filterValue = event.target.getAttribute( 'data-category' );
 
-      return $tileContainer.isotope( { filter: `.${ filterValue }` } );
+      return $tileContainer.isotope( { filter: filterValue } );
   }
 
   renderFilters ( ) {
@@ -29,7 +29,7 @@ export default class Nav extends Component {
             <a href = "#main"
                key = { category }
                className = "btn btn-xs text-uppercase filter-item"
-               data-category = { category }
+               data-category = { '.' + category }
                onClick={ this.filterClick.bind( this ) }>{ category.charAt(0).toUpperCase() + category.substr(1) }</a>
         );
       }
