@@ -13,43 +13,51 @@ const TRUNCATE_LENGTH = 360;
 
 Meteor.methods( {
 
-  getDateStr ( tile ) {
-    check( tile, Match.Any );
+  getDateStr ( start, end ) {
+    check( start, Match.Any );
+    check( end, Match.Any );
 
-    const startDate = new Date( tile.start );
-    const endDate   = new Date( tile.end );
-    let start;
-    let end;
+    let startObj;
+    let endObj;
     let date = '';
 
-    if ( tile.start ) {
-      start = {
+    if ( start ) {
+      const startDate = new Date( start );
+      startObj = {
         date:  startDate.getDate(),
         month: months[ startDate.getMonth() ]
       };
 
-      date += `${ start.month } ${ start.date }`;
+      date += `${ startObj.month } ${ startObj.date }`;
     }
 
-    if ( tile.end ) {
-      end = {
+    if ( end && end !== start ) {
+      const endDate   = new Date( end );
+      endObj = {
         date:  endDate.getDate(),
         month: months[ endDate.getMonth() ]
       };
 
-      if ( end.month !== start.month || end.date !== start.date ) {
+      if ( endObj.month !== startObj.month || endObj.date !== startObj.date ) {
         date += ' - ';
       }
-      if ( end.month !== start.month ) {
-        date += `${ end.month } `;
+
+      if ( endObj.month !== startObj.month ) {
+        date += endObj.month + ' ';
       }
 
-      if ( end.date !== start.date ) {
-        date += end.date;
+      if ( endObj.date !== startObj.date ) {
+        date += endObj.date;
       }
     }
 
     return date;
+  },
+
+  getTimestampDiff ( timestamp ) {
+    /* Assuming the same data is retrieved, this will recalculate on upsert */
+    const now = Date.parse( new Date( ) );
+    return Math.abs( timestamp - now );
   },
 
   getUniqueValues ( collection, key ) {
@@ -93,31 +101,25 @@ Meteor.methods( {
   mapSocial ( tile ) {
     check( tile, Match.Any );
 
-    const now = Date.parse( new Date( ) );
     const timestamp = tile.timestamp * 1000;
 
     if ( tile.url ) {
-
       return {
-        type:         'social',
         key:          tile.id,
-        relTimestamp: Math.abs( timestamp - now ),
+        timestamp:    tile.timestamp * 1000,
+        type:         'social',
         title:        tile.user.username,
         link:         tile.url,
         caption:      tile.caption ? Meteor.call( 'truncateText', tile.caption, TRUNCATE_LENGTH ) : null,
         media:        tile.photo ? Meteor.call( 'getMedia', tile.photo ) : null,
-        config,
-        timestamp
       };
     }
 
     return {
-      type:         'photo',
       key:          tile.id,
-      relTimestamp: Math.abs( timestamp - now ),
-      media:        tile.photo ? [ tile.photo.original ] : null, //Meteor.call( 'getMedia', tile.photo ) : null,
-      config,
-      timestamp
+      timestamp:    tile.timestamp * 1000,
+      type:         'photo',
+      media:        tile.photo ? [ tile.photo.original ] : null //Meteor.call( 'getMedia', tile.photo ) : null
     };
   },
 
@@ -125,24 +127,21 @@ Meteor.methods( {
   mapEvent ( tile ) {
     check( tile, Match.Any );
 
-    const now       = Date.parse( new Date( ) );
     const timestamp = Date.parse( tile.start );
 
     return {
-      type:         /*tile.registration.status === 'NOT_REQUIRED' ? 'event' :*/ 'activity',
-      subtype:      tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
       key:          tile.sessionId,
-      relTimestamp: Math.abs( timestamp - now ),
-      label:        Meteor.call( 'getDateStr', tile ),
+      timestamp:    Date.parse( tile.start ),
+      type:         'activity',
+      subtype:      tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
       title:        tile.title,
       link:         `https://rei.com${ tile.uri }`,
       caption:      tile.summary ? Meteor.call( 'truncateText', tile.summary, TRUNCATE_LENGTH ) : null,
-      badge:        tile.registration.status,
+      badge:        tile.registration.status === 'WAIT_LIST' ? 'Full' : null,
+      label:        Meteor.call( 'getDateStr', tile.start, tile.end ),
 
       // Replace when images added to service
-      media:        Meteor.call( 'getMedia', { placeholder: { url: '/img/test.jpg' } } ),
-      config,
-      timestamp
+      media:        Meteor.call( 'getMedia', { placeholder: { url: '/img/test.jpg' } } )
     };
   },
 
@@ -150,20 +149,17 @@ Meteor.methods( {
   mapPost ( tile ) {
     check( tile, Match.Any );
 
-    const now       = Date.parse( new Date( ) );
     const timestamp = Date.parse( tile.date );
 
     return {
-      type:         'blog',
       key:          tile.id,
-      relTimestamp: Math.abs( timestamp - now ),
-      label:        'blog',
+      timestamp:    Date.parse( tile.date ),
+      type:         'blog',
       title:        tile.title,
+      label:        'blog',
       link:         tile.url,
-      caption:      Meteor.call( 'truncateText', tile.excerpt, TRUNCATE_LENGTH ),
-      media:        tile.attachments[0] ? Meteor.call( 'getMedia', tile.attachments[0].images ) : [],
-      config,
-      timestamp
+      caption:      tile.excerpt ? Meteor.call( 'truncateText', tile.excerpt, TRUNCATE_LENGTH ) : '',
+      media:        tile.attachments[0] ? Meteor.call( 'getMedia', tile.attachments[0].images ) : []
     };
   },
 
@@ -213,6 +209,7 @@ Meteor.methods( {
       return items.forEach(
         tile => {
           const mapped = Meteor.call( map, tile );
+          mapped.relTimestamp = Meteor.call( 'getTimestampDiff', mapped.timestamp );
 
           Tiles.update(
             { _id:    mapped.key },

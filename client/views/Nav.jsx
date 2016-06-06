@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-// import classnames from 'classnames';
-
 // Tile component - represents a single todo item
 export default class Nav extends Component {
 
