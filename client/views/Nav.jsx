@@ -1,12 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-// import classnames from 'classnames';
-
 // Tile component - represents a single todo item
 export default class Nav extends Component {
 
-  filterClick( event ) {
+  filterClick ( event ) {
       const $tileContainer =  $( '.isotope' );
       const filterValue = event.target.getAttribute( 'data-category' );
 
@@ -29,6 +27,7 @@ export default class Nav extends Component {
       category => {
         return (
             <a href = "#main"
+               key = { category }
                className = "btn btn-xs text-uppercase filter-item"
                data-category = { category }
                onClick={ this.filterClick.bind( this ) }>{ category.charAt(0).toUpperCase() + category.substr(1) }</a>

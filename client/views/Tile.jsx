@@ -5,20 +5,6 @@ import classNames from 'classnames';
 
 // Tile component - represents a single todo item
 export default class Tile extends Component {
-  // deleteThisTile ( ) {
-  //   Meteor.call(
-  //     'tiles.remove',
-  //     this.props.tile._id
-  //   );
-  // }
-  //
-  // togglePublished ( ) {
-  //   Meteor.call(
-  //     'tiles.setToPublished',
-  //     this.props.tile._id,
-  //     ! this.props.tile.published
-  //   );
-  // }
 
   raw( str ) { return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) }; }
 
@@ -80,25 +66,6 @@ export default class Tile extends Component {
     if ( title || label || desc ) {
       content = (
         <div>
-          {/*<button className = "icon icon-rei-close"
-                  onClick   = { this.deleteThisTile.bind( this ) }
-          ></button>*/}
-
-          {/*{ this.props.showPublishedButton ? (*/}
-            {/*
-            <label className = "toggle-published"
-                    onClick  = { this.togglePublished.bind( this ) }
-              >
-              <input
-                type    = "checkbox"
-                checked = { this.props.tile.published }
-                onClick = { this.togglePublished.bind( this ) }
-                readOnly
-              />
-              { this.props.tile.published ? 'Unpublished' : 'Published }
-            </label>
-          ) : '' }
-          */}
           { label }
           { title }
           <div className = "expandable">
@@ -124,13 +91,30 @@ export default class Tile extends Component {
 
     if ( this.props.badge ) {
       badge = (
-        <span className = "position top right">
-          { this.props.badge }
-        </span>
+        <div className = "fill-block overlay">
+          <h2 className = "position center badge">
+            { this.props.badge }
+          </h2>
+          { caption }
+        </div>
       );
     }
 
-    if ( this.props.link && this.props.media ) {
+    if ( this.props.link && this.props.media && !badge ) {
+      inner = (
+        <a href = { this.props.link }
+           target = "_blank"
+           className = "card" >
+          { sizer }
+          <div className = "img-frame center fill">
+            { image }
+          </div>
+          { caption }
+        </a>
+      )
+    }
+
+    if ( this.props.link && this.props.media && badge ) {
       inner = (
         <a href = { this.props.link }
            target = "_blank"
@@ -140,7 +124,6 @@ export default class Tile extends Component {
             { image }
             { badge }
           </div>
-          { caption }
         </a>
       )
     }
@@ -179,7 +162,6 @@ export default class Tile extends Component {
 Tile.propTypes = {
   // Configured
   cols:         PropTypes.object,
-  // published:    PropTypes.boolean,
 
   // Collection
   media:        PropTypes.array.isRequired,
@@ -192,8 +174,5 @@ Tile.propTypes = {
   title:        PropTypes.string,
   alt:          PropTypes.string,
   badge:        PropTypes.string,
-  caption:      PropTypes.string,
-
-  // System
-  // showPublishedButton: React.PropTypes.bool.isRequired,
+  caption:      PropTypes.string
 };

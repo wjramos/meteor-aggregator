@@ -1,4 +1,4 @@
-@import ( reference ) "../../node_modules/rei-cedar/src/less/main.less";
+@import ( reference ) "../../node_modules/rei-cedar/src/less/main";
 
 main {
   background: @core-architectural-1;
@@ -12,6 +12,10 @@ main {
   &-center {
     text-align-last: center;
   }
+}
+
+.badge {
+  white-space: nowrap;
 }
 
 main .card {
@@ -54,6 +58,12 @@ main .card {
     }
   }
 
+  .overlay {
+    .caption {
+      background: transparent;
+    }
+  }
+
   .expandable {
     overflow: hidden;
     max-height: 0;
@@ -65,6 +75,13 @@ main .card {
   &:focus {
     .overlay {
       background-color: transparent;
+      color: transparent;
+      border: none;
+      text-shadow: none;
+
+      .caption {
+        background: rgba( 0, 0, 0, .5 );
+      }
     }
 
     .caption {

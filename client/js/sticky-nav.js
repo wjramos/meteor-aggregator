@@ -3,7 +3,8 @@ $( () => {
     let $win    = $( window );
     let $nav    = $( 'nav' );
 
-    let headerOffset = $header.scrollTop() + $header.height();
+    // BAD: MAGIC NUMBER
+    let headerOffset = 509;
 
     $win.scroll( () => {
         if ( $win.scrollTop() >= headerOffset ) {

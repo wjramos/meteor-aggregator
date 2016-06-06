@@ -1,14 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-// import ReactDOM   from 'react-dom';
 
 import { Tiles } from '../../lib/collections';
 
 import Header from './Header.jsx';
 import Nav    from './Nav.jsx';
 import Grid   from './Grid.jsx';
-
 
 class App extends Component {
 
@@ -20,7 +18,7 @@ class App extends Component {
 
   renderMain ( ) {
     return (
-      <main  className = 'container-fluid'>
+      <main  className = 'container-fluid' id = 'main' >
         <Grid tiles = { this.props.tiles } />
       </main>
     );

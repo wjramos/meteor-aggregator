@@ -13,6 +13,7 @@ export default class IsotopeComponent extends Component {
     this.displayName = 'IsotopeComponent';
     this.isotope     = false;
     this.domChildren = [];
+    this.state       = { mounted : false };
   }
 
   initializeIsotope ( force ) {
@@ -144,6 +145,7 @@ export default class IsotopeComponent extends Component {
   componentDidMount ( ) {
     this.initializeIsotope();
     this.imagesLoaded();
+    this.state.mounted = true;
   }
 
   componentDidUpdate ( ) {
@@ -154,14 +156,14 @@ export default class IsotopeComponent extends Component {
   componentWillReceiveProps ( ) {
     this._timer = setTimeout( ( ) => {
       this.isotope.reloadItems();
-      // isMounted is deprecated
-      // this.isMounted && this.isMounted() && this.forceUpdate();
+      this.state.mounted && this.forceUpdate();
     } );
   }
 
   componentWillUnmount ( ) {
     clearTimeout( this._timer );
     this.isotope.destroy();
+    this.state.mounted = false;
   }
 
   render ( ) {

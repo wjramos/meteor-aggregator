@@ -7,11 +7,13 @@ import { config } from '../../imports/isotope-config';
 export default class Grid extends Component {
 
   renderTiles ( ) {
+    const now = Date.parse( new Date( ) );
     return this.props.tiles.map(
       tile => {
 
-        if ( tile.badge !== 'CANCELLED' &&
-             tile.badge !== 'CLOSED' ) {
+        if ( tile.badge   !== 'CANCELLED' &&
+             tile.badge   !== 'CLOSED' &&
+             !( tile.type === 'activity' && tile.timestamp < now ) ) {
 
           return (
             <Tile
