@@ -1,5 +1,5 @@
 # Development ( Do not use in production )
-FROM jshimko/meteord:devbuild
+# FROM jshimko/meteord:devbuild
 
 # Production
-# FROM jshimko/meteord:onbuild
+FROM jshimko/meteord:onbuild
