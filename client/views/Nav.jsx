@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 // Tile component - represents a single todo item
 export default class Nav extends Component {
 
-  filterClick( event ) {
+  filterClick ( event ) {
       const $tileContainer =  $( '.isotope' );
       const filterValue = event.target.getAttribute( 'data-category' );
 

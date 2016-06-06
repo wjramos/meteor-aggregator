@@ -52,6 +52,17 @@ Meteor.methods( {
     return date;
   },
 
+  getUniqueValues ( collection, key ) {
+    return collection.reduce( ( carry, item ) => {
+      if ( item[ key ] && !~carry.indexOf( item[ key ] ) ) {
+        carry.push( item[ key ] );
+      }
+
+      return carry;
+
+    }, [] ).sort();
+  },
+
 
   truncateText ( text = '', length = 360 ) {
     check( text,   String );

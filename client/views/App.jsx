@@ -20,7 +20,7 @@ class App extends Component {
 
   renderMain ( ) {
     return (
-      <main  className = 'container-fluid'>
+      <main  className = 'container-fluid' id = 'main' >
         <Grid tiles = { this.props.tiles } />
       </main>
     );
