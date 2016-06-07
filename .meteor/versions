@@ -18,7 +18,6 @@ caching-html-compiler@1.0.6
 callback-hook@1.0.9-beta.0
 check@1.2.2-beta.0
 chuangbo:cookie@1.1.0
-dburles:collection-helpers@1.0.4
 ddp@1.2.5
 ddp-client@1.2.8-beta.0
 ddp-common@1.2.6-beta.0

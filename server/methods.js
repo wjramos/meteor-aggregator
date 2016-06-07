@@ -132,7 +132,7 @@ Meteor.methods( {
       key:          tile.sessionId,
       timestamp:    Date.parse( tile.start ),
       type:         'activity',
-      activitytype: tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
+      activityType: tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
       title:        tile.title,
       link:         `https://rei.com${ tile.uri }`,
       caption:      tile.summary ? Meteor.call( 'truncateText', tile.summary, TRUNCATE_LENGTH ) : null,

@@ -1,6 +1,6 @@
 export const config = {
-  published: true,
-  ratio: '9-16',
+  // published: true,
+  // ratio: '9-16',
   cols: {
     xs: 6,
     sm: 4,

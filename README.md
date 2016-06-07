@@ -1,23 +1,20 @@
 # United Outside ( Meteor Content Aggregator ) ![Build Status](https://travis-ci.org/rei/united-outside.svg)
 
 ### How to use:
-1. Install [Meteor](https://www.meteor.com/install)
+1. Install [Meteor](https://www.meteor.com/install) `curl https://install.meteor.com/ | sh`
+1. Clone repository
 1. Run `meteor` inside of app directory
 
-You are now running a meteor app -- accessible at `localhost:3000`
+You are now running a meteor app – accessible at `localhost:3000`
 
 ### Project Structure:
 - client ( runs only on the client )
  - js ( browser scripts )
  - stylesheets ( bundled less )
  - views ( react views )
-
 - server ( runs only on the server )
-
 - imports ( modules that can be loaded either client or server, not engaged unless required )
-
 - public ( static assets )
-
 - config ( module configurations )
 
 ### Features
@@ -31,14 +28,16 @@ You are now running a meteor app -- accessible at `localhost:3000`
 
 
 ### Docker
-[Base image](https://github.com/chriswessels/meteor-tupperware)
+[Base image](https://github.com/meteorhacks/meteord)
 
-#### Building
+#### Build
 ```
 docker build -t rapd/united-outside .
 ```
 
-#### Running
+#### Run
 ```
 docker-compose up
 ```
+
+App should be running at `127.0.0.1`
