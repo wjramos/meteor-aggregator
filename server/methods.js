@@ -13,7 +13,7 @@ const TRUNCATE_LENGTH = 360;
 Meteor.methods( {
 
   poll ( interval, endpoint, query, map, property, Collection = Tiles ) {
-    const curEntries = Tiles.find( ).fetch( );
+    const curEntries = Collection.find( ).fetch( );
     const now = Date.parse( new Date( ) );
     let retrievedCount = 0;
 
@@ -44,10 +44,10 @@ Meteor.methods( {
     Meteor.setInterval( retrieveData, interval );
 
     /* Result Reporting */
-    const updatedEntries = Tiles.find( ).fetch( );
+    const updatedEntries = Collection.find( ).fetch( );
     const difference     = updatedEntries.length - curEntries.length;
     console.log(
-      `\n\nNew Tiles collection size:
+      `\n\nNew  collection size:
        ${ updatedEntries.length } tiles ( ${ difference } new, ${ retrievedCount - difference } updated )\n`
     );
   },
@@ -233,7 +233,7 @@ Meteor.methods( {
     } catch ( e ) {
       console.log( `\n**** Result ****\n`, `\tERROR - CODE: ${ e.code }\n` );
 
-      return false;
+      return [];
     }
   },
 
