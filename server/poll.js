@@ -59,6 +59,9 @@ function poll ( ) {
   );
 }
 
-poll( );
+// If collection is empty, poll immediately, otherwise defer to interval
+if ( Tiles.find( ).fetch( ).length < 1 ) {
+  poll( );
+}
 
 Meteor.setInterval( poll, POLL_INTERVAL );
