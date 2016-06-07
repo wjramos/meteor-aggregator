@@ -10,8 +10,47 @@ import { config } from '../imports/tile-config';
 _ = lodash;
 
 const TRUNCATE_LENGTH = 360;
-
 Meteor.methods( {
+
+  poll ( interval, endpoint, query, map, property, Collection = Tiles ) {
+    const curEntries = Tiles.find( ).fetch( );
+    const now = Date.parse( new Date( ) );
+    let retrievedCount = 0;
+
+    console.log( '---- Poll ----\n',`\tInitial Tiles collection size: ${ curEntries.length } tiles` );
+
+    function retrieveData ( ) {
+      let data = Meteor.call( 'getData', endpoint, query, property );
+      console.log( `Found ${ data.length } items – Mapping and inserting using ${ map } schema adaptor...` );
+      retrievedCount += data.length;
+      return data ? Meteor.call( 'upsert', applyMap( data ) ) : [];
+    }
+
+    function applyMap( items ) {
+      return items.map(
+        item => {
+          item = Meteor.call( map, item );
+          item.relTimestamp = Meteor.call( 'getTimestampDiff', item.timestamp, now );
+          return item;
+        }
+      );
+    }
+
+    if ( curEntries.length < 1 ) {
+      console.log( 'No data in collection, retrieving initial set...' );
+      retrieveData();
+    }
+
+    Meteor.setInterval( retrieveData, interval );
+
+    /* Result Reporting */
+    const updatedEntries = Tiles.find( ).fetch( );
+    const difference     = updatedEntries.length - curEntries.length;
+    console.log(
+      `\n\nNew Tiles collection size:
+       ${ updatedEntries.length } tiles ( ${ difference } new, ${ retrievedCount - difference } updated )\n`
+    );
+  },
 
   getDateStr ( start, end ) {
     check( start, Match.Any );
@@ -132,7 +171,7 @@ Meteor.methods( {
       key:          tile.sessionId,
       timestamp:    Date.parse( tile.start ),
       type:         'activity',
-      activitytype: tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
+      activityType: tile.activityType && tile.activityType.program ? tile.activityType.program.name : '',
       title:        tile.title,
       link:         `https://rei.com${ tile.uri }`,
       caption:      tile.summary ? Meteor.call( 'truncateText', tile.summary, TRUNCATE_LENGTH ) : null,
@@ -163,9 +202,10 @@ Meteor.methods( {
   },
 
 
-  getData ( endpoint, query ) {
+  getData ( endpoint, query, property ) {
     check( endpoint, Match.Any );
     check( query, Match.Any );
+    check( property, Match.Any );
 
     let response;
 
@@ -188,7 +228,7 @@ Meteor.methods( {
       );
       console.log( `\n**** Result ****\n`, `\tSUCCESS\n` );
 
-      return response.data;
+      return response.data[ property ];
 
     } catch ( e ) {
       console.log( `\n**** Result ****\n`, `\tERROR - CODE: ${ e.code }\n` );
@@ -198,22 +238,14 @@ Meteor.methods( {
   },
 
 
-  upsert ( items, map ) {
-    check( items, Match.Any );
-    check( map, Match.Any );
-
-    if ( items ) {
-      console.log( `Found ${ items.length } items – Mapping and inserting using ${ map } schema adaptor...` );
-      const now = Date.parse( new Date( ) );
-
-      return items.forEach(
+  upsert ( tiles, Collection = Tiles ) {
+    check( tiles, Match.Any );
+    if ( tiles ) {
+      return tiles.forEach(
         tile => {
-          const mapped = Meteor.call( map, tile );
-          mapped.relTimestamp = Meteor.call( 'getTimestampDiff', mapped.timestamp, now );
-
-          Tiles.update(
-            { _id:    mapped.key },
-            { $set:   mapped },
+          Collection.update(
+            { _id:    tile.key },
+            { $set:   tile },
             { upsert: true }
           );
         }
