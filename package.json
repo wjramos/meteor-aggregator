@@ -16,7 +16,8 @@
     "react-addons-pure-render-mixin": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-lazyload": "^2.0.4",
-    "react-pure-render": "^1.0.2"
+    "react-pure-render": "^1.0.2",
+    "rei-cedar": "git+https://github.com/rei/rei-cedar.git#v1.2.7"
   },
   "devDependencies": {
     "eslint": "^2.10.2",
