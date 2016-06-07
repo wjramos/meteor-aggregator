@@ -8,23 +8,32 @@ class Query {
     this.query     = config.query;
     this.results   = [];
     this.interval  = null;
+
+    this.resolve( );
   }
 
   resolve ( ) {
-    return this.results = this.results.concat(
-      Meteor.call( 'getData', this.endpoint, this.query, this.property ).map(
-        result => Meteor.call( this.mapMethod, result )
-      )
+    return Meteor.call( 'getData', this.endpoint, this.query, this.property ).map(
+      result => !_.some( this.results, [ 'key', result.key ] ) ? this.results.push( Meteor.call( this.mapMethod, result ) ) : null
     );
   }
 
   poll ( interval = 300000 ) {
+    if ( this.results.length < 1 ) {
+      this.resolve();
+    }
+
     return this.interval = Meteor.setInterval( this.resolve, interval );
   }
 
   stop ( ) {
     return Meteor.clearInterval( this.interval );
   }
+
+  reset ( ) {
+    return this.results = [];
+  }
+
 }
 
 const PROGRAMS = {
@@ -64,25 +73,16 @@ const wpQuery = {
 }
 
 const curalate = new Query( curalateQuery );
-const wp = new Query( wpQuery);
+const wp       = new Query( wpQuery);
 
 let queries = [ curalate, wp ];
 
 for ( program in PROGRAMS ) {
   eventQuery.query.programIds = PROGRAMS[ program ];
-  queries.push(
-    new Query( eventQuery )
-  );
+  query = new Query( eventQuery );
+  query.results.forEach( result => result.activityType = program )
+
+  queries.push( query );
 }
 
 export default queries;
-console.log( queries );
-
-//     const data = Meteor.call( 'getData', EVENTS, programQuery );
-//
-//     if ( data.hasOwnProperty( 'events' ) ) {
-//       data.events.forEach( event => event.activityType = program );
-//       events = events.concat( data.events );
-//     }
-//   }
-//
