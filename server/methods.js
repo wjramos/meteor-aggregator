@@ -13,13 +13,13 @@ const TRUNCATE_LENGTH = 360;
 
 Meteor.methods( {
 
-  getDateStr ( start, end ) {
+  getDateStr ( start = 0, end = 0 ) {
     check( start, Match.Any );
     check( end, Match.Any );
 
     let startObj;
     let endObj;
-    let date = '';
+    let dateStr = '';
 
     if ( start ) {
       const startDate = new Date( start );
@@ -28,30 +28,30 @@ Meteor.methods( {
         month: months[ startDate.getMonth() ]
       };
 
-      date += `${ startObj.month } ${ startObj.date }`;
+      dateStr += `${ startObj.month } ${ startObj.date }`;
     }
 
-    if ( end && end !== start ) {
-      const endDate   = new Date( end );
+    if ( end && end > start ) {
+      const endDate = new Date( end );
       endObj = {
         date:  endDate.getDate(),
         month: months[ endDate.getMonth() ]
       };
 
       if ( endObj.month !== startObj.month || endObj.date !== startObj.date ) {
-        date += ' - ';
+        dateStr += ' - ';
       }
 
       if ( endObj.month !== startObj.month ) {
-        date += endObj.month + ' ';
+        dateStr += endObj.month + ' ';
       }
 
       if ( endObj.date !== startObj.date ) {
-        date += endObj.date;
+        dateStr += endObj.date;
       }
     }
 
-    return date;
+    return dateStr;
   },
 
   getTimestampDiff ( timestamp, reference ) {
