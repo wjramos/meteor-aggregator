@@ -17,18 +17,9 @@ export default class Grid extends Component {
 
           return (
             <Tile
-              type         = { tile.type }
-              activitytype  = { tile.activitytype }
-              key          = { tile.key }
-              timestamp    = { tile.timestamp }
-              relTimestamp = { tile.relTimestamp }
-              title        = { tile.title }
-              link         = { tile.link }
-              caption      = { tile.caption }
-              media        = { tile.media }
-              badge        = { tile.badge }
-              label        = { tile.label }
-              cols         = { {
+              key  = { tile.key }
+              tile = { tile }
+              cols = { {
                 xs: null,
                 sm: null,
                 md: null,
@@ -44,6 +35,7 @@ export default class Grid extends Component {
   render ( ) {
     return (
       <IsotopeComponent
+        key = 'isotope'
         className = { 'row row-flex tile isotope' }
         elementType = { 'ul' }
         options = { config }
