@@ -28,7 +28,7 @@ export default class Nav extends Component {
         return (
             <a href = "#main"
                key = { category }
-               className = "btn btn-xs text-uppercase filter-item"
+               className = "filter-item"
                data-category = { '.' + category }
                onClick={ this.filterClick.bind( this ) }>{ category.charAt(0).toUpperCase() + category.substr(1) }</a>
         );
@@ -44,7 +44,7 @@ export default class Nav extends Component {
         { this.renderFilters( ) }
 
         <a href = "#main"
-           className = "btn btn-xs text-uppercase filter-item"
+           className = "filter-item"
            data-category = "*"
            onClick={ this.filterClick }>Show All</a>
       </nav>

@@ -146,7 +146,7 @@ export default class Tile extends Component {
         </a>
       )
     }
-console.log(this.props.tile.activityType)
+
     return (
         <li className = { classNames( classes ) }
             data-category  = { this.props.tile.type }
