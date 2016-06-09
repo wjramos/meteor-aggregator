@@ -2,8 +2,9 @@
 // New .less files will be automatically imported  at the bottom
 // Existing contents will not be touched
 // When you delete a less file you must manually delete the import from here as well
-@import ( css ) '//satchel.rei.com/packages/rei/rei-cedar/edge/rei-cedar.min.css';
-@import "client/stylesheets/variables.less";
+
+// @import "client/stylesheets/variables.less";
+@import ( less, reference ) 'client/stylesheets/lib/rei-cedar.css';
 @import 'client/stylesheets/shim.less';
 @import 'client/stylesheets/general.less';
 @import 'client/stylesheets/header.less';
