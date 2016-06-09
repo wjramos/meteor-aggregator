@@ -4,7 +4,7 @@ $( () => {
     let $nav    = $( 'nav' );
 
     // BAD: MAGIC NUMBER
-    let headerOffset = 509;
+    let headerOffset = 465;
 
     $win.scroll( () => {
         if ( $win.scrollTop() >= headerOffset ) {
