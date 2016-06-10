@@ -29,7 +29,7 @@
         line-height: .75 !important;
         font-size: 2.4rem !important;
         background: transparent;
-        box-sizing: content-box;
+       /* box-sizing: content-box;*/
         transition: .25s ease all;
 
         @media screen and ( min-width: @screen-md-min ) {
@@ -50,5 +50,9 @@
         &.active {
             color: @color-secondary !important;
         }
+    }
+
+    .activity-submenu {
+        display: none;
     }
 }

@@ -1,18 +1,24 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import LazyLoad   from 'react-lazyload';
-import { Meteor } from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor';
 import classNames from 'classnames';
 
 // Tile component - represents a single todo item
 export default class Tile extends Component {
 
-  raw( str ) { return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) }; }
+  raw ( str ) {
+    return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) };
+  }
 
-  render ( ) {
+  render () {
+
+    let classifiedActivityType = this.props.tile.activityType;
+    ( classifiedActivityType ) ? classifiedActivityType.replace( /\s+/g, '-' ).toLowerCase() : '';
+
     const classes = [
       'item',
       this.props.tile.type,
-      this.props.tile.activitytype,
+      classifiedActivityType,
       `col-xs-${ this.props.cols.xs || 6 }`,
       `col-sm-${ this.props.cols.sm || 4 }`,
       `col-md-${ this.props.cols.md || 3 }`,
@@ -29,38 +35,40 @@ export default class Tile extends Component {
     let inner;
     let sizer;
 
-    if ( this.props.tile.media[0] ) {
+    if ( this.props.tile.media[ 0 ] ) {
       image = (
-        <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
-          <img className = "fade in"
-               src = { this.props.tile.media[ this.props.tile.media.length - 1 ].url }
-               // srcset
-               alt = { this.props.tile.alt || '' } />
+        <LazyLoad offset={ [ 200, 200 ] } resize={ true } height={ 0 } throttle={ 200 } once>
+          <img className="fade in"
+               src={ this.props.tile.media[ this.props.tile.media.length - 1 ].url }
+            // srcset
+               alt={ this.props.tile.alt || '' }/>
         </LazyLoad>
       )
     }
 
-    if ( !this.props.tile.link && this.props.tile.media[0] ) {
+    if ( !this.props.tile.link && this.props.tile.media[ 0 ] ) {
       image = (
-        <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
-          <img className = "fade in img-responsive"
-               src = { this.props.tile.media[ this.props.tile.media.length - 1 ].url }
-               // srcset
-               alt = { this.props.tile.alt || '' } />
+        <LazyLoad offset={ [ 200, 200 ] } resize={ true } height={ 0 } throttle={ 200 } once>
+          <img className="fade in img-responsive"
+               src={ this.props.tile.media[ this.props.tile.media.length - 1 ].url }
+            // srcset
+               alt={ this.props.tile.alt || '' }/>
         </LazyLoad>
       )
     }
 
     if ( this.props.tile.title ) {
-      title = ( <h3 className = "caption-title" dangerouslySetInnerHTML = { this.raw( this.props.tile.title ) }></h3> );
+      title = (
+        <h3 className="caption-title" dangerouslySetInnerHTML={ this.raw( this.props.tile.title ) }></h3> );
     }
 
     if ( this.props.tile.label ) {
-      label = ( <p className = "caption-label">{ this.props.tile.label }</p> );
+      label = ( <p className="caption-label">{ this.props.tile.label }</p> );
     }
 
     if ( this.props.tile.caption ) {
-      desc = <div className = "caption-description" dangerouslySetInnerHTML = { this.raw( this.props.tile.caption ) }></div>
+      desc = <div className="caption-description"
+                  dangerouslySetInnerHTML={ this.raw( this.props.tile.caption ) }></div>
     }
 
     if ( title || label || desc ) {
@@ -68,14 +76,14 @@ export default class Tile extends Component {
         <div>
           { label }
           { title }
-          <div className = "expandable">
+          <div className="expandable">
             { desc }
           </div>
         </div>
       );
 
       sizer = (
-        <div className = "card-sizer" style = { { 'visibility' : 'hidden' } }>
+        <div className="card-sizer" style={ { 'visibility' : 'hidden' } }>
           { content }
         </div>
       );
@@ -83,7 +91,7 @@ export default class Tile extends Component {
 
     if ( this.props.tile.caption && this.props.tile.media ) {
       caption = (
-        <div className = "caption">
+        <div className="caption">
           { content }
         </div>
       );
@@ -91,8 +99,8 @@ export default class Tile extends Component {
 
     if ( this.props.tile.badge ) {
       badge = (
-        <div className = "fill-block overlay">
-          <h2 className = "position center badge">
+        <div className="fill-block overlay">
+          <h2 className="position center badge">
             { this.props.tile.badge }
           </h2>
           { caption }
@@ -102,11 +110,11 @@ export default class Tile extends Component {
 
     if ( this.props.tile.link && this.props.tile.media && !badge ) {
       inner = (
-        <a href = { this.props.link }
-           target = "_blank"
-           className = "card" >
+        <a href={ this.props.link }
+           target="_blank"
+           className="card">
           { sizer }
-          <div className = "img-frame center fill">
+          <div className="img-frame center fill">
             { image }
           </div>
           { caption }
@@ -116,11 +124,11 @@ export default class Tile extends Component {
 
     if ( this.props.tile.link && this.props.tile.media && badge ) {
       inner = (
-        <a href = { this.props.tile.link }
-           target = "_blank"
-           className = "card" >
+        <a href={ this.props.tile.link }
+           target="_blank"
+           className="card">
           { sizer }
-          <div className = "img-frame center fill">
+          <div className="img-frame center fill">
             { image }
             { badge }
           </div>
@@ -130,31 +138,30 @@ export default class Tile extends Component {
 
     if ( !this.props.tile.link && this.props.tile.media ) {
       inner = (
-        <div className = "card">
-            { image }
-            { badge }
+        <div className="card">
+          { image }
+          { badge }
         </div>
       )
     }
 
     if ( this.props.tile.link && !this.props.tile.media ) {
       inner = (
-        <a href = { this.props.tile.link }
-           target = "_blank"
-           className = "card" >
+        <a href={ this.props.tile.link }
+           target="_blank"
+           className="card">
           { content }
         </a>
       )
     }
-console.log(this.props.tile.activityType)
     return (
-        <li className = { classNames( classes ) }
-            data-category  = { this.props.tile.type }
-            data-subcategory = { this.props.tile.activityType }
-            data-timestamp = { this.props.tile.timestamp }
-            data-rel-timestamp = { this.props.tile.relTimestamp } >
-          { inner }
-        </li>
+      <li className={ classNames( classes ) }
+          data-category={ this.props.tile.type }
+          data-subcategory={ classifiedActivityType }
+          data-timestamp={ this.props.tile.timestamp }
+          data-rel-timestamp={ this.props.tile.relTimestamp }>
+        { inner }
+      </li>
     );
   }
 }
@@ -163,5 +170,5 @@ Tile.propTypes = {
   tile: PropTypes.object,
 
   // Configuration
-  cols:         PropTypes.object,
+  cols: PropTypes.object,
 };
