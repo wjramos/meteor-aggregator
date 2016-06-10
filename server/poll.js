@@ -24,7 +24,7 @@ function poll ( ) {
       thisQuery.programIds = PROGRAMS[program];
       const data = Meteor.call( 'getData', EVENTS, thisQuery );
 
-      if (data.hasOwnProperty('events')) {
+      if ( data.hasOwnProperty( 'events' ) ) {
         data.events.forEach( event => event.activityType = program );
         events = events.concat( data.events );
       }

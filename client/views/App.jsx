@@ -35,6 +35,7 @@ class App extends Component {
   render ( ) {
     return (
       <div>
+        {/*<script dangerouslySetInnerHTML={{ __html: `window.data = ${ JSON.stringify( this.props.tiles ) };` }}></script>*/}
         { this.renderHeader() }
         { this.renderNav() }
         { this.renderMain() }

@@ -6,18 +6,18 @@ export default class Header extends Component {
     return (
       <header className = "container-fluid">
         <div className = "row">
-          <div className = "col-xs-12 text-center">
-            <h1 className = "heading-announce">{ TITLE }</h1>
+          <div className = "col-xs-12">
+            <h1>{ TITLE }</h1>
             <section className = "row">
               <div className = "col-xs-10 col-xs-offset-1 col-md-10 col-md-offset-1">
-                <h3 className = "text-uppercase text-justify text-last-center">{ LEAD }</h3>
+                <h3>{ LEAD }</h3>
               </div>
             </section>
             <section className = "row">
               <div className = "col-xs-2 col-xs-offset-5 vertical-pull-xl">
                 <a href = "https://rei.com"
                    target = "_blank">
-                  <img src = "/img/co-op.svg"
+                  <img src = "//satchel.rei.com/media/img/header/rei-co-op-logo-red.svg"
                        alt = { LOGO_ALT }/>
                 </a>
               </div>

@@ -31,6 +31,8 @@ aldeed:collection2
 meteorhacks:subs-manager
 
 meteorhacks:fast-render
-kadira:flow-router
+kadira:flow-router-ssr
 
 meteorhacks:kadira
+appcache
+kadira:dochead

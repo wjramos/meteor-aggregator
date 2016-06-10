@@ -8,6 +8,7 @@ dashboard:
    - ROOT_URL=http://127.0.0.1
    - MONGO_URL=mongodb://mongo/meteor
    - MONGO_OPLOG=mongodb://mongo/local
-   
+   - DISABLE_WEBSOCKETS=1
+
 mongo:
   image: mongo:latest

@@ -22,15 +22,17 @@ export default class Nav extends Component {
 
     }, [] ).sort();
 
+    // Append 'reset option'
+    categories.push( null );
 
     return categories.map(
       category => {
         return (
             <a href = "#main"
-               key = { category }
+               key = { category || 'all' }
                className = "filter-item"
-               data-category = { '.' + category }
-               onClick={ this.filterClick.bind( this ) }>{ category.charAt(0).toUpperCase() + category.substr(1) }</a>
+               data-category = { category ? '.' + category : '*' }
+               onClick={ this.filterClick.bind( this ) }>{ category ? category.charAt(0).toUpperCase() + category.substr(1) : 'Show All' }</a>
         );
       }
     )
@@ -39,14 +41,8 @@ export default class Nav extends Component {
   render ( ) {
     return (
       <nav className = "filters js-filters">
-        <label class = "hidden-xs">Filter By:</label>
-
+        <label>Filter By:</label>
         { this.renderFilters( ) }
-
-        <a href = "#main"
-           className = "filter-item"
-           data-category = "*"
-           onClick={ this.filterClick }>Show All</a>
       </nav>
     );
   }
