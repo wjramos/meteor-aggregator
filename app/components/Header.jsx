@@ -7,10 +7,10 @@ export default class Header extends Component {
       <header className = "container-fluid">
         <div className = "row">
           <div className = "col-xs-12">
-            <h1>{ TITLE }</h1>
+            <h1 className = "heading-announce">{ TITLE }</h1>
             <section className = "row">
               <div className = "col-xs-10 col-xs-offset-1 col-md-10 col-md-offset-1">
-                <h3>{ LEAD }</h3>
+                <h3 className = "text-uppercase text-last-center text-justify">{ LEAD }</h3>
               </div>
             </section>
             <section className = "row">

@@ -8,7 +8,7 @@ export const CURALATE_QUERY = {
 export const WP       = 'http://brightestyoungthings.com/api/get_recent_posts';
 export const WP_QUERY = {
   limit: 10000,
-  tag:   'rei'
+  // tag:   'rei'
 };
 
 export const EVENTS = 'https://rei.com/rest/events/nearby';
@@ -19,7 +19,7 @@ export const EVENTS_QUERY = {
   offset:        0,
   distance:      100,
   location:      20500,
-  sa:            'United DC',
+  // sa:            'United DC',
   // ca:            'Women Only'
 };
 

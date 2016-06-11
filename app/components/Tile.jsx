@@ -3,6 +3,8 @@ import LazyLoad   from 'react-lazyload';
 import { Meteor } from 'meteor/meteor';
 import classNames from 'classnames';
 
+import { config } from '../../imports/tile-config';
+
 // Tile component - represents a single todo item
 export default class Tile extends Component {
 
@@ -13,10 +15,10 @@ export default class Tile extends Component {
       'item',
       this.props.tile.type,
       this.props.tile.activitytype,
-      `col-xs-${ this.props.cols.xs || 6 }`,
-      `col-sm-${ this.props.cols.sm || 4 }`,
-      `col-md-${ this.props.cols.md || 3 }`,
-      `col-lg-${ this.props.cols.lg || 3 }`
+      `col-xs-${ config.cols.xs || 6 }`,
+      `col-sm-${ config.cols.sm || 4 }`,
+      `col-md-${ config.cols.md || 3 }`,
+      `col-lg-${ config.cols.lg || 3 }`
     ];
 
     let image;
@@ -160,8 +162,5 @@ export default class Tile extends Component {
 }
 
 Tile.propTypes = {
-  tile: PropTypes.object,
-
-  // Configuration
-  cols:         PropTypes.object,
+  tile: PropTypes.object
 };

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { assign } from 'lodash';
 
-const isBrowser = !!window;
-const Isotope = isBrowser ? Isotope || window.Isotope : null;
+const isBrowser = typeof window !== 'undefined';
+const Isotope = isBrowser ? ( Isotope || window.Isotope || require( 'isotope-layout' ) ) : null;
 const imagesloaded = isBrowser ? require( 'imagesloaded' ) : null;
 const refName = 'isotopeContainer';
 
