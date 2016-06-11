@@ -6,9 +6,12 @@ import Grid from './containers/grid';
 
 FlowRouter.route( '/', {
   name: 'Home',
+  subscriptions: function( params, queryParams ) {
+    this.register( 'tiles', Meteor.subscribe( 'tiles.public' ) );
+  },
   action( ) {
     mount( Page, {
-      content: <Grid />
+      Grid: <Grid />
     } );
   }
 } );

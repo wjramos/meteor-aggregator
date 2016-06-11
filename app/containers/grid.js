@@ -3,7 +3,7 @@ import { composeWithTracker } from 'react-komposer';
 import { Tiles } from '../../lib/collections';
 import Grid from '../components/Grid.jsx';
 
-const loading = ( ) => ( '<div>Loading...</div>' );
+const loading = ( ) => ( <div>{ 'Loading...' }</div> );
 
 const composer = ( props, onData ) => {
   if ( Meteor.subscribe( 'tiles' ).ready( ) ) {

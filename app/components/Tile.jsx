@@ -5,7 +5,6 @@ import classNames from 'classnames';
 
 import { config } from '../../imports/tile-config';
 
-// Tile component - represents a single todo item
 export default class Tile extends Component {
 
   raw( str ) { return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) }; }
