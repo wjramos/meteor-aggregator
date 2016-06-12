@@ -30,15 +30,15 @@ export default Tile = ( { tile } ) => {
   let inner;
   let sizer;
 
-  if ( tile.media[0] ) {
+  if ( tile.media.length > 0 ) {
     image = (
       <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
         <img className = { `fade in${ !tile.link ? ' img-responsive' : '' }` }
              src = { tile.media[ tile.media.length - 1 ].url }
-             // srcset
+             // TODO: srcset
              alt = { tile.alt || '' } />
       </LazyLoad>
-    )
+    );
   }
 
   if ( tile.label ) {
@@ -50,7 +50,7 @@ export default Tile = ( { tile } ) => {
   }
 
   if ( tile.caption ) {
-    desc = <div className = "caption-description" dangerouslySetInnerHTML = { rawHTML( tile.caption ) }></div>
+    desc = ( <div className = "caption-description" dangerouslySetInnerHTML = { rawHTML( tile.caption ) }></div> );
   }
 
   if ( label || title || desc ) {
@@ -64,11 +64,7 @@ export default Tile = ( { tile } ) => {
       </div>
     );
 
-    sizer = (
-      <div className = "card-sizer" style = { { 'visibility' : 'hidden' } }>
-        { content }
-      </div>
-    );
+    sizer = ( <div className = "card-sizer" style = { { 'visibility' : 'hidden' } }>{ content }</div> );
   }
 
   if ( tile.caption && tile.media ) {
@@ -102,16 +98,11 @@ export default Tile = ( { tile } ) => {
         </div>
         { !tile.badge ? caption : null }
       </a>
-    )
+    );
   }
 
   if ( !tile.link && tile.media ) {
-    inner = (
-      <div className = "card">
-          { image }
-          { badge }
-      </div>
-    )
+    inner = ( <div className = "card">{ image }{ badge }</div>);
   }
 
   if ( tile.link && !tile.media ) {
@@ -121,7 +112,7 @@ export default Tile = ( { tile } ) => {
          className = "card" >
         { content }
       </a>
-    )
+    );
   }
 
   return (

@@ -28,9 +28,14 @@ function getUniqueValues( arr, key ) {
 
 export default Grid = ( { tiles } ) => {
   tiles = getActive( tiles );
+  let categories = getUniqueValues( tiles, 'type' );
+  
+  /* Add reset filter */
+  categories.push( null );
+
   return (
     <main className = "container-fluid" id = "main" >
-      <Nav categories = { getUniqueValues( tiles, 'type' ) } />
+      <Nav categories = { categories } />
       <Isotope
         key = 'isotope'
         className = { 'row row-flex tile isotope' }
