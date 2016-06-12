@@ -107,7 +107,7 @@ export default Tile = ( { tile } ) => {
 
   if ( tile.link && !tile.media ) {
     inner = (
-      <a href = { this.props.tile.link }
+      <a href = { tile.link }
          target = "_blank"
          className = "card" >
         { content }
