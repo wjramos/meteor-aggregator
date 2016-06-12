@@ -1,11 +1,16 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
+
 import { config } from '../../imports/isotope-config';
 
 import Nav from './Nav.jsx';
 import Isotope from './Isotope.jsx';
 import Tile from './Tile.jsx';
 
-function getActive( tiles ) {
+/* TODO: Move to methods */
+function getActive ( tiles = [] ) {
+  check( tiles, Array );
+
   const now = Date.parse( new Date( ) );
   return tiles.filter(
     tile => (
@@ -16,8 +21,11 @@ function getActive( tiles ) {
   );
 }
 
-function getUniqueValues( arr, key ) {
-  return arr.reduce( ( carry, item ) => {
+function getUniqueValues ( collection = [], key = '' ) {
+  check( collection, Array );
+  check( key,        String );
+
+  return collection.reduce( ( carry, item ) => {
     if ( item[ key ] && !~carry.indexOf( item[ key ] ) ) {
       carry.push( item[ key ] );
     }
@@ -29,7 +37,7 @@ function getUniqueValues( arr, key ) {
 export default Grid = ( { tiles } ) => {
   tiles = getActive( tiles );
   let categories = getUniqueValues( tiles, 'type' );
-  
+
   /* Add reset filter */
   categories.push( null );
 

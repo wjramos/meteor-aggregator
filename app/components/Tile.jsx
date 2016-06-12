@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import LazyLoad   from 'react-lazyload';
-import { Meteor } from 'meteor/meteor';
 import classNames from 'classnames';
 
 import { config } from '../../imports/tile-config';
