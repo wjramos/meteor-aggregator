@@ -5,161 +5,132 @@ import classNames from 'classnames';
 
 import { config } from '../../imports/tile-config';
 
-export default class Tile extends Component {
-
-  raw( str ) { return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) }; }
-
-  render ( ) {
-    const classes = [
-      'item',
-      this.props.tile.type,
-      this.props.tile.activitytype,
-      `col-xs-${ config.cols.xs || 6 }`,
-      `col-sm-${ config.cols.sm || 4 }`,
-      `col-md-${ config.cols.md || 3 }`,
-      `col-lg-${ config.cols.lg || 3 }`
-    ];
-
-    let image;
-    let label;
-    let title;
-    let desc;
-    let caption;
-    let badge;
-    let content;
-    let inner;
-    let sizer;
-
-    if ( this.props.tile.media[0] ) {
-      image = (
-        <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
-          <img className = "fade in"
-               src = { this.props.tile.media[ this.props.tile.media.length - 1 ].url }
-               // srcset
-               alt = { this.props.tile.alt || '' } />
-        </LazyLoad>
-      )
-    }
-
-    if ( !this.props.tile.link && this.props.tile.media[0] ) {
-      image = (
-        <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
-          <img className = "fade in img-responsive"
-               src = { this.props.tile.media[ this.props.tile.media.length - 1 ].url }
-               // srcset
-               alt = { this.props.tile.alt || '' } />
-        </LazyLoad>
-      )
-    }
-
-    if ( this.props.tile.title ) {
-      title = ( <h3 className = "caption-title" dangerouslySetInnerHTML = { this.raw( this.props.tile.title ) }></h3> );
-    }
-
-    if ( this.props.tile.label ) {
-      label = ( <p className = "caption-label">{ this.props.tile.label }</p> );
-    }
-
-    if ( this.props.tile.caption ) {
-      desc = <div className = "caption-description" dangerouslySetInnerHTML = { this.raw( this.props.tile.caption ) }></div>
-    }
-
-    if ( title || label || desc ) {
-      content = (
-        <div>
-          { label }
-          { title }
-          <div className = "expandable">
-            { desc }
-          </div>
-        </div>
-      );
-
-      sizer = (
-        <div className = "card-sizer" style = { { 'visibility' : 'hidden' } }>
-          { content }
-        </div>
-      );
-    }
-
-    if ( this.props.tile.caption && this.props.tile.media ) {
-      caption = (
-        <div className = "caption">
-          { content }
-        </div>
-      );
-    }
-
-    if ( this.props.tile.badge ) {
-      badge = (
-        <div className = "fill-block overlay">
-          <h2 className = "position center badge">
-            { this.props.tile.badge }
-          </h2>
-          { caption }
-        </div>
-      );
-    }
-
-    if ( this.props.tile.link && this.props.tile.media && !badge ) {
-      inner = (
-        <a href = { this.props.link }
-           target = "_blank"
-           className = "card" >
-          { sizer }
-          <div className = "img-frame center fill">
-            { image }
-          </div>
-          { caption }
-        </a>
-      )
-    }
-
-    if ( this.props.tile.link && this.props.tile.media && badge ) {
-      inner = (
-        <a href = { this.props.tile.link }
-           target = "_blank"
-           className = "card" >
-          { sizer }
-          <div className = "img-frame center fill">
-            { image }
-            { badge }
-          </div>
-        </a>
-      )
-    }
-
-    if ( !this.props.tile.link && this.props.tile.media ) {
-      inner = (
-        <div className = "card">
-            { image }
-            { badge }
-        </div>
-      )
-    }
-
-    if ( this.props.tile.link && !this.props.tile.media ) {
-      inner = (
-        <a href = { this.props.tile.link }
-           target = "_blank"
-           className = "card" >
-          { content }
-        </a>
-      )
-    }
-
-    return (
-        <li className = { classNames( classes ) }
-            data-category  = { this.props.tile.type }
-            data-subcategory = { this.props.tile.activityType }
-            data-timestamp = { this.props.tile.timestamp }
-            data-rel-timestamp = { this.props.tile.relTimestamp } >
-          { inner }
-        </li>
-    );
-  }
+function rawHTML ( str ) {
+  return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) };
 }
 
-Tile.propTypes = {
-  tile: PropTypes.object
-};
+export default Tile = ( { tile } ) => {
+  const classes = [
+    'item',
+    tile.type,
+    tile.activitytype,
+    `col-xs-${ config.cols.xs || 6 }`,
+    `col-sm-${ config.cols.sm || 4 }`,
+    `col-md-${ config.cols.md || 3 }`,
+    `col-lg-${ config.cols.lg || 3 }`
+  ];
+
+  let image;
+  let label;
+  let title;
+  let desc;
+  let caption;
+  let badge;
+  let content;
+  let inner;
+  let sizer;
+
+  if ( tile.media[0] ) {
+    image = (
+      <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
+        <img className = { `fade in${ !tile.link ? ' img-responsive' : '' }` }
+             src = { tile.media[ tile.media.length - 1 ].url }
+             // srcset
+             alt = { tile.alt || '' } />
+      </LazyLoad>
+    )
+  }
+
+  if ( tile.label ) {
+    label = ( <p className = "caption-label">{ tile.label }</p> );
+  }
+
+  if ( tile.title ) {
+    title = ( <h3 className = "caption-title" dangerouslySetInnerHTML = { rawHTML( tile.title ) }></h3> );
+  }
+
+  if ( tile.caption ) {
+    desc = <div className = "caption-description" dangerouslySetInnerHTML = { rawHTML( tile.caption ) }></div>
+  }
+
+  if ( label || title || desc ) {
+    content = (
+      <div>
+        { label }
+        { title }
+        <div className = "expandable">
+          { desc }
+        </div>
+      </div>
+    );
+
+    sizer = (
+      <div className = "card-sizer" style = { { 'visibility' : 'hidden' } }>
+        { content }
+      </div>
+    );
+  }
+
+  if ( tile.caption && tile.media ) {
+    caption = (
+      <div className = "caption">
+        { content }
+      </div>
+    );
+  }
+
+  if ( tile.badge ) {
+    badge = (
+      <div className = "fill-block overlay">
+        <h2 className = "position center badge">
+          { tile.badge }
+        </h2>
+        { caption }
+      </div>
+    );
+  }
+
+  if ( tile.link && tile.media ) {
+    inner = (
+      <a href = { tile.link }
+         target = "_blank"
+         className = "card" >
+        { sizer }
+        <div className = "img-frame center fill">
+          { image }
+          { tile.badge ? badge : null }
+        </div>
+        { !tile.badge ? caption : null }
+      </a>
+    )
+  }
+
+  if ( !tile.link && tile.media ) {
+    inner = (
+      <div className = "card">
+          { image }
+          { badge }
+      </div>
+    )
+  }
+
+  if ( tile.link && !tile.media ) {
+    inner = (
+      <a href = { this.props.tile.link }
+         target = "_blank"
+         className = "card" >
+        { content }
+      </a>
+    )
+  }
+
+  return (
+    <li className = { classNames( classes ) }
+        data-category  = { tile.type }
+        data-subcategory = { tile.activityType }
+        data-timestamp = { tile.timestamp }
+        data-rel-timestamp = { tile.relTimestamp } >
+      { inner }
+    </li>
+  );
+}
