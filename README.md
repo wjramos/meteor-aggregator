@@ -8,6 +8,7 @@
 You are now running a meteor app – accessible at `localhost:3000`
 
 ### Project Structure:
+```
 - client       ( runs only on the client )
  - js          ( browser scripts )
  - stylesheets ( bundled less )
@@ -20,6 +21,7 @@ You are now running a meteor app – accessible at `localhost:3000`
 - imports      ( modules that can be loaded either client or server, not engaged unless required )
 - lib          ( always-loaded utilities )
 - config       ( module configurations )
+```
 
 ### Features
 - Replacement of underscore with [Lodash](https://atmospherejs.com/stevezhu/lodash)
