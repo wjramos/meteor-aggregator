@@ -31,12 +31,10 @@ export default Tile = ( { tile } ) => {
 
   if ( tile.media.length > 0 ) {
     image = (
-      <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
-        <img className = { `fade in${ !tile.link ? ' img-responsive' : '' }` }
-             src = { tile.media[ tile.media.length - 1 ].url }
-             // TODO: srcset
-             alt = { tile.alt || '' } />
-      </LazyLoad>
+      <img className = { `fade in${ !tile.link ? ' img-responsive' : '' }` }
+           src = { tile.media[ tile.media.length - 1 ].url }
+           // TODO: srcset
+           alt = { tile.alt || '' } />
     );
   }
 
@@ -92,7 +90,9 @@ export default Tile = ( { tile } ) => {
          className = "card" >
         { sizer }
         <div className = "img-frame center fill">
-          { image }
+          <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
+            { image }
+          </LazyLoad>
           { tile.badge ? badge : null }
         </div>
         { !tile.badge ? caption : null }
@@ -101,7 +101,12 @@ export default Tile = ( { tile } ) => {
   }
 
   if ( !tile.link && tile.media ) {
-    inner = ( <div className = "card">{ image }{ badge }</div>);
+    inner = (
+      <div className = "card">
+        { image }
+        { badge }
+      </div>
+    );
   }
 
   if ( tile.link && !tile.media ) {

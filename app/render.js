@@ -4,7 +4,7 @@ import { mount } from 'react-mounter';
 import Page from './layouts/page';
 import Grid from './containers/grid';
 
-FlowRouter.route( '/', {
+FlowRouter.route( '/(.*)', {
   name: 'Home',
   subscriptions ( params, queryParams ) {
     this.register( 'tiles', Meteor.subscribe( 'tiles' ) );
@@ -16,6 +16,6 @@ FlowRouter.route( '/', {
   }
 } );
 
-FlowRouter.route( '/health', {
-  name: 'Health'
-} );
+// FlowRouter.route( '/health', {
+//   name: 'Health'
+// } );
