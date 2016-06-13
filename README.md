@@ -8,14 +8,18 @@
 You are now running a meteor app – accessible at `localhost:3000`
 
 ### Project Structure:
-- client ( runs only on the client )
- - js ( browser scripts )
+- client       ( runs only on the client )
+ - js          ( browser scripts )
  - stylesheets ( bundled less )
- - views ( react views )
-- server ( runs only on the server )
-- imports ( modules that can be loaded either client or server, not engaged unless required )
-- public ( static assets )
-- config ( module configurations )
+- server       ( runs only on the server )
+- app          ( runs on both client and server )
+ - components  ( stateless presentational components )
+ - containers  ( component-data composition and stateful components )
+ - layouts     ( arrangement )
+ - render.js   ( render app per route )
+- imports      ( modules that can be loaded either client or server, not engaged unless required )
+- lib          ( always-loaded utilities )
+- config       ( module configurations )
 
 ### Features
 - Replacement of underscore with [Lodash](https://atmospherejs.com/stevezhu/lodash)
