@@ -10,7 +10,7 @@ export const WP       = 'http://brightestyoungthings.com/api/get_recent_posts';
 export const WP_QUERY = {
   count:     10000,
   tag:       'rei',
-  include:   [ 'date', 'title', 'excerpt', 'attachments' ],
+  include:   [ 'date', 'url', 'title', 'excerpt', 'attachments' ],
   order_by:  'date',//'modified'
   order:     'desc',
   read_more: '...',
