@@ -21,9 +21,9 @@ You are now running a meteor app – accessible at `localhost:3000`
 - Replacement of underscore with [Lodash](https://atmospherejs.com/stevezhu/lodash)
 - On-the-fly Less compilation with [Less](https://atmospherejs.com/grove/less)
 - Validated data storage with [Collection2](https://atmospherejs.com/aldeed/collection2)
-- Routing path resolution with [Flow Router](https://atmospherejs.com/meteorhacks/flowrouter)
-- Back-end rendering with [Fast-Render](https://atmospherejs.com/meteorhacks/fast-render) [(coupled with flow-router)](https://github.com/kadirahq/flow-router#fast-render)
-- Subscription caching with [Subs Manager](https://atmospherejs.com/meteorhacks/subs-manager)
+- Routing path resolution and Server-Side Rendering with [Flow Router SSR](https://atmospherejs.com/meteorhacks/flowrouter-ssr)
+- Data pre-rendering with [Fast-Render](https://atmospherejs.com/meteorhacks/fast-render) [(coupled with flow-router)](https://github.com/kadirahq/flow-router#fast-render)
+- ( WIP ) Subscription caching with [Subs Manager](https://atmospherejs.com/meteorhacks/subs-manager)
 - Performance monitoring with [Kadira](https://atmospherejs.com/meteorhacks/kadira)
 
 
