@@ -2,20 +2,25 @@
 // TODO: Make authorable by admin
 export const CURALATE = 'https://api.curalate.com/v1/reels/unitedoutside';
 export const CURALATE_QUERY = {
-  limit: 100,
+  limit: 10000
 };
 
-export const WP       = 'http://brightestyoungthings.com/api/get_recent_posts';
+/* API Documentation: https://wordpress.org/plugins/json-api/other_notes/ */
+export const WP       = 'http://brightestyoungthings.com/?json=get_tag_posts';
 export const WP_QUERY = {
-  limit: 100,
-  // search: 'REI'
+  count:     10000,
+  tag_slug:  'rei',
+  include:   [ 'date', 'url', 'title', 'excerpt', 'attachments' ],
+  order_by:  'date',
+  order:     'desc',
+  read_more: '...',
 };
 
-export const EVENTS = 'https://rei.com/rest/events/nearby';
+export const EVENTS = 'https://future.rei.com/rest/events/nearby';
 export const EVENTS_QUERY = {
-  limit:         100,
+  limit:         10000,
   sortBy:        'date',
-  sortDirection: 'asc',
+  sortDirection: 'desc',
   offset:        0,
   distance:      100,
   location:      20500,
@@ -23,8 +28,11 @@ export const EVENTS_QUERY = {
   // ca:            'Women Only'
 };
 
-export const PROGRAMS = { 
-    climbing : 21,
-    cycling : 22,
-    'Outdoor Fitness' : 83
+export const PROGRAMS = {
+    'Climbing':            21,
+    'Cycling':             22,
+    'Outdoor Fitness':     83,
+    'Hiking & Camping':    25,
+    'Paddling' :           24,
+    'Outdoor Photography': 41
 };

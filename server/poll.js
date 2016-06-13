@@ -9,8 +9,8 @@ import {
 
 const POLL_INTERVAL = 300000; // 5 min
 
-function poll ( ) {
-  const curEntries = Tiles.find( ).fetch( );
+function poll ( data ) {
+  const curEntries = data || Tiles.find( ).fetch( );
 
   console.log( `\n---------------- POLLING ( ${ ( POLL_INTERVAL / 1000 / 60 ).toFixed( 1 ) } minute interval )----------------\n`,
                `Initial Tiles collection size: ${ curEntries.length } tiles` );
@@ -24,7 +24,7 @@ function poll ( ) {
       thisQuery.programIds = PROGRAMS[program];
       const data = Meteor.call( 'getData', EVENTS, thisQuery );
 
-      if (data.hasOwnProperty('events')) {
+      if ( data.hasOwnProperty( 'events' ) ) {
         data.events.forEach( event => event.activityType = program );
         events = events.concat( data.events );
       }
@@ -60,8 +60,9 @@ function poll ( ) {
 }
 
 // If collection is empty, poll immediately, otherwise defer to interval
-if ( Tiles.find( ).fetch( ).length < 1 ) {
-  poll( );
+let initialData = Tiles.find( ).fetch( ).length;
+if ( initialData < 1 ) {
+  poll(  );
 }
 
 Meteor.setInterval( poll, POLL_INTERVAL );
