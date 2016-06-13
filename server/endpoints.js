@@ -6,15 +6,14 @@ export const CURALATE_QUERY = {
 };
 
 /* API Documentation: https://wordpress.org/plugins/json-api/other_notes/ */
-export const WP       = 'http://brightestyoungthings.com/api/get_recent_posts';
+export const WP       = 'http://brightestyoungthings.com/?json=get_tag_posts';
 export const WP_QUERY = {
   count:     10000,
-  tag:       'rei',
+  tag_slug:  'rei',
   include:   [ 'date', 'url', 'title', 'excerpt', 'attachments' ],
-  order_by:  'date',//'modified'
+  order_by:  'date',
   order:     'desc',
   read_more: '...',
-  // date_format: '',
 };
 
 export const EVENTS = 'https://future.rei.com/rest/events/nearby';
@@ -25,7 +24,7 @@ export const EVENTS_QUERY = {
   offset:        0,
   distance:      100,
   location:      20500,
-  sa:            'United DC',
+  // sa:            'United DC',
   // ca:            'Women Only'
 };
 
