@@ -6,10 +6,10 @@ import Grid from './containers/grid';
 
 FlowRouter.route( '/', {
   name: 'Home',
-  subscriptions: function( params, queryParams ) {
-    this.register( 'tiles', Meteor.subscribe( 'tiles.public' ) );
+  subscriptions ( params, queryParams ) {
+    this.register( 'tiles', Meteor.subscribe( 'tiles' ) );
   },
-  action( ) {
+  action ( ) {
     mount( Page, {
       Grid: <Grid />
     } );
