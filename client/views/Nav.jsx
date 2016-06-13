@@ -36,14 +36,16 @@ export default class Nav extends Component {
 
     return categories.map(
       category => {
+        let dataCategory = category.replace(/&/g,"").replace(/\s+/g, '-').toLowerCase()
         return (
             <a href = "#main"
                key = { category }
                className = "btn btn-xs text-uppercase filter-item"
-               data-category = { '.' + category }
+               data-category = { '.' + dataCategory }
                onTouchStart = { this.menuShow }
                onMouseEnter = { this.menuShow }
-               onClick = { this.filterClick.bind( this ) }>{ category.charAt(0).toUpperCase() + category.substr(1) }</a>
+               onClick = { this.filterClick.bind( this ) }>
+              { category.charAt(0).toUpperCase() + category.substr(1) }</a>
         );
       }
     )

@@ -25,10 +25,25 @@ function poll ( ) {
       const data = Meteor.call( 'getData', EVENTS, thisQuery );
 
       if (data.hasOwnProperty('events')) {
-        data.events.forEach( event => event.activityType = program );
+        data.events.forEach( event => {
+          // set up activity type
+          event.activityType = program;
+
+          // get the preferred image
+          if (event.images.hasOwnProperty('session')) {
+            event.images = event.images.session;
+          } else if (event.images.hasOwnProperty('course')){
+            event.images = event.images.course;
+          } else {
+            event.images = event.images.default;
+          }
+
+        } );
+
         events = events.concat( data.events );
       }
     }
+
     Meteor.call( 'upsert', events, 'mapEvent' );
     return events;
   }

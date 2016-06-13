@@ -132,7 +132,7 @@ Meteor.methods( {
       key:          tile.sessionId,
       timestamp:    Date.parse( tile.start ),
       type:         'activity',
-      activityType: tile.activityType ? tile.activityType.replace(/\s+/g, '-').toLowerCase() : '',
+      activityType: tile.activityType ? tile.activityType : '',
       title:        tile.title,
       link:         `https://rei.com${ tile.uri }`,
       caption:      tile.summary ? Meteor.call( 'truncateText', tile.summary, TRUNCATE_LENGTH ) : null,
@@ -140,7 +140,8 @@ Meteor.methods( {
       label:        Meteor.call( 'getDateStr', tile.start, tile.end ),
 
       // Replace when images added to service
-      media:        Meteor.call( 'getMedia', { placeholder: { url: '/img/test.jpg' } } )
+      //media:        Meteor.call( 'getMedia', { placeholder: { url: '/img/test.jpg' } } )
+      media:        Meteor.call( 'getMedia', { placeholder: { url: tile.images.high } } )
     };
   },
 

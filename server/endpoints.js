@@ -11,7 +11,7 @@ export const WP_QUERY = {
   // search: 'REI'
 };
 
-export const EVENTS = 'https://rei.com/rest/events/nearby';
+export const EVENTS = 'https://future.rei.com/rest/events/nearby';
 export const EVENTS_QUERY = {
   limit:         100,
   sortBy:        'date',
@@ -19,12 +19,14 @@ export const EVENTS_QUERY = {
   offset:        0,
   distance:      100,
   location:      20500,
-  // sa:            'United DC',
+  sa:            'United DC'
   // ca:            'Women Only'
 };
 
 export const PROGRAMS = { 
-    climbing : 21,
     cycling : 22,
-    'Outdoor Fitness' : 83
+    'Outdoor Fitness' : 83,
+    'Hiking & Camping' : 25,
+    'Paddling' : 24,
+    'Outdoor Photography' : 41
 };
