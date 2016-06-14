@@ -24,15 +24,24 @@ export const EVENTS_QUERY = {
   offset:        0,
   distance:      100,
   location:      20500,
-  // sa:            'United DC',
+  sa:            'United DC',
   // ca:            'Women Only'
 };
 
 export const PROGRAMS = {
-    'Climbing':            21,
-    'Cycling':             22,
-    'Outdoor Fitness':     83,
-    'Hiking & Camping':    25,
-    'Paddling' :           24,
-    'Outdoor Photography': 41
+    'Climbing':                  21,
+    'Cycling':                   22,
+    'Navigation':                23,
+    'Paddling' :                 24,
+    'Hiking & Camping':          25,
+    'Snowsports':                26,
+    'Outdoor Photography':       41,
+    'Volunteering':              81,
+    'Travel':                    82,
+    'Outdoor Fitness':           83,
+    'Stewardship':               84,
+    'Member Benefits':           85,
+    'Wilderness Medicine':       102,
+    'Random':/*'Store Event'*/   122,
+    'Post Course Registrations': 123
 };

@@ -11,9 +11,9 @@ export default class IsotopeComponent extends Component {
     super( props, context );
 
     this.displayName = 'IsotopeComponent';
-    this.isotope     = false;
-    this.domChildren = [];
     this.state       = { mounted : false };
+    this.domChildren = [];
+    this.isotope;
   }
 
   initializeIsotope ( force ) {
