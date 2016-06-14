@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-function filterApply ( filter ) {
-  return $( '.isotope' ).isotope( { filter: filter } );
+function filterApply ( ref, filter ) {
+  console.log( ref )
+  return new ref().isotope.arrange( { filter: filter } );
 }
 
 function getFilterSelector ( filter ) {
@@ -13,9 +14,9 @@ function getFilterLabel ( filter ) {
   return filter ? filter.charAt(0).toUpperCase() + filter.substr(1) : 'Show All';
 }
 
-export default Filter = ( { category } ) => (
+export default Filter = ( { isotope, category } ) => (
   <a href = "#main"
      key = { category || 'all' }
      className = "filter-item"
-     onClick = { ( ) => filterApply( getFilterSelector( category ) ) }>{ getFilterLabel( category ) }</a>
+     onClick = { ( ) => filterApply( isotope, getFilterSelector( category ) ) }>{ getFilterLabel( category ) }</a>
 );

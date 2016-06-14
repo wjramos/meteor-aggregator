@@ -34,25 +34,33 @@ function getUniqueValues ( collection = [], key = '' ) {
   }, [] ).sort();
 }
 
-export default Grid = ( { tiles } ) => {
-  tiles = getActive( tiles );
-  let categories = getUniqueValues( tiles, 'type' );
+export default class Grid extends Component {
+  render ( ) {
+    let tiles = getActive( this.props.tiles );
+    let categories    = getUniqueValues( tiles, 'type' );
+    let subcategories = getUniqueValues( tiles, 'activityType' );
 
-  /* Add reset filter */
-  categories.push( null );
+    /* Add reset filter */
+    categories.push( null );
 
-  return (
-    <main className = "container-fluid" id = "main" >
-      <Nav categories = { categories } />
-      <Isotope
-        key = 'isotope'
-        className = { 'row row-flex tile isotope' }
-        elementType = { 'ul' }
-        options = { config }
-        disableImagesLoaded = { true }
-      >
-        { tiles.map( tile => ( <Tile key = { tile.key } tile = { tile } /> ) ) }
-      </Isotope>
-    </main>
-  );
+    return (
+      <main className = "container-fluid" id = "main" >
+        <Nav isotope = { ( ) => this._isotope } categories = { categories } subcategories = { subcategories } />
+        <Isotope
+          key = 'isotope'
+          className = { 'row row-flex tile isotope' }
+          elementType = { 'ul' }
+          options = { config }
+          disableImagesLoaded = { true }
+          ref = { c => this._isotope = c }
+        >
+          { tiles.map( tile => ( <Tile key = { tile.key } tile = { tile } /> ) ) }
+        </Isotope>
+      </main>
+    );
+  }
+}
+
+Grid.propTypes = {
+  tiles: PropTypes.array
 }

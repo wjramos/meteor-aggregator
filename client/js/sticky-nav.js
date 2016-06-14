@@ -1,3 +1,5 @@
+$ = $ || window.jQuery || require( 'jquery2' );
+
 $( () => {
     let $header = $( 'header' );
     let $win    = $( window );
