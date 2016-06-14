@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 
 function filterApply ( ref, filter ) {
-  console.log( ref )
   return new ref().isotope.arrange( { filter: filter } );
 }
 
