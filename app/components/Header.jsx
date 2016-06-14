@@ -12,7 +12,7 @@ export default Header = ( ) => (
           </div>
         </section>
         <section className = "row">
-          <div className = "col-xs-2 col-xs-offset-5 vertical-pull-xl">
+          <div className = "col-xs-3 col-xs-offset-5 col-sm-2 col-sm-offset-5 vertical-pull-xl">
             <a href = { LOGO_HREF }
                target = "_blank">
               <img src = { LOGO_SRC }

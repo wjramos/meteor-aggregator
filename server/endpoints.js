@@ -10,13 +10,19 @@ export const WP       = 'http://brightestyoungthings.com/?json=get_tag_posts';
 export const WP_QUERY = {
   count:     10000,
   tag_slug:  'rei',
-  include:   [ 'date', 'url', 'title', 'excerpt', 'attachments' ],
   order_by:  'date',
   order:     'desc',
   read_more: '...',
+  include:   [
+    'date',
+    'url',
+    'title',
+    'excerpt',
+    'attachments'
+  ]
 };
 
-export const EVENTS = 'https://future.rei.com/rest/events/nearby';
+export const EVENTS       = 'https://future.rei.com/rest/events/nearby';
 export const EVENTS_QUERY = {
   limit:         10000,
   sortBy:        'date',
@@ -24,10 +30,10 @@ export const EVENTS_QUERY = {
   offset:        0,
   distance:      100,
   location:      20500,
-  sa:            'United DC',
-  // ca:            'Women Only'
+  sa:            'United DC'
 };
 
+/* Ideally this would be brought along from a single query */
 export const PROGRAMS = {
     'Climbing':                  21,
     'Cycling':                   22,

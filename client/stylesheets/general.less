@@ -52,6 +52,12 @@ main {
       &:extend( .label-classification );
       margin-bottom: 1rem;
     }
+
+    @media ( max-width: @screen-sm-min + 1px ) {
+      &:after {
+        &:extend( .icon.icon-rei-expand );
+      }
+    }
   }
 
   .overlay {
