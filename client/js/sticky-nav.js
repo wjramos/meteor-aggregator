@@ -1,9 +1,9 @@
 // $ = $ || window.jQuery || require( 'jquery2' );
-Meteor.startup( () => smoothScroll.init() );
 
 var sticky = {
-  stickyAfter: document.getElementsByTagName( 'nav' )[0].getBoundingClientRect().top + document.body.scrollTop,
   init ( ) {
+    this.nav = document.getElementsByTagName( 'nav' )[0];
+    this.stickyAfter = this.nav.getBoundingClientRect().top + document.body.scrollTop;
     this.scroll();
     this.events();
   },
