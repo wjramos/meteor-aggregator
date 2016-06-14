@@ -1,4 +1,4 @@
-$ = $ || window.jQuery || require( 'jquery2' );
+// $ = $ || window.jQuery || require( 'jquery2' );
 
 $( () => {
     let $header = $( 'header' );

@@ -30,11 +30,22 @@ export default Tile = ( { tile } ) => {
   let sizer;
 
   if ( tile.media.length > 0 ) {
+    // let srcSet = '';
+    
+    // if ( tile.media.length > 1 ) {
+    //   for ( let i = tile.media.length; i > 0; i-- ) {
+    //     srcSet += `${ tile.media[ i ] } ${ 600 / i }w, `;
+    //   }
+    // }
+
     image = (
-      <img className = { `fade in${ !tile.link ? ' img-responsive' : '' }` }
-           src = { tile.media[ tile.media.length - 1 ].url }
-           // TODO: srcset
-           alt = { tile.alt || '' } />
+      <img
+        className = { `fade in${ !tile.link ? ' img-responsive' : '' }` }
+        alt = { tile.alt || '' }
+        src = { tile.media[ tile.media.length - 1 ].url }
+        //srcSet = { srcSet }
+        //sizes = "50vw, ( min-width: 76.8rem ) 33.333vw, ( min-width: 99.2rem ) 25vw"
+      />
     );
   }
 
