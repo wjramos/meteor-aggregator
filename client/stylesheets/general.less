@@ -1,7 +1,9 @@
 
 main {
-  // background: @core-architectural-1;
-  background: #000;
+  &,
+  & .card {
+    background: #000;
+  }
 }
 
 .text-justify {
@@ -18,17 +20,12 @@ main {
   white-space: nowrap;
 }
 
-main .card {
-  background-color: #000;
-}
-
 .isotope > .item {
   // Ensure isotope does not unnecessarily wrap
   margin: -.001px;
 }
 
 .card {
-
   .overlay,
   .caption {
     &:extend( .overlay-dark-2 );
@@ -70,6 +67,16 @@ main .card {
     opacity: 0;
   }
 
+  &-sizer,
+  &:hover .caption,
+  &:focus .caption {
+    padding: 8rem 3rem;
+
+    .expandable {
+      max-height: 100rem;
+    }
+  }
+
   &:hover,
   &:focus {
     .overlay {
@@ -84,24 +91,15 @@ main .card {
     }
 
     .caption {
-      &:extend( .well-lg );
-
       .expandable {
         transition: 1s ease-in max-height;
-        max-height: 100rem;
         opacity: 1;
       }
     }
   }
-
-  &-sizer {
-    &:extend( .well-lg );
-
-    .expandable {
-      max-height: 100rem;
-    }
-  }
 }
+
+/* Prevent sub-pixel gaps */
 .img-frame {
   padding: 0 !important;
   position: absolute !important;
@@ -120,11 +118,12 @@ main .card {
     text-shadow: 0px 0px 2px #000;
 }
 
+
+/* Pending Cedar update */
+
 .img-frame > img {
     image-rendering: auto!important;
 }
-
-/* Pending Cedar update */
 
 // Size.less
 .fill {
