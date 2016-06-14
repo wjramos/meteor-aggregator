@@ -1,19 +1,24 @@
-$ = $ || window.jQuery || require( 'jquery2' );
+// $ = $ || window.jQuery || require( 'jquery2' );
+Meteor.startup( () => smoothScroll.init() );
 
-$( () => {
-    let $header = $( 'header' );
-    let $win    = $( window );
-    let $nav    = $( 'nav' );
+var sticky = {
+  stickyAfter: document.getElementsByTagName( 'nav' )[0].getBoundingClientRect().top + document.body.scrollTop,
+  init ( ) {
+    this.scroll();
+    this.events();
+  },
 
-    // BAD: MAGIC NUMBER
-    let headerOffset = 465;
+  scroll ( ) {
+    if ( window.scrollY > this.stickyAfter ) {
+      document.body.classList.add( 'fixed' );
+    } else {
+      document.body.classList.remove( 'fixed' );
+    }
+  },
 
-    $win.scroll( () => {
-        if ( $win.scrollTop() >= headerOffset ) {
-            $nav.addClass( 'fixed' );
-        }
-        else {
-            $nav.removeClass( 'fixed' );
-        }
-    } );
-} );
+  events ( ) {
+    window.addEventListener( 'scroll', ( ) => this.scroll( ) );
+  }
+};
+
+document.addEventListener( 'DOMContentLoaded', sticky.init.bind( sticky ) );

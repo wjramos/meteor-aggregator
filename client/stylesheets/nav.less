@@ -1,5 +1,14 @@
 @import ( reference ) "variables";
 
+.fixed {
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
 .filters {
     &:extend( .overlay-dark-2, .row.row-flex, .col-xs-12, .text-uppercase );
     letter-spacing: .1rem;
@@ -7,13 +16,6 @@
     position: relative;
     justify-content: center;
     z-index: 999;
-
-    &.fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-    }
 
     label,
     .filter-item {
