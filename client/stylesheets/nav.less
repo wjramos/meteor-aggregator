@@ -16,6 +16,7 @@ body.fixed {
     position: relative;
     justify-content: center;
     z-index: 999;
+    flex-flow: row nowrap;
 
     label,
     .filter-item {
@@ -23,12 +24,17 @@ body.fixed {
         vertical-align: middle;
         margin: 0 !important;
         line-height: .75 !important;
-        font-size: 2.4rem;
+        font-size: 3vw;
         background: transparent;
         box-sizing: content-box;
         transition: .25s ease all;
 
-        @media screen and ( min-width: @screen-md-min ) {
+        @media ( min-width: @screen-sm-min ) {
+            font-size: 2.4rem;
+
+        }
+
+        @media ( min-width: @screen-md-min ) {
             padding: 0 2.4rem !important;
         }
     }
@@ -41,7 +47,7 @@ body.fixed {
 .filter-item {
     @media ( min-width: @screen-sm-min ) {
         &:not( :first-of-type ) {
-            border-left: .15rem solid @color-base;
+            border-left-color: @color-base;
         }
     }
 
