@@ -22,7 +22,7 @@ export const WP_QUERY = {
   ]
 };
 
-export const EVENTS       = 'https://future.rei.com/rest/events/nearby';
+export const EVENTS       = 'https://rei.com/rest/events/nearby';
 export const EVENTS_QUERY = {
   limit:         10000,
   sortBy:        'date',

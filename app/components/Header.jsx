@@ -4,7 +4,7 @@ import { STAR_SRC, TITLE, LEAD, LOGO_HREF, LOGO_SRC, LOGO_ALT } from '../../impo
 export default Header = ( ) => (
   <header className = "container-fluid">
     <div className = "row row-flex">
-      <div className = "col-xs-4 col-sm-3">
+      <div className = "col-xs-4 col-sm-3 col-md-2">
         <div className = "row row-flex nowrap">
           <div className = "col-sm-4">
             <div className = "well">
