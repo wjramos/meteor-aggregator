@@ -27,7 +27,7 @@ export default Header = ( ) => (
         <h1>{ TITLE }</h1>
       </div>
       <div className = "col-xs-10 col-md-8">
-        <h2 className = "text-uppercase text-last-center text-justify">{ LEAD }</h2>
+        <h2 className = "text-uppercase text-last-center text-center">{ LEAD }</h2>
       </div>
       <div className = "col-xs-12 vertical-pull-xl">
         <a href = { LOGO_HREF }
