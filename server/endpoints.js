@@ -1,6 +1,6 @@
 
 // TODO: Make authorable by admin
-export const CURALATE = 'https://api.curalate.com/v1/reels/optoutside';
+export const CURALATE = 'https://api.curalate.com/v1/reels/unitedoutside';
 export const CURALATE_QUERY = {
   limit: 10000
 };
