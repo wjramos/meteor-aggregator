@@ -1,3 +1,11 @@
+.logo {
+    max-width: 10rem;
+}
+
+.stars {
+    align-items: center;
+}
+
 header {
     &:extend( .text-center, .text-uppercase );
     background-color: @color-base;
@@ -9,11 +17,15 @@ header {
 
     h1,
     h2 {
-        font-family: 'Plak Condensed' !important;
+        font-family: 'Plak Condensed', 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif' !important;
     }
 
     h1 {
-        font-size: 20rem;
+        font-size: 15rem;
         color: @color-primary !important;
+    }
+
+    h2 {
+        font-size: 2rem;
     }
 }

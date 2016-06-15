@@ -3,8 +3,8 @@ import { STAR_SRC, TITLE, LEAD, LOGO_HREF, LOGO_SRC, LOGO_ALT } from '../../impo
 
 export default Header = ( ) => (
   <header className = "container-fluid">
-    <div className = "row">
-      <div className = "hidden-xs col-sm-4 col-sm-offset-4">
+    <div className = "row row-flex">
+      <div className = "hidden-xs col-sm-3 stars">
         <div className = "row row-flex">
           <div className = "col-sm-4">
             <div className = "well">
@@ -34,7 +34,8 @@ export default Header = ( ) => (
           <div className = "col-xs-3 col-xs-offset-5 col-sm-2 col-sm-offset-5 vertical-pull-xl">
             <a href = { LOGO_HREF }
                target = "_blank">
-              <img src = { LOGO_SRC }
+              <img className = "logo"
+                   src = { LOGO_SRC }
                    alt = { LOGO_ALT }/>
             </a>
           </div>
