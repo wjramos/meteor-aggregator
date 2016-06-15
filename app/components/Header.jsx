@@ -1,14 +1,33 @@
 import React, { Component, PropTypes } from "react";
-import { TITLE, LEAD, LOGO_HREF, LOGO_SRC, LOGO_ALT } from '../../imports/content'
+import { STAR_SRC, TITLE, LEAD, LOGO_HREF, LOGO_SRC, LOGO_ALT } from '../../imports/content'
 
 export default Header = ( ) => (
   <header className = "container-fluid">
     <div className = "row">
+      <div className = "hidden-xs col-sm-4 col-sm-offset-4">
+        <div className = "row row-flex">
+          <div className = "col-sm-4">
+            <div className = "well">
+              <img className = "img-responsive" src = { STAR_SRC } />
+            </div>
+          </div>
+          <div className = "col-sm-4">
+            <div className = "well">
+              <img className = "img-responsive" src = { STAR_SRC } />
+            </div>
+          </div>
+          <div className = "col-sm-4">
+            <div className = "well">
+              <img className = "img-responsive" src = { STAR_SRC } />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className = "col-xs-12">
-        <h1 className = "heading-announce">{ TITLE }</h1>
+        <h1>{ TITLE }</h1>
         <section className = "row">
-          <div className = "col-xs-10 col-xs-offset-1 col-md-10 col-md-offset-1">
-            <h3 className = "text-uppercase text-last-center text-justify">{ LEAD }</h3>
+          <div className = "col-xs-8 col-xs-offset-2">
+            <h2 className = "text-uppercase text-last-center text-justify">{ LEAD }</h2>
           </div>
         </section>
         <section className = "row">

@@ -1,7 +1,5 @@
-@import ( reference ) "variables";
-
 header {
-    &:extend( .text-center );
+    &:extend( .text-center, .text-uppercase );
     background-color: @color-base;
     padding: 4rem 2rem;
 
@@ -10,21 +8,12 @@ header {
     }
 
     h1,
-    h3 {
-        color: @color-primary !important;
+    h2 {
+        font-family: 'Plak Condensed' !important;
     }
 
     h1 {
-        &:extend( .heading-announce );
-        font-weight: 700;
-
-        @media screen and ( min-width: @screen-md-min ) {
-            letter-spacing: -.25rem !important;
-        }
-    }
-
-    h3 {
-        &:extend( .text-uppercase, .text-justify, .text-last-center );
-        line-height: 1.75;
+        font-size: 20rem;
+        color: @color-primary !important;
     }
 }

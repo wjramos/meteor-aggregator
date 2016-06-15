@@ -55,7 +55,7 @@ export default Tile = ( { tile } ) => {
       <div>
         { label }
         { title }
-        <div className = "expandable">
+        <div className = "caption-description expandable">
           { desc }
         </div>
       </div>

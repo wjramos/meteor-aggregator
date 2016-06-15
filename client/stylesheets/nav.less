@@ -1,8 +1,6 @@
-@import ( reference ) "variables";
-
 body.fixed {
     padding-top: 66px;
-    
+
     nav {
         position: fixed;
         top: 0;
@@ -12,7 +10,7 @@ body.fixed {
 }
 
 .filters {
-    &:extend( .overlay-dark-2, .row.row-flex, .col-xs-12, .text-uppercase );
+    &:extend( .row.row-flex, .col-xs-12, .overlay-dark-2 );
     letter-spacing: .1rem;
     padding: 2rem 0;
     position: relative;
@@ -25,7 +23,7 @@ body.fixed {
         vertical-align: middle;
         margin: 0 !important;
         line-height: .75 !important;
-        font-size: 2.4rem !important;
+        font-size: 3.2rem;
         background: transparent;
         box-sizing: content-box;
         transition: .25s ease all;
@@ -38,19 +36,20 @@ body.fixed {
     label {
         &:extend( .hidden-xs );
     }
+}
 
-    .filter-item {
-        @media screen and ( min-width: @screen-md-min ) {
-            &:not( :first-of-type ) {
-                border-left: .15rem solid @color-base;
-            }
+.filter-item {
+    @media ( min-width: @screen-sm-min ) {
+        &:not( :first-of-type ) {
+            border-left: .15rem solid @color-base;
         }
+    }
 
-        &:hover,
-        &:focus,
-        &:active,
-        &.active {
-            color: @color-secondary !important;
-        }
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+        text-decoration: none;
+        color: @color-secondary !important;
     }
 }

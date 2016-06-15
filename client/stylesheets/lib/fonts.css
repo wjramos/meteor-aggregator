@@ -1,0 +1,20 @@
+/*@import url( "http://fast.fonts.net/t/1.css?apiType=css&projectid=7d0b7af3-7351-4894-9a49-b4596a9dd39a" );*/
+
+@font-face {
+    font-family: "Plak";
+    src: url( "//satchel.rei.com/media/font/plak-w02-black.eot?#iefix" );
+    src: url( "//satchel.rei.com/media/font/plak-w02-black.eot?#iefix" )                               format( "eot" ),
+         url( "//satchel.rei.com/media/font/plak-w02-black.woff2" )                                    format( "woff2" ),
+         url( "//satchel.rei.com/media/font/plak-w02-black.woff" )                                     format( "woff" ),
+         url( "//satchel.rei.com/media/font/plak-w02-black.ttf" )                                      format( "truetype" ),
+         url( "//satchel.rei.com/media/font/plak-w02-black.svg#0c19efb3-410a-48fc-bafd-8dfbe1bb98de" ) format( "svg" );
+}
+@font-face {
+    font-family: "Plak Condensed";
+    src: url( "//satchel.rei.com/media/font/plak-w02-black-condensed.eot?#iefix" );
+    src: url( "//satchel.rei.com/media/font/plak-w02-black-condensed.eot?#iefix" )                               format( "eot" ),
+         url( "//satchel.rei.com/media/font/plak-w02-black-condensed.woff2" )                                    format( "woff2" ),
+         url( "//satchel.rei.com/media/font/plak-w02-black-condensed.woff" )                                     format( "woff" ),
+         url( "//satchel.rei.com/media/font/plak-w02-black-condensed.ttf" )                                      format( "truetype" ),
+         url( "//satchel.rei.com/media/font/plak-w02-black-condensed.svg#766de397-1752-4e8d-b946-0c51548da328" ) format( "svg" );
+}
