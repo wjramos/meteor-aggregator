@@ -2,14 +2,19 @@ let document = window.document;
 
 var sticky = {
   init ( ) {
-    this.nav = document.getElementsByTagName( 'nav' )[0];
-    this.scroll();
+    this.nav;
+    this.stickyAfter = 2000;
+    
+    setTimeout( ( ) => {
+      this.nav = document.getElementsByTagName( 'nav' )[0];
+      this.stickyAfter = this.nav.getBoundingClientRect().top + document.body.scrollTop;
+      this.scroll();
+    }, 500 );
+
     this.events();
   },
 
   scroll ( ) {
-    this.stickyAfter = this.nav.getBoundingClientRect().top + document.body.scrollTop;
-
     if ( window.scrollY > this.stickyAfter ) {
       document.body.classList.add( 'fixed' );
     } else {
