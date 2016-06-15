@@ -7,17 +7,17 @@ export default Header = ( ) => (
       <div className = "col-xs-4 col-sm-3 col-md-2">
         <div className = "row row-flex nowrap">
           <div className = "col-sm-4">
-            <div className = "well">
+            <div className = "well-sm">
               <img className = "img-responsive" src = { STAR_SRC } />
             </div>
           </div>
           <div className = "col-sm-4">
-            <div className = "well">
+            <div className = "well-sm">
               <img className = "img-responsive" src = { STAR_SRC } />
             </div>
           </div>
           <div className = "col-sm-4">
-            <div className = "well">
+            <div className = "well-sm">
               <img className = "img-responsive" src = { STAR_SRC } />
             </div>
           </div>
