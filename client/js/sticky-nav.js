@@ -1,14 +1,15 @@
-// $ = $ || window.jQuery || require( 'jquery2' );
+let document = window.document;
 
 var sticky = {
   init ( ) {
     this.nav = document.getElementsByTagName( 'nav' )[0];
-    this.stickyAfter = this.nav.getBoundingClientRect().top + document.body.scrollTop;
     this.scroll();
     this.events();
   },
 
   scroll ( ) {
+    this.stickyAfter = this.nav.getBoundingClientRect().top + document.body.scrollTop;
+
     if ( window.scrollY > this.stickyAfter ) {
       document.body.classList.add( 'fixed' );
     } else {
