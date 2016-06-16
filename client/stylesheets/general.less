@@ -2,14 +2,28 @@
   margin: 0;
 }
 
+header,
 main,
-nav {
-  background: @color-text !important;
+nav,
+.caption,
+.overlay {
+  background-image: url( '//satchel.rei.com/media/img/united-outside-texture.png' );
+  background-size: 100vw;
+  background-position: 50% 100%;
 
   &,
   a {
     color: @color-base !important;
   }
+}
+
+main,
+nav {
+  background-color: @color-text;
+}
+
+main {
+  background-repeat: repeat-y;
 }
 
 .card > img {

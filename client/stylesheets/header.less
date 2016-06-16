@@ -4,14 +4,14 @@
 
 header {
     &:extend( .text-center, .text-uppercase );
-    background-image: url( '//satchel.rei.com/media/img/united-outside-texture.png' );
-    background-size: cover;
     background-color: @color-base;
     padding: 4rem 2rem;
 
     .row-flex {
         justify-content: center;
         max-width: 120rem;
+        mask-image: url( '//satchel.rei.com/media/img/united-outside-texture.png' );
+        mask-size: 100%;
     }
 
     h1,
