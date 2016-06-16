@@ -6,7 +6,7 @@ export const CURALATE_QUERY = {
 };
 
 /* API Documentation: https://wordpress.org/plugins/json-api/other_notes/ */
-export const WP       = 'http://brightestyoungthings.com/?json=get_tag_posts';
+export const WP       = 'https://www.brightestyoungthings.com/?json=get_tag_posts';
 export const WP_QUERY = {
   count:     10000,
   tag_slug:  'rei',

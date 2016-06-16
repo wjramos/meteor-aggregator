@@ -100,7 +100,22 @@ export default Tile = ( { tile } ) => {
     );
   }
 
-  if ( !tile.link && tile.media ) {
+  if ( caption && !tile.link && tile.media ) {
+    inner = (
+      <div className = "card">
+        { sizer }
+        <div className = "img-frame center fill">
+          <LazyLoad offset = { [ 200, 200 ] } resize = { true } height = { 0 } throttle = { 200 } once >
+            { image }
+          </LazyLoad>
+          { tile.badge ? badge : null }
+        </div>
+        { !tile.badge ? caption : null }
+      </div>
+    );
+  }
+
+  if ( !caption && !tile.link && tile.media ) {
     inner = (
       <div className = "card">
         { image }
