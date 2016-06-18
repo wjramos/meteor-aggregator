@@ -115,6 +115,17 @@ export default Tile = ( { tile } ) => {
     );
   }
 
+  if ( !caption && tile.link && tile.media ) {
+    inner = (
+      <a href = { tile.link }
+         target = "_blank"
+         className = "card">
+        { image }
+        { badge }
+      </a>
+    );
+  }
+
   if ( !caption && !tile.link && tile.media ) {
     inner = (
       <div className = "card">
