@@ -5,7 +5,7 @@ import {
   CURALATE, CURALATE_QUERY,
   EVENTS,   EVENTS_QUERY,
   PROGRAMS
-} from './endpoints';
+} from '../imports/endpoints';
 
 const POLL_INTERVAL = 300000; // 5 min
 
@@ -19,9 +19,9 @@ function poll ( data ) {
 
   function getEvents ( ) {
     let events = [];
-    for (program in PROGRAMS) {
+    for ( program in PROGRAMS ) {
       let thisQuery        = EVENTS_QUERY;
-      thisQuery.programIds = PROGRAMS[program];
+      thisQuery.programIds = PROGRAMS[ program ];
       const data = Meteor.call( 'getData', EVENTS, thisQuery );
 
       if ( data.hasOwnProperty( 'events' ) ) {
