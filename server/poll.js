@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import queries from './queries';
+import queries from '../imports/queries';
 
 const POLL_INTERVAL = 300000; // 5 min
 
