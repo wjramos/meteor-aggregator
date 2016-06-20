@@ -14,7 +14,7 @@ export default Header = ( ) => (
     <div className = "row row-flex">
       <div className = "col-xs-4 col-sm-3 col-md-2">
         <div className = "row row-flex nowrap">
-          { [ ...Array( 3 ) ].map( ( ) => ( <Star /> ) ) }
+          { [ ...Array( 3 ) ].map( ( val, i ) => ( <Star key = { i } /> ) ) }
         </div>
       </div>
       <div className = "col-xs-12">

@@ -1,5 +1,5 @@
-export const config = {
-  // published: true,
+export default {
+  visible: true,
   // ratio: '9-16',
   cols: {
     xs: 6,
