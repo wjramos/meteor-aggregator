@@ -45,6 +45,11 @@ function poll ( data ) {
     return social.items || [];
   }
 
+  if ( curEntries.length > 0 ) {
+    Meteor.call( 'purgeCollection' );
+    console.log( 'Collection cleared.' );
+  }
+
   let events = getEvents();
   let posts  = getPosts();
   let social = getSocial();
