@@ -40,11 +40,7 @@ export default class Grid extends Component {
           disableImagesLoaded = { true }
           ref = { c => this._isotope = c }
         >
-          { tiles.map( tile => {
-            if ( tile.config.visible ) {
-              return ( <Tile key = { tile.key } tile = { tile } /> );
-            }
-          } ) }
+          { tiles.map( tile => tile.config.visible ? ( <Tile key = { tile.key } tile = { tile } /> ) : null ) }
         </Isotope>
       </main>
     );
