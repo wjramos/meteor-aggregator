@@ -1,7 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 
+function triggerScroll ( ) {
+  const event = document.createEvent( 'HTMLEvents' );
+  event.initEvent( 'scroll', true, false );
+  document.dispatchEvent( event );
+}
+
 function filterApply ( ref, filter ) {
+  triggerScroll( );
   return new ref().isotope.arrange( { filter: filter } );
 }
 
