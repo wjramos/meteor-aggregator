@@ -45,10 +45,12 @@ function poll ( data ) {
     return social.items || [];
   }
 
+  /* Purge collections between calls
   if ( curEntries.length > 0 ) {
     Meteor.call( 'purgeCollection' );
     console.log( 'Collection cleared.' );
   }
+  */
 
   let events = getEvents();
   let posts  = getPosts();
