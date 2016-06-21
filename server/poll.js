@@ -45,10 +45,12 @@ function poll ( data ) {
     return social.items || [];
   }
 
+  /* Purge collections between calls
   if ( curEntries.length > 0 ) {
     Meteor.call( 'purgeCollection' );
     console.log( 'Collection cleared.' );
   }
+  */
 
   let events = getEvents();
   let posts  = getPosts();
@@ -67,7 +69,7 @@ function poll ( data ) {
 // If collection is empty, poll immediately, otherwise defer to interval
 let initialData = Tiles.find( ).fetch( ).length;
 if ( initialData < 1 ) {
-  poll(  );
+  poll( );
 }
 
 Meteor.setInterval( poll, POLL_INTERVAL );
