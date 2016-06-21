@@ -3,23 +3,9 @@ import React, { Component, PropTypes } from 'react';
 
 import { config } from '../../imports/isotope-config';
 
-import Nav from './Nav.jsx';
+import Nav     from './Nav.jsx';
 import Isotope from './Isotope.jsx';
-import Tile from './Tile.jsx';
-
-/* TODO: Move to methods */
-function getActive ( tiles = [] ) {
-  check( tiles, Array );
-
-  const now = Date.parse( new Date( ) );
-  return tiles.filter(
-    tile => (
-      !( tile.type  === 'activity' && tile.timestamp < now ) &&
-         tile.badge !== 'CANCELLED' &&
-         tile.badge !== 'CLOSED'
-    )
-  );
-}
+import Tile    from './Tile.jsx';
 
 function getUniqueValues ( collection = [], key = '' ) {
   check( collection, Array );
@@ -36,7 +22,7 @@ function getUniqueValues ( collection = [], key = '' ) {
 
 export default class Grid extends Component {
   render ( ) {
-    let tiles = getActive( this.props.tiles );
+    let tiles         = this.props.tiles;
     let categories    = getUniqueValues( tiles, 'type' );
     let subcategories = getUniqueValues( tiles, 'activityType' );
 

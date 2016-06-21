@@ -2,21 +2,23 @@ import React, { Component, PropTypes } from 'react';
 import LazyLoad   from 'react-lazyload';
 import classNames from 'classnames';
 
-import { config } from '../../imports/tile-config';
-
 function rawHTML ( str ) {
   return { __html: str.replace( /<(?:(?!br|em|i|b|strong)|\n)*?>/gm, '' ) };
 }
 
 export default Tile = ( { tile } ) => {
+  if ( !tile.visible ) {
+    return null;
+  }
+
   const classes = [
     'item',
     tile.type,
     tile.activitytype,
-    `col-xs-${ config.cols.xs || 6 }`,
-    `col-sm-${ config.cols.sm || 4 }`,
-    `col-md-${ config.cols.md || 3 }`,
-    `col-lg-${ config.cols.lg || 3 }`
+    `col-xs-${ /*tile.config.cols.xs ||*/ 6 }`,
+    `col-sm-${ /*tile.config.cols.sm ||*/ 4 }`,
+    `col-md-${ /*tile.config.cols.md ||*/ 3 }`,
+    `col-lg-${ /*tile.config.cols.lg ||*/ 3 }`
   ];
 
   let image;
@@ -147,9 +149,10 @@ export default Tile = ( { tile } ) => {
 
   return (
     <li className = { classNames( classes ) }
-        data-category  = { tile.type }
-        data-subcategory = { tile.activityType }
-        data-timestamp = { tile.timestamp }
+        data-visible       = { tile.visible }
+        data-category      = { tile.type }
+        data-subcategory   = { tile.activityType }
+        data-timestamp     = { tile.timestamp }
         data-rel-timestamp = { tile.relTimestamp } >
       { inner }
     </li>

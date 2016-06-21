@@ -48,7 +48,7 @@ body.fixed {
 
 .filter-item {
     @media ( min-width: @screen-sm-min ) {
-        &:not( :first-of-type ) {
+        & + & {
             border-left: .3rem solid @color-base;
         }
     }
