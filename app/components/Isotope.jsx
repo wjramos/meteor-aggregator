@@ -1,10 +1,66 @@
 import React, { Component, PropTypes } from 'react';
-import { assign } from 'lodash';
+import { assign as _assign } from 'lodash';
+
+import defaultProps from './defaultProps';
 
 const isBrowser = typeof window !== 'undefined';
 const Isotope = isBrowser ? ( Isotope || window.Isotope || require( 'isotope-layout' ) ) : null;
 const imagesloaded = isBrowser ? require( 'imagesloaded' ) : null;
 const refName = 'isotopeContainer';
+
+function getDiff ( listA, listB ) {
+  // get differences between two lists
+  return listA.filter( diffItem => !~listB.indexOf( diffItem ) )
+}
+
+function getPrepended ( diff, updated ) {
+  // get everything added to the beginning of the DOMNode list
+  let beginningIndex = 0;
+
+  return diff.filter(
+    newChild => {
+      const prepend = beginningIndex === updated.indexOf( newChild );
+
+      if ( prepend ) {
+        // increase the index
+        beginningIndex++;
+      }
+
+      return prepend;
+    }
+  );
+}
+
+/*
+ * otherwise we reverse it because so we're going through the list picking off the items that
+ * have been added at the end of the list. this complex logic is preserved in case it needs to be
+ * invoked
+  function getPrependedReverse ( diff, updated ) {
+    let endingIndex = updated.length - 1;
+
+    diff.reverse().filter(
+      newChild => {
+        const append = endingIndex = updated.indexOf( newChild );
+
+        if ( append ) {
+          endingIndex--;
+        }
+
+        return append;
+      }
+    )
+  }
+*/
+
+function getAppended ( diff, prepended ) {
+  // we assume that everything else is appended
+  return diff.filter( el => prepended.indexOf( el ) === -1 );
+}
+
+function getMoved ( newChildren, oldChildren ) {
+  // get everything added to the end of the DOMNode list
+  return oldChildren.filter( ( child, index ) => index !== newChildren.indexOf( child ) );
+}
 
 export default class IsotopeComponent extends Component {
   constructor ( props, context ) {
@@ -34,67 +90,30 @@ export default class IsotopeComponent extends Component {
     return Array.prototype.slice.call( children );
   }
 
+
   diffDomChildren ( ) {
     /*
      * take only elements attached to DOM
      * (aka the parent is the isotope container, not null)
      */
-    const oldChildren = this.domChildren.filter( element => !!element.parentNode );
     const newChildren = this.getNewDomChildren();
-    const removed = oldChildren.filter( oldChild => !~newChildren.indexOf( oldChild ) );
-    const domDiff = newChildren.filter( newChild => !~oldChildren.indexOf( newChild ) );
+    const oldChildren = this.domChildren.filter( element => !!element.parentNode );
 
-    let beginningIndex = 0;
-
-    // get everything added to the beginning of the DOMNode list
-    const prepended = domDiff.filter( ( newChild, i ) => {
-      const prepend = beginningIndex === newChildren.indexOf( newChild );
-
-      if ( prepend ) {
-        // increase the index
-        beginningIndex++;
-      }
-
-      return prepend;
-    } );
-
-    // we assume that everything else is appended
-    const appended = domDiff.filter( el => prepended.indexOf( el ) === -1 );
-
-    /*
-     * otherwise we reverse it because so we're going through the list picking off the items that
-     * have been added at the end of the list. this complex logic is preserved in case it needs to be
-     * invoked
-     *
-     * const endingIndex = newChildren.length - 1;
-     *
-     * domDiff.reverse().filter( ( newChild, i ) => {
-     *   const append = endingIndex == newChildren.indexOf(newChild);
-     *
-     *   if ( append ) {
-     *     endingIndex--;
-     *   }
-     *
-     *   return append;
-     * } );
-     */
-
-    // get everything added to the end of the DOMNode list
-    let moved = [];
-
-    if ( removed.length === 0 ) {
-      moved = oldChildren.filter( ( child, index ) => index !== newChildren.indexOf( child ) );
-    }
+    const removed = getDiff( oldChildren, newChildren );
+    const domDiff = getDiff( newChildren, oldChildren );
+    const prepended = getPrepended( domDiff, newChildren );
+    const appended  = getAppended( domDiff, prepended );
+    const moved = removed.length === 0 ? getMoved( newChildren, oldChildren ) : [];
 
     this.domChildren = newChildren;
 
     return {
-      old:       oldChildren,
-      new:       newChildren,
-      removed:   removed,
-      appended:  appended,
-      prepended: prepended,
-      moved:     moved
+      oldChildren,
+      newChildren,
+      removed,
+      appended,
+      prepended,
+      moved
     };
   }
 
@@ -167,7 +186,7 @@ export default class IsotopeComponent extends Component {
   }
 
   render ( ) {
-    return React.createElement( this.props.elementType, assign( {}, this.props, { ref: refName } ), this.props.children );
+    return React.createElement( this.props.elementType, _assign( {}, this.props, { ref: refName } ), this.props.children );
   }
 }
 
@@ -177,9 +196,4 @@ IsotopeComponent.propTypes = {
   options:             PropTypes.object
 };
 
-IsotopeComponent.defaultProps = {
-  disableImagesLoaded: false,
-  options:             {},
-  className:           '',
-  elementType:         'div'
-};
+IsotopeComponent.defaultProps = defaultProps;
