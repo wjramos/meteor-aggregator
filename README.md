@@ -1,4 +1,4 @@
-# United Outside ( Meteor Content Aggregator ) ![Build Status](https://travis-ci.org/rei/united-outside.svg)
+# Meteor Content Aggregator ![Build Status](https://travis-ci.org/rei/united-outside.svg)
 
 ### How to use:
 1. Install [Meteor](https://www.meteor.com/install) `curl https://install.meteor.com/ | sh`
